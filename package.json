@@ -1,46 +1,45 @@
 {
-  "private": true,
-  "engines": {
-    "node": ">=4"
+  "scripts": {
+    "clean": "gulp clean",
+    "dist": "gulp dist",
+    "lint": "gulp lint",
+    "start": "gulp",
+    "test-dist": "gulp test-dist"
+  },
+  "dependencies": {
+    "phaser-ce": "^2.8.3"
   },
   "devDependencies": {
-    "babel-core": "^6.4.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-register": "^6.5.2",
-    "browser-sync": "^2.2.1",
-    "del": "^2.2.0",
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.0.1",
-    "gulp-babel": "^6.1.1",
-    "gulp-cache": "^0.4.2",
-    "gulp-cssnano": "^2.0.0",
-    "gulp-eslint": "^3.0.0",
-    "gulp-filter": "^4.0.0",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^3.0.1",
-    "gulp-load-plugins": "^1.2.4",
-    "gulp-plumber": "^1.0.1",
-    "gulp-sass": "^3.0.0",
-    "gulp-size": "^2.1.0",
-    "gulp-sourcemaps": "^2.2.0",
-    "gulp-uglify": "^2.0.0",
-    "gulp-useref": "^3.0.0",
-    "main-bower-files": "^2.5.0",
-    "run-sequence": "^1.2.2",
-    "wiredep": "^4.0.0"
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.13",
+    "browserify": "^14.4.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.0",
+    "gulp-eslint": "^4.0.0",
+    "gulp-if": "^2.0.1",
+    "gulp-json-minify": "^1.0.9",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-processhtml": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.5.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.7",
+    "lazypipe": "^1.0.1",
+    "merge-stream": "^1.0.0",
+    "require-dir": "^0.3.2",
+    "run-sequence": "^2.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
   },
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true
-    },
-    "rules": {
-      "quotes": [
-        2,
-        "single"
-      ]
-    }
-  }
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "private": true
 }

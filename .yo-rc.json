@@ -1,6 +1,18 @@
 {
-  "generator-mocha": {
-    "ui": "bdd",
-    "rjs": false
+  "generator-phaser-plus": {
+    "meta": {
+      "createdWith": "2.4.1",
+      "creationDate": "2018-02-04T17:45:26.749Z"
+    },
+    "baseTemplate": "esnext",
+    "dirs": {
+      "objects": "src/objects/",
+      "plugins": "src/plugins/",
+      "states": "src/states/"
+    },
+    "states": {
+      "moduleName": "src/states.js",
+      "requirePath": "./states/"
+    }
   }
 }
