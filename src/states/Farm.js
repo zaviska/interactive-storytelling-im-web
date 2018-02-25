@@ -120,6 +120,12 @@ export default class Farm extends Phaser.State {
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.game.input.onDown.add(gofull, this);
+
+        var style = { font: "24px Arial", fill: "#19de65"};
+
+        this.ballCount = 0;
+        this.ballText = this.game.add.text(10, 10, "Gesammelte Bälle: "+this.ballCount, style);
+    
         function gofull() {
             this.game.scale.startFullScreen();
         }
@@ -138,6 +144,7 @@ export default class Farm extends Phaser.State {
     update() {
         function collectItem(payer, item) {
             item.kill();
+            this.ballText.text = "Gesammelte Bälle: "+ (++this.ballCount);
         }
         function talkeToMummy(payer, item) {
     
