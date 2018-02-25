@@ -13,12 +13,11 @@ export default class Preloader extends Phaser.State {
   preload() {
     this.showSplashScreen();
     this.load.pack('gameAssets', null, {gameAssets});
-    this.load.audio('intro', 'audio/intro/haunted-forest_terrasound_de.mp3');
-    this.load.video('ball', 'video/ball_glow.mp4');
-    this.load.video('intro_title', 'video/blackAirKnights_title.mp4');
-    this.load.video('intro_title_sound', 'video/blackAirKnights_title_audio.mp4');
-    this.load.image('button_play', 'image/button/button_play.png');
-    this.load.spritesheet('button', 'image/button/button_sprite_sheet.png', 193, 71);
+    this.load.audio('intro_sound', 'audio/intro/haunted-forest_terrasound_de.mp3');
+    this.load.video('intro_title_sound', 'video/blackAirKnights_title_audio_V4.mp4');
+    this.load.spritesheet('nextButton', 'image/button/nextButton.png', 180, 35);
+    this.load.spritesheet('backButton', 'image/button/backButton.png', 180, 35);
+    this.load.spritesheet('playButton', 'image/button/playButton.png', 180, 35);
   }
 
   create() {

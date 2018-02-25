@@ -9,6 +9,7 @@
 export const width = 1920;
 export const height = 1080;
 
+
 //  Choose the rendering method. Available values are:
 //  * WEBGL: Use WebGL rendering;
 //  * CANVAS: Use 'context2D' API rendering method;
