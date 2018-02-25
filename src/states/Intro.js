@@ -13,7 +13,7 @@ export default class Game extends Phaser.State {
     function onClickNExtButton() {
         introTitleSound.destroy();
         nextButton.destroy();
-        this.state.start('Game');
+        this.state.start('Farm');
     }
 
   }
