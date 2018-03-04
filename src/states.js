@@ -11,3 +11,5 @@ export {default as Preloader} from './states/Preloader';
 export {default as Game} from './states/Game';
 export {default as Intro} from './states/Intro';
 export {default as Farm} from './states/Farm';
+export {default as Room} from './states/Room';
+export {default as Ship} from './states/Ship';

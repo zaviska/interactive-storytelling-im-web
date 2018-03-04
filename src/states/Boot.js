@@ -44,6 +44,7 @@ export default class Boot extends Phaser.State {
 
     //  Load the graphical assets required to show the splash screen.
     this.load.pack('preloaderAssets', null, {preloaderAssets});
+    this.game.load.image('loading', 'farm/loading_410x100px.png');
   }
 
   create() {

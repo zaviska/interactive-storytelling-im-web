@@ -13,6 +13,9 @@ export const preloaderAssets = [{
 }, {
   key: 'progress-bar',
   type: 'image'
+}, {
+  key: 'loading_410x100px',
+  type: 'image'
 }];
 
 //  -- General assets used throughout the game.

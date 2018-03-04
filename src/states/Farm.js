@@ -13,11 +13,16 @@ export default class Farm extends Phaser.State {
         this.game.load.tilemap('map', 'farm/farm2.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'farm/tiles-ground.png');
         this.game.load.image('tiles_ball', 'farm/tiles_ball.png');
-        this.game.load.spritesheet('dude', 'farm/damian.png', 150, 370);
-        this.game.load.image('background', 'farm/farm_3840x1080px.png');
+        this.game.load.spritesheet('damian', 'farm/damian.png', 150, 370);
+        this.game.load.spritesheet('damian-armour', 'farm/character_asset_damian_armour_190x260px.png', 190, 260);
+        this.game.load.spritesheet('damian-magic', 'farm/character_asset_damian_magicAttackAndWalk_250x260.png', 250, 260);
+        this.game.load.spritesheet('damian-sword', 'farm/character_asset_damian_swordAttack_240x350px.png', 240, 350);
+        this.game.load.spritesheet('darcono', 'farm/character_asset_darconos_400x620.png', 400, 620);
+        this.game.load.spritesheet('darcono-baby', 'farm/character_asset_darcono_baby_280x500.png', 280, 500);
+        this.game.load.image('background', 'farm/house_farm_3840x1080px.png');
         this.game.load.image('donut', 'farm/donut-small.png');
         this.game.load.spritesheet('mummy', 'farm/metalslug_mummy37x45.png', 37, 45, 18);
-        this.game.load.image('bullet', 'farm/shmup-bullet.png');
+        this.game.load.image('bullet', 'farm/magicBullet_100x100.png');
         this.game.load.spritesheet('kaboom', 'farm/explode.png', 128, 128);
         this.game.load.image('dad', '/farm/character_asset_tamo_140x270.png');
     }
@@ -58,7 +63,7 @@ export default class Farm extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 250;
 
-        this.player = this.game.add.sprite(500, 370, 'dude');
+        this.player = this.game.add.sprite(500, 370, 'damian');
         this.player.scale.set(0.8);
     
         this.game.camera.follow(this.player);
@@ -93,7 +98,23 @@ export default class Farm extends Phaser.State {
         this.game.physics.enable(this.mummy, Phaser.Physics.ARCADE);
         this.mummy.body.collideWorldBounds = true;
 
+        this.darconoBaby = this.game.add.sprite(3500, 400, 'darcono-baby');
+        this.game.physics.enable(this.darconoBaby, Phaser.Physics.ARCADE);
+        this.darconoBaby.body.collideWorldBounds = true;
+        this.darconoBaby.scale.set(0.5);
+
+        this.darconogroup = this.game.add.group();
+        this.darconogroup.createMultiple(1, 'darcono', [0, 1, 2], true);
+        this.darconogroup.scale.set(0.4);
+        this.darconogroup.enableBody = true;
+        this.darconogroup.physicsBodyType = Phaser.Physics.ARCADE;
+        this.darconogroup.align(40,-40,400, 600);
+        this.darconogroup.x = 3300;
+        this.darconogroup.y = 400;
+
+
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
+        this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
         this.fireButton = this.input.keyboard.addKey(Phaser.KeyCode.E);
 
        /* this.weapon = this.game.add.weapon(30, 'bullet');
@@ -139,6 +160,9 @@ export default class Farm extends Phaser.State {
             invader.anchor.y = 0.5;
             invader.animations.add('kaboom');
         }
+
+
+        
     }
 
     update() {
@@ -164,9 +188,15 @@ export default class Farm extends Phaser.State {
         
         }
 
+        if(this.nKey.isDown) {
+            this.state.start('Room');
+        }
+
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.balls, this.layer);
+        this.game.physics.arcade.collide(this.darconoBaby, this.layer);
+        this.game.physics.arcade.collide(this.darconogroup, this.layer);
 
         this.game.physics.arcade.overlap(this.player, this.donut, collectItem, null, this);
         this.game.physics.arcade.overlap(this.player, this.mummy, talkeToMummy, null, this);
