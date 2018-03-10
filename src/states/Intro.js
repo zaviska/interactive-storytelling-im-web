@@ -1,5 +1,4 @@
-
-export default class Game extends Phaser.State {
+export default class Intro extends Phaser.State {
 
   create() {
 

@@ -13,3 +13,6 @@ export {default as Intro} from './states/Intro';
 export {default as Farm} from './states/Farm';
 export {default as Room} from './states/Room';
 export {default as Ship} from './states/Ship';
+export {default as AirshipArrival} from './states/AirshipArrival';
+export {default as FarmEscapeWay} from './states/FarmEscapeWay';
+export {default as AirshipDeparture} from './states/AirshipDeparture';
