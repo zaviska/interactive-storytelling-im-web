@@ -1,19 +1,11 @@
-/*
- * Game state
- * ==========
- *
- * A sample Game state, displaying the Phaser logo.
- */
-
-
-
 export default class Room extends Phaser.State {
 
     preload() {
         this.load.audio('escape_way_sound', 'audio/escape_way/criminal-cat_terrasound_de.mp3');
         this.game.load.tilemap('map', 'farm/room.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'farm/tiles-ground.png');
-        this.game.load.spritesheet('damian', 'farm/damian.png', 150, 370);
+        this.game.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
+        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
         this.game.load.image('background-room', 'farm/house_room_1920x1080px.png');
         this.game.load.image('bag', 'farm/backpack_115_155px.png');
     }
@@ -24,7 +16,7 @@ export default class Room extends Phaser.State {
         this.tileset;
         this.layer;
         this.player;
-        this.facing = 'left';
+        this.facing = 'right';
         this.jumpTimer = 0;
         this.cursors;
         this.jumpButton;
@@ -49,8 +41,8 @@ export default class Room extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 250;
 
-        this.player = this.game.add.sprite(500, 700, 'damian');
-        this.player.scale.set(1.3);
+        this.player = this.game.add.sprite(500, 700, 'damian_amulet');
+        //this.player.scale.set(1.3);
     
         this.game.camera.follow(this.player);
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -58,7 +50,7 @@ export default class Room extends Phaser.State {
         this.player.anchor.set(0.75);
         this.player.body.bounce.y = 0.2;
         this.player.body.collideWorldBounds = true;
-        this.player.body.setSize(152, 385, 0, 0);
+        this.player.body.setSize(210, 495, 0, 0);
         this.player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
         this.player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
 
@@ -85,7 +77,7 @@ export default class Room extends Phaser.State {
     }
 
     update() {
-        function collectItem(payer, item) {
+        function collectItem(player, item) {
             item.kill();
         }
       
@@ -96,34 +88,36 @@ export default class Room extends Phaser.State {
         //this.game.physics.arcade.overlap(this.player, this.door, openDoor, null, this);
         //this.game.physics.arcade.overlap(this.player, this.window, openWindow, null, this);
 
+
+        this.fontStyle = { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" };
         
-        if(this.nKey.isDown) {
+        if (this.nKey.isDown) {
             this.escapeWayBackgroundSound.destroy();
             this.state.start('FarmEscapeWay');
         }
 
         function takeBag(player, item) {
             if (this.fKey.isDown) {
-                this.fText = this.game.add.text(900, 900, 'Damian hat den Rucksack genommen.', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.fText = this.game.add.text(900, 900, 'Damian hat den Rucksack genommen.', this.fontStyle);
                 item.kill();
             } else {
-                this.text = this.game.add.text(this.bag.x, this.bag.y, 'Drücke F: nehmen', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.text = this.game.add.text(this.bag.x, this.bag.y, 'Drücke F: nehmen', this.fontStyle);
             }
         }
 
         function openDoor(player, item) {
             if (this.fKey.isDown) {
-                this.fText = this.game.add.text(900, 900, 'Die Tür ist verschlossen.', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.fText = this.game.add.text(900, 900, 'Die Tür ist verschlossen.', this.fontStyle);
             } else {
-                this.text = this.game.add.text(0, 500, 'Drücke F: öffnen', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.text = this.game.add.text(0, 500, 'Drücke F: öffnen', this.fontStyle);
             }
         }
 
         function openWindow(player, item) {
             if (this.fKey.isDown) {
-                this.fText = this.game.add.text(900, 900, 'Damian ist aus dem Fenster geklettert.', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.fText = this.game.add.text(900, 900, 'Damian ist aus dem Fenster geklettert.', this.fontStyle);
             } else {
-                this.text = this.game.add.text(0, 500, 'Drücke F: aus dem Fenster klettern', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.text = this.game.add.text(0, 500, 'Drücke F: aus dem Fenster klettern', this.fontStyle);
             }
         }
 
@@ -134,8 +128,7 @@ export default class Room extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');
@@ -146,19 +139,16 @@ export default class Room extends Phaser.State {
                 this.player.animations.stop();
                 if (this.facing == 'left') {
                     this.player.frame = 4;
-                }
-                else {
+                } else {
                     this.player.frame = 5;
                 }
                 this.facing = 'idle';
             }
         }
         
-        if (
-            this.jumpButton.isDown &&
+        if (this.jumpButton.isDown &&
             this.player.body.onFloor() &&
             this.game.time.now > this.jumpTimer) {
-
             this.player.body.velocity.y = -250;
             this.jumpTimer = this.game.time.now + 750;
         }

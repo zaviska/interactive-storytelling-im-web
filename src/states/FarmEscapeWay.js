@@ -7,6 +7,7 @@ export default class FarmEscapeWay extends Phaser.State {
         this.game.load.image('tiles-ground', 'farm/tiles-ground.png');
         this.game.load.image('tiles_ball', 'farm/tiles_ball.png');
         this.game.load.spritesheet('damian', 'farm/damian.png', 150, 370);
+        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
         this.game.load.spritesheet('damian-armour', 'farm/character_asset_damian_armour_190x260px.png', 190, 260);
         this.game.load.spritesheet('damian-magic', 'farm/character_asset_damian_magicAttackAndWalk_250x260.png', 250, 260);
         this.game.load.spritesheet('damian-sword', 'farm/character_asset_damian_swordAttack_240x350px.png', 240, 350);
@@ -53,8 +54,8 @@ export default class FarmEscapeWay extends Phaser.State {
         this.game.physics.arcade.gravity.y = 250;
 
 
-        this.player = this.game.add.sprite(0, 370, 'damian');
-        this.player.scale.set(0.8);
+        this.player = this.game.add.sprite(0, 370, 'damian_amulet');
+        this.player.scale.set(0.5);
     
         this.game.camera.follow(this.player);
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -63,7 +64,7 @@ export default class FarmEscapeWay extends Phaser.State {
 
         this.player.body.bounce.y = 0.2;
         this.player.body.collideWorldBounds = true;
-        this.player.body.setSize(152, 385, 0, 0); // nutzen ist ungewiss
+        this.player.body.setSize(210, 495, 0, 0); // nutzen ist ungewiss
 
         this.player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
         this.player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
