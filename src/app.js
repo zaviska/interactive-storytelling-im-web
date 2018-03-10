@@ -24,3 +24,25 @@ export function init() {
 
   return game;
 }
+
+export function enterFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  }
+}
+
+export function exitFullscreen() {
+  if(document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if(document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if(document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
