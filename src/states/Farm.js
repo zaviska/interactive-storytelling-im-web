@@ -39,6 +39,9 @@ export default class Farm extends Phaser.State {
         this.game.stage.backgroundColor = '#000000';
         this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background');
         this.game.world.setBounds(0, 0, 3840, 1080);
+        //this.bg.fixedToCamera = true;
+
+        document.getElementById('textbox').innerHTML = "Hallo Welt";
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');

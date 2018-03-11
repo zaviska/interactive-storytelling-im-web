@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Black Air Knights</title>
     <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <style>
       html { box-sizing: border-box; }
       html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action: none; touch-action: none; }
@@ -14,6 +15,12 @@
   </head>
 
   <body>
+    <div class="navigation">
+        <ul>
+          <li><a href="#" onclick="window.app.enterFullscreen(document.documentElement);">Enter Fullscreen</a></li>
+          <li><a href="#" onclick="window.app.exitFullscreen();">Leave Fullscreen</a></li>
+        </ul>
+    </div>
     <!-- build:js phaser.min.js -->
     <script src="phaser.js"></script>
     <!-- /build -->
@@ -22,7 +29,20 @@
     <script src="game.js"></script>
     <!-- /build -->
     <script>window.app.init()</script>
-
+    <div id="textbox" class="textbox">
+        <div class="erzahler">Die Welt ist schön</div>
+        <div class="gespraech">
+          <div class="picture damian">Damian</div>
+          <p>Willst du was essen?</p>
+        </div>
+        <div class="entscheidung">
+            <ul>
+              <li><a href="#">Ja ich habe Hunger</a></li>
+              <li><a href="#">Nein ich habe keinen Hunger</a></li>
+              <li><a href="#">Ich bin müde</a></li>
+            </ul>
+        </div>
+    </div>
   </body>
 
 </html>
