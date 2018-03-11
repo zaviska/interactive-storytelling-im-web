@@ -14,6 +14,7 @@ export default class Ship extends Phaser.State {
         this.game.load.image('tiles-ground', 'farm/tiles-ground.png');
         this.game.load.spritesheet('damian', 'farm/damian.png', 150, 370);
         this.game.load.spritesheet('damian-magic', 'farm/character_asset_damian_magicAttackAndWalk_250x260.png', 250, 260);
+        this.game.load.spritesheet('damian-sword', 'farm/character_asset_damian_swordAttack_240x350px.png', 240, 350);
         this.game.load.spritesheet('lorcan', 'farm/character_asset_lorcan_190x260px.png', 190, 260);
         this.game.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
         this.game.load.image('bullet', 'farm/magicBullet_100x100.png');
@@ -70,20 +71,24 @@ export default class Ship extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
-        this.player = this.game.add.sprite(0, 300, 'damian-magic');
-        this.player.scale.set(1.9);
-    
-        this.game.camera.follow(this.player);
-        this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+   
+        this.player = createDamian(this.game);
 
-       // this.player.anchor.set(0.75);
-        this.player.body.bounce.y = 0.2;
-        this.player.body.collideWorldBounds = true;
-        this.player.body.setSize(250, 260, 0, 0);
-        this.player.animations.add('left', [9, 8, 7, 6], 8, true);
-        this.player.animations.add('right', [2, 3, 4, 5], 8, true);
-        this.player.animations.add('shootRight', [1, 0]);
-        this.player.animations.add('shootLeft', [10, 11]);
+
+        function createDamian(game) {
+            let player = game.add.sprite(0, 300, 'damian');
+            player.scale.set(1.3);
+            game.camera.follow(player);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            player.body.bounce.y = 0.2;
+            player.body.collideWorldBounds = true;
+            player.body.setSize(150, 370, 0, 0);
+            player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
+            player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
+            return player;
+        }
+
+     
 
         this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
         this.lorcan.scale.set(2);
@@ -98,7 +103,7 @@ export default class Ship extends Phaser.State {
 
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.input.onDown.add(gofull, this);
+    
 
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
@@ -149,10 +154,6 @@ export default class Ship extends Phaser.State {
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
 
-        function gofull() {
-            this.game.scale.startFullScreen();
-        }
-
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
         }
@@ -166,6 +167,35 @@ export default class Ship extends Phaser.State {
     }
 
     update() {
+
+        function createDamianMagic(game, x, y) {
+            let player = game.add.sprite(x, y, 'damian-magic');
+            player.scale.set(1.9);
+            game.camera.follow(player);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            player.body.bounce.y = 0.2;
+            player.body.collideWorldBounds = true;
+            player.body.setSize(250, 260, 0, 0);
+            player.animations.add('left', [9, 8, 7, 6], 8, true);
+            player.animations.add('right', [2, 3, 4, 5], 8, true);
+            player.animations.add('shootRight', [1, 0]);
+            player.animations.add('shootLeft', [10, 11]);
+            return player;
+        }
+        function createDamianSword(game, x, y) {
+            let player = game.add.sprite(x, y, 'damian-sword');
+            player.scale.set(1);
+            game.camera.follow(player);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            player.body.bounce.y = 0.2;
+            player.body.collideWorldBounds = true;
+            player.body.setSize(240, 350, 0, 0);
+            player.animations.add('left', [9, 8, 7, 6], 8, true);
+            player.animations.add('right', [2, 3, 4, 5], 8, true);
+            player.animations.add('shootRight', [1, 0]);
+            player.animations.add('shootLeft', [10, 11]);
+            return player;
+        }
         function collectItem(player, item) {
             item.kill();
         }
@@ -177,6 +207,11 @@ export default class Ship extends Phaser.State {
 
         function talkToLorcan(player, item) {
             if (this.fKey.isDown) {
+                let x = this.player.x;
+                let y = this.player.y;
+                this.player.destroy();
+                this.player = createDamianMagic(this.game, x, y);
+                //this.player = createDamianSword(this.game, x, y);
                 this.fText = this.game.add.text(900, 900, 'Hallo Damian', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
             } else {
                 this.game.add.text(1100, 300, 'Drücke F: sprechen', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
