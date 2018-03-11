@@ -11,6 +11,7 @@ import 'babel-polyfill';
 //  Import configuration and game states.
 import * as config from './config';
 import * as states from './states';
+import { TextBoxController } from './textbox/TextBoxController';
 
 //  Add all required states and boot the game.
 export function init() {
@@ -21,6 +22,7 @@ export function init() {
     .forEach(([key, state]) => game.state.add(key, state));
 
   game.state.start('Boot');
+  game.textBox = new TextBoxController();
 
   return game;
 }

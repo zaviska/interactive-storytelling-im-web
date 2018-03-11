@@ -1,3 +1,9 @@
+import { Text } from "../textbox/api/Text";
+import { Person } from "../textbox/api/Person";
+import { Dialog } from "../textbox/api/Dialog";
+import { Decision } from "../textbox/api/Decision";
+import { Answer } from "../textbox/api/Answer";
+
 export default class Ship extends Phaser.State {
 
     preload() {
@@ -16,6 +22,21 @@ export default class Ship extends Phaser.State {
     }
 
     create() {
+
+        let textBox = this.game.textBox;
+        
+        window.answer1 = function() {
+            textBox.addText(new Text("Antwort 1 wurde ausjewählt"));
+        }
+
+        let damianPerson = new Person("Damian", "damian");
+        let answers = [
+            new Answer("Antowort 1", "answer1"),
+            new Answer("Antwort 2")
+        ]
+        this.game.textBox.addText(new Text("Ship level was started"));
+        this.game.textBox.addText(new Dialog("Hallo mein Name ist Damian", damianPerson));
+        this.game.textBox.addText(new Decision(answers));
 
         this.map;
         this.tileset;

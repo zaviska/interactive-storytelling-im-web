@@ -10,6 +10,17 @@
     font-size: 20px;
     overflow: scroll;
 }
+.gespraech {
+    display: flex;
+}
+.picture {
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+}
+.picture.damian {
+    background-image: url('assets/farm/donut.png');
+}
 
 .navigation {
     font-family: Arial, Helvetica, sans-serif;
