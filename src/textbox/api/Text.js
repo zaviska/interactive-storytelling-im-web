@@ -5,6 +5,6 @@ export class Text {
     }
 
     render() {
-        return '<div class="erzahler">'+this.text+'</div>';
+        return '<div class="storyteller">'+this.text+'</div>';
     }
 }

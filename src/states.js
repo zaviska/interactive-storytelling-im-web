@@ -16,3 +16,4 @@ export {default as Ship} from './states/Ship';
 export {default as AirshipArrival} from './states/AirshipArrival';
 export {default as FarmEscapeWay} from './states/FarmEscapeWay';
 export {default as AirshipDeparture} from './states/AirshipDeparture';
+export {default as OrdinaryWorld} from './states/OrdinaryWorld';

@@ -17,6 +17,8 @@ import { TextBoxController } from './textbox/TextBoxController';
 export function init() {
   const game = new Phaser.Game(config);
 
+
+
   Object
     .entries(states)
     .forEach(([key, state]) => game.state.add(key, state));

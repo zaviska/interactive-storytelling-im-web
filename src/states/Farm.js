@@ -1,3 +1,9 @@
+import { Text } from "../textbox/api/Text";
+import { Person } from "../textbox/api/Person";
+import { Dialog } from "../textbox/api/Dialog";
+import { Decision } from "../textbox/api/Decision";
+import { Answer } from "../textbox/api/Answer";
+
 export default class Farm extends Phaser.State {
 
     preload() {
@@ -20,6 +26,58 @@ export default class Farm extends Phaser.State {
     }
 
     create() {
+  
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.game.scale.setShowAll();
+        window.addEventListener('resize', function () {  
+          this.game.scale.refresh();
+        });
+        this.game.scale.refresh();
+
+        let textBox = this.game.textBox;
+        this.game.textBox.addText(new Text("KAPITEL 1: BLACK'S DARCONO FARM <hr>"));
+        this.game.textBox.addText(new Text("Familie Black lebte am Rande der schwebenden Stadt des Königreichs Livania. Sie arbeiteten auf der familiengeführten Darcono Farm. Damian war der älteste Sohn von Tamo und Ava Black und hatte eine jüngere Schwester namens Lina. Er musste viele Aufgaben auf der Darcono Farm übernehmen, die ihn allerdings sehr langweilten. Damian wollte vielmehr ein Luftritter, wie sein Onkel Luan Black, werden. Aber er sollte später einmal die Darcono Farm übernehmen."));
+        this.game.textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Sammle 10 Energie-Bälle und füttere damit die Darconos. Sprich danach mit Tamo Black.</i></span>"));
+        
+        let damianPerson = new Person("Damian Black", "damian");
+        window.farmAnswer1 = function() {
+            textBox.addText(new Text("Antwort 1 wurde ausgewählt"));
+        }
+        let answers1 = [
+            new Answer("Antwort 1", "farmAnswer1"),
+            new Answer("Antwort 2")
+        ]
+        this.game.textBox.addText(new Dialog("Familie Black lebte am Rande der schwebenden Stadt des Königreichs Livania. Sie arbeiteten auf der familiengeführten Darcono Farm. Damian war der älteste Sohn von Tamo und Ava Black und hatte eine jüngere Schwester namens Lina. Er musste viele Aufgaben auf der Darcono Farm übernehmen, die ihn allerdings sehr langweilten. Damian wollte vielmehr ein Luftritter, wie sein Onkel Luan Black, werden. Aber er sollte später einmal die Darcono Farm übernehmen.", damianPerson));
+        this.game.textBox.addText(new Decision(answers1));
+
+        //
+        window.farmAnswer2 = function() {
+            textBox.addText(new Text("Antwort 1 wurde ausgewählt"));
+        }
+
+        let tamoPerson = new Person("Tamo Black", "tamo");
+        let answers2 = [
+            new Answer("Antwort 1 csddfsddfdfasdfddsafdadfafadsfafefaf", "farmAnswer2"),
+            new Answer("Antwort 2")
+        ]
+        
+        this.game.textBox.addText(new Dialog("Familie Black lebte am Rande der schwebenden Stadt des Königreichs Livania. Sie arbeiteten auf der familiengeführten Darcono Farm. Damian war der älteste Sohn von Tamo und Ava Black und hatte eine jüngere Schwester namens Lina. Er musste viele Aufgaben auf der Darcono Farm übernehmen, die ihn allerdings sehr langweilten. Damian wollte vielmehr ein Luftritter, wie sein Onkel Luan Black, werden. Aber er sollte später einmal die Darcono Farm übernehmen.", tamoPerson));
+
+        this.game.textBox.addText(new Decision(answers2));
+        //
+
+        window.farmAnswer3 = function() {
+            textBox.addText(new Text("Antwort 1 wurde ausgewählt"));
+        }
+
+        let lorcanPerson = new Person("Sir Lorcan", "lorcan");
+        let answers3 = [
+            new Answer("Antwort 1", "farmAnswer3"),
+            new Answer("Antwort 2")
+        ]
+        
+        this.game.textBox.addText(new Dialog("Hallo mein Name ist Damian", lorcanPerson));
+        this.game.textBox.addText(new Decision(answers3));
 
         this.map;
         this.tileset;
@@ -41,7 +99,7 @@ export default class Farm extends Phaser.State {
         this.game.world.setBounds(0, 0, 3840, 1080);
         //this.bg.fixedToCamera = true;
 
-        document.getElementById('textbox').innerHTML = "Hallo Welt";
+        
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
@@ -128,18 +186,18 @@ export default class Farm extends Phaser.State {
         this.explosions.forEach(setupInvader, this);
     
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.input.onDown.add(gofull, this);
+        //this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        //this.game.input.onDown.add(gofull, this);
 
-        var style = { font: "24px Arial", fill: "#19de65"};
-
+        var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         this.ballCount = 0;
-        this.ballText = this.game.add.text(10, 10, "Gesammelte Bälle: "+this.ballCount, style);
+        this.ballText = this.game.add.text(10, 10, "Gesammelte Energie-Bälle: "+this.ballCount, style);
     
+        /*
         function gofull() {
             this.game.scale.startFullScreen();
         }
-
+        */
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
         }

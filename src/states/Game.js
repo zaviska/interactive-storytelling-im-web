@@ -13,6 +13,7 @@ export default class Game extends Phaser.State {
   create() {
     const {centerX: x, centerY: y} = this.world;
 
+
     /*
     let logo = new Logo(this.game, x, y);
     this.add.existing(logo);
@@ -23,6 +24,8 @@ export default class Game extends Phaser.State {
     //SOUND: intro background music (loop)
     let introSound = this.game.add.audio('intro_sound');
     introSound.loopFull();
+
+
     
     /* BUTTON: create play button with image
     let button_play = this.game.add.image(100, 100, 'button_play');

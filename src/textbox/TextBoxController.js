@@ -13,7 +13,7 @@ export class TextBoxController {
         this.renderText();
     }
     renderText() {
-        let textBoxHtml = "";
+        let textBoxHtml = '<a class="navigation_link navigation_link-textbox" href="#" onclick="toggleTextbox()" id="zoomTextboxButton">Textfeld maximieren</a>';
         for(let textIndex in this.textList) {
             let text = this.textList[textIndex];
             textBoxHtml += text.render();

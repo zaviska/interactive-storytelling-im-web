@@ -26,18 +26,19 @@ export default class Ship extends Phaser.State {
 
         let textBox = this.game.textBox;
         
-        window.answer1 = function() {
-            textBox.addText(new Text("Antwort 1 wurde ausjewählt"));
+        window.shipAnswer1 = function() {
+            textBox.addText(new Text("Antwort 1 wurde ausgewählt"));
         }
 
         let damianPerson = new Person("Damian", "damian");
         let answers = [
-            new Answer("Antowort 1", "answer1"),
+            new Answer("Antowort 1", "shipAnswer1"),
             new Answer("Antwort 2")
         ]
         this.game.textBox.addText(new Text("Ship level was started"));
         this.game.textBox.addText(new Dialog("Hallo mein Name ist Damian", damianPerson));
         this.game.textBox.addText(new Decision(answers));
+    
 
         this.map;
         this.tileset;
@@ -202,19 +203,26 @@ export default class Ship extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.fightTutorialBackgroundSound.destroy();
-            this.state.start('Farm');
+            this.state.start('Intro');
         }  
 
         function talkToLorcan(player, item) {
-            if (this.fKey.isDown) {
+            if( this.lorcanHatDamianBegrüßt) {
+                
+            }
+            if (this.fKey.isDown && !this.lorcanHatDamianBegrüßt) {
+                if(sprechText) {
+                    sprechText.destroy();
+                }
                 let x = this.player.x;
                 let y = this.player.y;
                 this.player.destroy();
                 this.player = createDamianMagic(this.game, x, y);
                 //this.player = createDamianSword(this.game, x, y);
                 this.fText = this.game.add.text(900, 900, 'Hallo Damian', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                this.lorcanHatDamianBegrüßt = true;
             } else {
-                this.game.add.text(1100, 300, 'Drücke F: sprechen', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                var sprechText = this.game.add.text(1100, 300, 'Drücke F: sprechen', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
             }
         }
 

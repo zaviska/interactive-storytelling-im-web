@@ -6,12 +6,12 @@ export default class Intro extends Phaser.State {
     introTitleSound.play(true);
     introTitleSound.addToWorld(0, 0);
     
-    let nextButton = this.game.add.button(1050, 620, 'nextButton', onClickNextButton, this, 1, 0, 2);
+    let nextButton = this.game.add.button(1200, 10, 'playButton', onClickNextButton, this, 1, 0, 2);
 
     function onClickNextButton() {
         introTitleSound.destroy();
         nextButton.destroy();
-        this.state.start('Farm');
+        this.state.start('OrdinaryWorld');
     }
 
   }

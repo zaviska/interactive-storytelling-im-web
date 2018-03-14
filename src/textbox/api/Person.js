@@ -1,4 +1,3 @@
-
 export class Person {
     constructor(name, code) {
         this.name = name;

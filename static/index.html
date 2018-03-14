@@ -6,6 +6,7 @@
     <title>Black Air Knights</title>
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"> 
     <style>
       html { box-sizing: border-box; }
       html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action: none; touch-action: none; }
@@ -15,12 +16,83 @@
   </head>
 
   <body>
+
+    <script>
+      let toggler = true;
+      function toggleFullscreen() {
+          if(toggler) {
+            window.app.enterFullscreen(document.documentElement);
+            toggler = false;
+            document.getElementById("fullscreenButton").innerHTML = "Leave Fullscreen";
+          } else {
+            window.app.exitFullscreen();
+            toggler = true;
+            document.getElementById("fullscreenButton").innerHTML = "Enter Fullscreen";
+          }
+      }
+      function openPopupHome() {
+        hidePopupControl();
+        document.getElementById("popupContentHome").style.display = "block";
+      }
+      function hidePopupHome() {
+        document.getElementById("popupContentHome").style.display = "none";
+      }
+      function openHome() {
+        hidePopupHome();
+        self.location.href="index.html";
+      }
+      function cancelPopupHome() {
+        hidePopupHome();
+      }
+      function openPopupControl() {
+        hidePopupHome();
+        document.getElementById("popupContentControl").style.display = "block";
+      }
+      function hidePopupControl() {
+        document.getElementById("popupContentControl").style.display = "none";
+      }
+      function cancelPopupControl() {
+        hidePopupControl();
+      }
+      function toggleTextbox() {
+          if(toggler) {
+            document.getElementById("textbox").style.height = "100%";
+            toggler = false;
+            document.getElementById("zoomTextboxButton").innerHTML = "Textfeld minimieren";
+          } else {
+            document.getElementById("textbox").style.height = "200px";
+            toggler = true;
+            document.getElementById("zoomTextboxButton").innerHTML = "Textfeld maximieren";
+          }
+      }
+    </script>
+
     <div class="navigation">
-        <ul>
-          <li><a href="#" onclick="window.app.enterFullscreen(document.documentElement);">Enter Fullscreen</a></li>
-          <li><a href="#" onclick="window.app.exitFullscreen();">Leave Fullscreen</a></li>
-        </ul>
+      <ul class="navigation_list">
+        <li class="navigation_list_item"><a class="navigation_link" href="#" onclick="openPopupHome()">Home</a></li>
+        <li class="navigation_list_item"><a class="navigation_link" href="#" onclick="toggleFullscreen()" id="fullscreenButton">Enter Fullscreen</a></li>
+        <li class="navigation_list_item"><a class="navigation_link" href="#" onclick="openPopupControl()">Steuerung</a></li>
+        <li class="navigation_list_item"><a class="navigation_link" href="impressum.html" target="_blank">Impressum</a></li>
+      </ul>
     </div>
+    <div class="popupContent" id="popupContentHome">
+      <p><span class="popupContent_warning">Achtung: </span>Der Spielstand geht dadurch verloren.</p>
+      <button class="nextButton" onclick="openHome()">Spiel verlassen</button>	
+      <button class="nextButton" onclick="cancelPopupHome()">Abbrechen</button>	
+    </div>
+    <div class="popupContent" id="popupContentControl">
+      <h4 class="popupContent_title">Steuerung</h4>
+      <p class="popupContent_control"><span class="popupContent_control_button">D</span> oder <span class="popupContent_control_button">&#8594</span> : NACH <i>RECHTS</i> GEHEN</p>
+      <p class="popupContent_control"><span class="popupContent_control_button">A</span> oder <span class="popupContent_control_button">&#8592</span> : NACH <i>LINKS</i> GEHEN</p>
+      <p class="popupContent_control"><span class="popupContent_control_button">LEERTASTE</span> : SPRINGEN</p>
+      <p class="popupContent_control"><span class="popupContent_control_button">F</span> : SPRECHEN / NEHMEN</p>
+      <p class="popupContent_control"><span class="popupContent_control_button">LINKE MAUSTASTE</span> : ATTACKIEREN</p>
+      <button class="nextButton" onclick="cancelPopupControl()">Ausblenden</button>	
+    </div>
+    <div id="textbox" class="textbox navigation navigation_textbox">
+      <a class="navigation_link navigation_link-textbox" href="#" onclick="toggleTextbox()" id="zoomTextboxButton">Textfeld maximieren</a></li>
+    </div>
+
     <!-- build:js phaser.min.js -->
     <script src="phaser.js"></script>
     <!-- /build -->
@@ -29,20 +101,6 @@
     <script src="game.js"></script>
     <!-- /build -->
     <script>window.app.init()</script>
-    <div id="textbox" class="textbox">
-        <div class="erzahler">Die Welt ist schön</div>
-        <div class="gespraech">
-          <div class="picture damian">Damian</div>
-          <p>Willst du was essen?</p>
-        </div>
-        <div class="entscheidung">
-            <ul>
-              <li><a href="#">Ja ich habe Hunger</a></li>
-              <li><a href="#">Nein ich habe keinen Hunger</a></li>
-              <li><a href="#">Ich bin müde</a></li>
-            </ul>
-        </div>
-    </div>
   </body>
 
 </html>

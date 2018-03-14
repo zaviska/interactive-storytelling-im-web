@@ -10,7 +10,7 @@ export default class AirshipArrival extends Phaser.State {
       cutSceneAirshipArrival.play(true);
       cutSceneAirshipArrival.addToWorld(0, 0);
       
-      let nextButton = this.game.add.button(1700, 1000, 'nextButton', onClickNextButton, this, 1, 0, 2);
+      let nextButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
   
       function onClickNextButton() {
         cutSceneAirshipArrival.destroy();

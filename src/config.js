@@ -6,8 +6,12 @@
  */
 
 //  The game canvas dimensions.
-export const width = 1920;
-export const height = 1080;
+//export const width = 1920;
+//export const height = 1080;
+
+export const width = "100%";
+export const height = "98vh";
+
 
 
 //  Choose the rendering method. Available values are:

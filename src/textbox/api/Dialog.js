@@ -6,9 +6,12 @@ export class Dialog {
     }
 
     render() {
-        return '<div class="gespraech">' +
-                    '<div class="picture '+this.person.getCode()+'">'+this.person.getName()+'</div>' +
-                    '<p>'+this.text+'</p>' +
+        return '<div class="dialog">' +
+                    '<div class="picture '+this.person.getCode()+'"></div>' +
+                    '<div>'+
+                        '<h3 class="dialog_name">'+this.person.getName()+'</h3>' +
+                        '<p class="dialog_text">'+this.text+'</p>' +
+                    '</div>'+
                 '</div>';
     }
 }
