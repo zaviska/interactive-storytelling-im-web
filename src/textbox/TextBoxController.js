@@ -13,11 +13,14 @@ export class TextBoxController {
         this.renderText();
     }
     renderText() {
-        let textBoxHtml = '<a class="navigation_link navigation_link-textbox" href="#" onclick="toggleTextbox()" id="zoomTextboxButton">Textfeld maximieren</a>';
+        let textBoxHtml = '';
         for(let textIndex in this.textList) {
             let text = this.textList[textIndex];
             textBoxHtml += text.render();
         }
-        document.getElementById('textbox').innerHTML = textBoxHtml;
+        textBoxHtml += '<a class="navigation_link navigation_link-textbox" href="#" onclick="toggleTextbox()" id="zoomTextboxButton">Textfeld maximieren</a>';
+        let $textbox = document.getElementById('textbox');
+        $textbox.innerHTML = textBoxHtml;
+        $textbox.scrollTop = $textbox.scrollHeight - $textbox.clientHeight;
     }
 }

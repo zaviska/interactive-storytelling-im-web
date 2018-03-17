@@ -53,16 +53,18 @@
     list-style: none;
 }
 .decision_button {
-    background-color: #52DBE2;
-    color: black;
+    border-left: 2px solid #52DBE2;
+    background-color: #0A1A37;
+    color: white;
     display: inline-block;
     padding: 10px 20px;
     margin: 10px 20px;
     text-decoration: none;
 }
 .decision_button:hover {
-    background-color: white;
-    color: black;
+    border-left: 2px solid white;
+    background-color: #52DBE2;
+    color: #0A1A37;
 }
 .navigation {
     font-family: 'Hind', Arial, Helvetica, sans-serif;
@@ -86,6 +88,11 @@
 .navigation_link-textbox {
     display: block;
     text-align: right;
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    padding: 3px;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 .navigation_link:hover {
     color: white;
@@ -119,7 +126,8 @@
 .popupContent_title {
     padding-bottom: 10px;
 }
-.popupContent button {
+.popupContent_button {
+    background-color: #999999;
     color: black;
     font-size: 18px;
     width: 160px;
@@ -129,11 +137,8 @@
     margin: 10px 15px 10px 0;
     cursor: pointer;
 }
-.popupContent button:hover {
+.popupContent_button:hover {
     background-color: white;
-}
-.nextButton {
-    background-color: #999999;
 }
 .impressum {
     font-family: 'Hind', Arial, Helvetica, sans-serif;
