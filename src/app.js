@@ -26,6 +26,13 @@ export function init() {
   game.state.start('Boot');
   game.textBox = new TextBoxController();
 
+  game.hideNavigation = function () {
+      document.getElementById('textbox').style.display = "none";
+  }
+  game.showNavigation = function() {
+    document.getElementById('textbox').style.display = "block";
+  }
+
   return game;
 }
 

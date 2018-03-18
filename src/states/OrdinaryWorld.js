@@ -5,17 +5,25 @@ export default class OrdinaryWorld extends Phaser.State {
     }
 
     create() {
+      let that = this;
   
+      this.game.hideNavigation();
+
       let cutSceneOrdinaryWorld = this.game.add.video('cut_scene_ordinary_world');
-      cutSceneOrdinaryWorld.play(true);
-      cutSceneOrdinaryWorld.addToWorld(0, 0);
+      
+      let videoImage = cutSceneOrdinaryWorld.addToWorld(0, 0);
+      cutSceneOrdinaryWorld.play();
+      cutSceneOrdinaryWorld.onComplete.add(onClickNextButton); 
+    
       
       let nextButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
-  
+
+
       function onClickNextButton() {
-        cutSceneOrdinaryWorld.destroy();
+        videoImage.destroy();
         nextButton.destroy();
-        this.state.start('Farm');
+        that.state.start('Farm');
+        that.game.showNavigation();
       }
   
     }
