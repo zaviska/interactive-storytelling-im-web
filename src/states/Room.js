@@ -8,6 +8,7 @@ export default class Room extends Phaser.State {
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
         this.game.load.image('background-room', 'farm/house_room_1920x1080px.png');
         this.game.load.image('bag', 'farm/backpack_115_155px.png');
+        this.game.load.image('marker', 'farm/marker_30x40px.png');
     }
 
     create() {
@@ -62,6 +63,15 @@ export default class Room extends Phaser.State {
         this.game.physics.enable(this.bag, Phaser.Physics.ARCADE);
         this.bag.body.collideWorldBounds = true;
 
+        this.door = this.game.add.sprite(20, 500, 'marker');
+        this.game.physics.enable(this.door, Phaser.Physics.ARCADE);
+        this.door.body.allowGravity = false;
+        this.door.visible = false;
+
+        this.window = this.game.add.sprite(1800, 500, 'marker');
+        this.game.physics.enable(this.window, Phaser.Physics.ARCADE);
+        this.window.body.allowGravity = false;
+        this.window.visible = false;
 
         this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -85,8 +95,8 @@ export default class Room extends Phaser.State {
         this.game.physics.arcade.collide(this.bag, this.layer);
 
         this.game.physics.arcade.overlap(this.player, this.bag, takeBag, null, this);
-        //this.game.physics.arcade.overlap(this.player, this.door, openDoor, null, this);
-        //this.game.physics.arcade.overlap(this.player, this.window, openWindow, null, this);
+        this.game.physics.arcade.overlap(this.player, this.door, openDoor, null, this);
+        this.game.physics.arcade.overlap(this.player, this.window, openWindow, null, this);
 
 
         this.fontStyle = { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" };
