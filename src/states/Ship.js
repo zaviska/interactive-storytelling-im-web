@@ -23,18 +23,32 @@ export default class Ship extends Phaser.State {
     }
 
     create() {
+        let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
+        this.mage = false;
+        this.knight = false;
         let textBox = this.game.textBox;
         
-        window.shipAnswer1 = function() {
-            textBox.addText(new Text("Antwort 1 wurde ausgewählt"));
+        window.beAMage = function() {
+            let x = that.player.x;
+            let y = that.player.y;
+            that.player.destroy();
+            that.player = createDamianMagic(that.game, x, y);
+            textBox.addText(new Text("Damian ist jetzt ein Magier"));
+        }
+        window.beAKnight = function() {
+            let x = that.player.x;
+            let y = that.player.y;
+            that.player.destroy();
+            that.player = createDamianSword(that.game, x, y);
+            textBox.addText(new Text("Damian ist jetzt ein Schwertkämpfer"));
         }
 
         let damianPerson = new Person("Damian", "damian");
         let answers = [
-            new Answer("Antowort 1", "shipAnswer1"),
-            new Answer("Antwort 2")
+            new Answer("Ich will ein Magier sein.", "beAMage"),
+            new Answer("Ich will ein Schwertkämpfer sein.", "beAKnight")
         ]
         this.game.textBox.addText(new Text("Ship level was started"));
         this.game.textBox.addText(new Dialog("Hallo mein Name ist Damian", damianPerson));
@@ -86,7 +100,7 @@ export default class Ship extends Phaser.State {
         
         this.player = createDamian(this.game);
         function createDamian(game) {
-            let player = game.add.sprite(0, 0, 'damian_amulet');
+            let player = game.add.sprite(0, 300, 'damian_amulet');
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
@@ -143,11 +157,10 @@ export default class Ship extends Phaser.State {
             invader.animations.add('explode');
         }
 
-    }
-
-    update() {
         function createDamianMagic(game, x, y) {
-            let player = game.add.sprite(x, y, 'damian-magic');
+            that.mage = true;
+            that.knight = false;
+            let player = game.add.sprite(x, 300, 'damian-magic');
             player.scale.set(1.9);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -161,7 +174,10 @@ export default class Ship extends Phaser.State {
             return player;
         }
         function createDamianSword(game, x, y) {
-            let player = game.add.sprite(x, y, 'damian-sword');
+            that.knight = true;
+            that.mage = false;
+            let player = game.add.sprite(x, 0, 'damian-sword');
+            player.scale.set(0.7);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
@@ -169,10 +185,16 @@ export default class Ship extends Phaser.State {
             player.body.setSize(610, 880, 0, 0);
             player.animations.add('left', [10, 11, 12, 13], 8, true);
             player.animations.add('right', [16, 17, 18, 19], 8, true);
-            player.animations.add('shootRight', [5, 6, 7, 8, 9]);
-            player.animations.add('shootLeft', [4, 3, 2, 1, 0]);
+            player.animations.add('slashRight', [5, 6, 7, 8, 9], 16 );
+            player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
+
+    }
+
+    update() {
+       
+     
         function collectItem(player, item) {
             item.kill();
         }
@@ -190,11 +212,7 @@ export default class Ship extends Phaser.State {
                 if(sprechText) {
                     sprechText.destroy();
                 }
-                let x = this.player.x;
-                let y = this.player.y;
-                this.player.destroy();
-                //this.player = createDamianMagic(this.game, x, y);
-                this.player = createDamianSword(this.game, x, y);
+            
                 this.fText = this.game.add.text(900, 900, 'Hallo Damian', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
                 this.lorcanHatDamianBegrüßt = true;
             } else {
@@ -204,6 +222,15 @@ export default class Ship extends Phaser.State {
 
         function destroyObject(weapon, object) {
             weapon.kill();
+            object.kill();
+
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(object.body.x, object.body.y);
+            explosion.play('explode', 30, false, true);
+
+            this.explosionSound.play("", 0, 5, false, true);
+        }
+        function slashObject(player, object) {
             object.kill();
 
             var explosion = this.explosions.getFirstExists(false);
@@ -224,10 +251,48 @@ export default class Ship extends Phaser.State {
         this.game.physics.arcade.overlap(this.bullets, this.box2, destroyObject, null, this);
         this.game.physics.arcade.overlap(this.bullets, this.box3, destroyObject, null, this);
         //this.game.physics.arcade.overlap(this.bullets, this.boxgroup, destroyObject, null, this);
-        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        //this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
 
         this.player.body.velocity.x = 0;
-        if (this.cursors.left.isDown || this.aKey.isDown) {
+        
+        
+        if (this.jumpButton.isDown &&
+            this.player.body.onFloor() &&
+            this.game.time.now > this.jumpTimer) {
+                this.player.body.velocity.y = -250;
+                this.jumpTimer = this.game.time.now + 750;
+        }
+
+        if (this.game.input.activePointer.isDown) {
+            if(this.mage === true) {
+                var bullet = this.bullets.getFirstExists(false);
+                if (bullet) {
+                    bullet.reset(this.player.x+350, this.player.y+300);
+                    bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 1000, this.game.input.activePointer, 1000);
+                    this.shootSound.play();
+                    if (this.facing == 'idleRight') {
+                        this.player.animations.play('shootRight');
+                        this.facing == "idleRight";
+                    } else if (this.facing == 'idleLeft') {
+                        this.player.animations.play('shootLeft');
+                        this.facing == "idleLeft";
+                    }
+                    
+                }
+            } else if(this.knight === true) {
+                this.shootSound.play();
+                this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
+                this.game.physics.arcade.overlap(this.player, this.box2, slashObject, null, this);
+                this.game.physics.arcade.overlap(this.player, this.box3, slashObject, null, this);
+                if (this.facing == 'idleRight' || this.facing == 'right') {
+                    this.player.animations.play('slashRight');
+                    this.facing == "idleRight";
+                } else if (this.facing == 'idleLeft' || this.facing == 'left') {
+                    this.player.animations.play('slashLeft');
+                    this.facing == "idleLeft";
+                }
+            }
+        } else if (this.cursors.left.isDown || this.aKey.isDown) {
             this.player.body.velocity.x = -350;
             if (this.facing != 'left') {
                 this.player.animations.play('left');
@@ -253,31 +318,6 @@ export default class Ship extends Phaser.State {
                 //this.facing = 'idle';
             }
         }
-        
-        if (this.jumpButton.isDown &&
-            this.player.body.onFloor() &&
-            this.game.time.now > this.jumpTimer) {
-                this.player.body.velocity.y = -250;
-                this.jumpTimer = this.game.time.now + 750;
-        }
-
-        if (this.game.input.activePointer.isDown) {
-            var bullet = this.bullets.getFirstExists(false);
-            if (bullet) {
-                bullet.reset(this.player.x+350, this.player.y+300);
-                bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 1000, this.game.input.activePointer, 1000);
-                this.shootSound.play();
-                if (this.facing == 'idleRight') {
-                    this.player.animations.play('shootRight');
-                    this.facing == "idleRight";
-                } else if (this.facing == 'idleLeft') {
-                    this.player.animations.play('shootLeft');
-                    this.facing == "idleLeft";
-                }
-                
-            }
-        } 
-
     
     }
 
