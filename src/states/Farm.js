@@ -8,32 +8,20 @@ export default class Farm extends Phaser.State {
 
     preload() {
         this.load.audio('farm_sound', 'audio/farm/piano_rain_terrasound_de.mp3');
-        this.game.load.tilemap('map', 'farm/farm2.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tiles-ground', 'farm/tiles-ground.png');
-        this.game.load.image('tiles_ball', 'farm/tiles_ball.png');
-        this.game.load.spritesheet('damian', 'farm/damian.png', 150, 370);
-        this.game.load.spritesheet('damian-armour', 'farm/character_asset_damian_armour_190x260px.png', 190, 260);
-        this.game.load.spritesheet('damian-magic', 'farm/character_asset_damian_magicAttackAndWalk_250x260.png', 250, 260);
-        this.game.load.spritesheet('damian-sword', 'farm/character_asset_damian_swordAttack_240x350px.png', 240, 350);
-        this.game.load.spritesheet('darcono', 'farm/character_asset_darconos_400x620.png', 400, 620);
-        this.game.load.spritesheet('darcono-baby', 'farm/character_asset_darcono_baby_280x500.png', 280, 500);
-        this.game.load.image('background', 'farm/house_farm_3840x1080px.png');
-        this.game.load.image('bullet', 'farm/magicBullet_100x100.png');
-        this.game.load.spritesheet('kaboom', 'farm/explode.png', 128, 128);
-        this.game.load.image('tamo', '/farm/character_asset_tamo_140x270.png');
+        this.load.audio('ball_sound', 'audio/sound_effects/balls/ting.mp3');
+        this.game.load.tilemap('map', 'image/tilemap/farm.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
+        this.game.load.image('tiles_ball', 'image/tilemap/tiles_ball.png');
+        this.game.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
+        this.game.load.image('tamo', '/image/characters/tamo/tamo_140x270.png', 140, 270);
+        this.game.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
+        this.game.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
+        this.game.load.image('background', 'image/background/house_farm_3840x1080px.png');
     }
 
     create() {
-
-        this.map;
-        this.tileset;
-        this.layer;
-        this.player;
         this.facing = 'left';
         this.jumpTimer = 0;
-        this.cursors;
-        this.jumpButton;
-        this.background;
   
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.game.scale.setShowAll();
@@ -44,18 +32,18 @@ export default class Farm extends Phaser.State {
 
         this.farmBackgroundSound = this.game.add.audio('farm_sound');
         this.farmBackgroundSound.loopFull();
+        this.ballSound = this.game.add.audio('ball_sound');
 
         let textBox = this.game.textBox;
         this.game.textBox.addText(new Text("KAPITEL 1: BLACK'S DARCONO FARM <hr>"));
         this.game.textBox.addText(new Text("Familie Black lebte am Rande der schwebenden Stadt des Königreichs Livania. Sie arbeiteten auf der familiengeführten Darcono Farm. Damian war der älteste Sohn von Tamo und Ava Black und hatte eine jüngere Schwester namens Lina. Er musste viele Aufgaben auf der Darcono Farm übernehmen, die ihn allerdings sehr langweilten. Damian wollte vielmehr ein Luftritter, wie sein Onkel Luan Black, werden. Aber er sollte später einmal die Darcono Farm übernehmen."));
-        this.game.textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Sammle 10 Energie-Bälle und füttere damit die Darconos. Sprich danach mit Tamo Black.</i></span>"));
+        this.game.textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Sammle mind. 10 Energie-Bälle und füttere damit die Darconos. Sprich danach mit Tamo Black.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
         this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background');
         this.game.world.setBounds(0, 0, 3840, 1080);
-        //this.bg.fixedToCamera = true;
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
@@ -67,44 +55,66 @@ export default class Farm extends Phaser.State {
         this.balls = this.game.add.group();
         this.balls.enableBody = true;
         this.map.createFromObjects('object-layer_balls', 5, 'tiles_ball', 0, true, false, this.balls);
+        this.itemTaken = false;
+        this.itemTakeFText = false;
 
         this.game.physics.arcade.gravity.y = 250;
 
+        this.darconoOne = this.game.add.sprite(3200, 500, 'darcono');
+        this.game.physics.enable(this.darconoOne, Phaser.Physics.ARCADE);
+        this.darconoOne.body.collideWorldBounds = true;
+        this.darconoOne.scale.set(0.6);
+        //this.darconoOne.body.bounce.set(1);
 
-        this.player = this.game.add.sprite(700, 700, 'damian');
-        this.player.scale.set(0.8);
-    
+        this.darconoTwo = this.game.add.sprite(3500, 500, 'darcono');
+        this.game.physics.enable(this.darconoTwo, Phaser.Physics.ARCADE);
+        this.darconoTwo.body.collideWorldBounds = true;
+        this.darconoTwo.scale.set(0.6);
+        //this.darconoTwo.body.bounce.set(1);
+
+        this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
+        this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
+        this.darconoThree.body.collideWorldBounds = true;
+        this.darconoThree.scale.set(0.6);
+        this.darconoThree.body.bounce.set(1);
+
+        this.darconoBabyOne = this.game.add.sprite(3400, 600, 'darcono-baby');
+        this.game.physics.enable(this.darconoBabyOne, Phaser.Physics.ARCADE);
+        this.darconoBabyOne.body.collideWorldBounds = true;
+        this.darconoBabyOne.scale.set(0.4);
+        this.darconoBabyOne.body.bounce.set(1);
+
+        this.darconoBabyTwo = this.game.add.sprite(3500, 680, 'darcono-baby');
+        this.game.physics.enable(this.darconoBabyTwo, Phaser.Physics.ARCADE);
+        this.darconoBabyTwo.body.collideWorldBounds = true;
+        this.darconoBabyTwo.scale.set(0.4);
+        //this.darconoBabyTwo.body.bounce.set(1);
+        
+        this.darconosFed = false;
+        this.darconosFedFText = false;
+
+        this.tamo = this.game.add.sprite(420, 640, 'tamo');
+        this.game.physics.enable(this.tamo, Phaser.Physics.ARCADE);
+        this.tamo.body.collideWorldBounds = true;
+        this.tamo.body.setSize(140, 270, 0, 0);
+        this.tamoTalked = false;
+        this.tamoTalkFText = false;
+
+        this.player = this.game.add.sprite(700, 800, 'damian');
+        this.player.scale.set(0.53);
         this.game.camera.follow(this.player);
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-
         this.player.anchor.set(0.75);
-
         this.player.body.bounce.y = 0.2;
         this.player.body.collideWorldBounds = true;
-        this.player.body.setSize(152, 385, 0, 0); // nutzen ist ungewiss
-
+        this.player.body.setSize(210, 495, 0, 0);
         this.player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
         this.player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
-
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-
-        this.tamo = this.game.add.sprite(380, 640, 'tamo');
-        this.game.physics.enable(this.tamo, Phaser.Physics.ARCADE);
-        this.tamo.body.collideWorldBounds = true;
-        this.tamoTalked = false;
-        this.tamoTalkFText = false;
-        //this.tamo.scale.set(1.2);
-    
-
-        this.darconoBaby = this.game.add.sprite(3500, 400, 'darcono-baby');
-        this.game.physics.enable(this.darconoBaby, Phaser.Physics.ARCADE);
-        this.darconoBaby.body.collideWorldBounds = true;
-        this.darconoBaby.scale.set(0.5);
-        this.darconoBaby.body.bounce.set(1);
-
+        /*
         this.darconogroup = this.game.add.group();
         this.darconogroup.createMultiple(1, 'darcono', [0, 1, 2], true);
         this.darconogroup.scale.set(0.4);
@@ -113,131 +123,128 @@ export default class Farm extends Phaser.State {
         this.darconogroup.align(40,-40,400, 600);
         this.darconogroup.x = 3300;
         this.darconogroup.y = 400;
-
+        */
 
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        this.fireButton = this.input.keyboard.addKey(Phaser.KeyCode.E);
-
-       /* this.weapon = this.game.add.weapon(30, 'bullet');
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        this.weapon.bulletSpeed = 800;
-        this.weapon.fireRate = 20;
-        this.weapon.trackSprite(this.player, 0, 0, true);*/
-    
-        this.bullets = this.game.add.group();
-        this.bullets.enableBody = true;
-        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.bullets.createMultiple(30, 'bullet', 0, false);
-        this.bullets.setAll('anchor.x', 0.5);
-        this.bullets.setAll('anchor.y', 1);
-        this.bullets.setAll('outOfBoundsKill', true);
-        this.bullets.setAll('checkWorldBounds', true);
-        this.bullets.forEach(setupInvader, this);
-
-        this.explosions = this.game.add.group();
-        this.explosions.createMultiple(30, 'kaboom');
-        this.explosions.forEach(setupInvader, this);
-    
-        //this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        //this.game.input.onDown.add(gofull, this);
 
         var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         this.ballCount = 0;
-        this.ballText = this.game.add.text(10, 500, "Gesammelte Energie-Bälle: "+this.ballCount, style);
-    
-
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }
-                
-        function setupInvader (invader) {
-            invader.anchor.x = 0.5;
-            invader.anchor.y = 0.5;
-            invader.animations.add('kaboom');
-        }
-        
+        this.ballText = this.game.add.text(3500, 400, "Gesammelte Energie-Bälle: "+this.ballCount, style);
     }
 
     update() {
         let textBox = this.game.textBox;
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
-        if (typeof this.text !== undefined && this.tamoTalked === true) {
-            this.text.destroy();
-            this.tamoTalkFText = false;
+        
+        /*
+        function collectItem(player, item) {
+            this.ballSound.play();
+            item.kill();
+            this.ballText.text = "Gesammelte Energie-Bälle: "+ (++this.ballCount);
+        }*/
+
+        if (typeof this.itemText !== undefined && this.itemTaken === true) {
+            this.itemText.destroy();
+            this.itemTakeFText = false;
         }
         function collectItem(player, item) {
-            item.kill();
-            this.ballText.text = "Gesammelte Bälle: "+ (++this.ballCount);
+            if (this.fKey.isDown && this.itemTaken === false) {
+                this.ballSound.play();
+                this.ballText.text = "Gesammelte Energie-Bälle: "+ (++this.ballCount);
+                this.game.textBox.addText(new Text("Gesammelte Energie-Bälle: "+ (this.ballCount)));
+                item.kill();
+            } else if (this.itemTakeFText === false) {
+                this.itemTakeFText = true;
+                this.itemText = this.game.add.text(this.player.x, this.player.y, 'Drücke F: Energie-Ball nehmen', style);
+            }
         }
-        var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+
+       if (typeof this.darconoText !== undefined && this.darconosFed === true) {
+            this.darconoText.destroy();
+            this.darconosFedFText = false;
+        }
+        function feedDarcono(player, darcono) {
+            if (this.fKey.isDown && this.darconosFed === false) {
+                //this.darconoText.destroy();
+                if (this.ballCount >= 10) {
+                    this.ballSound.play();
+                    this.darconosFedFText = true;
+                    this.darconosFed = true;
+                    this.game.textBox.addText(new Text("Du hast die Darconos gefüttert."));
+                } else {
+                    //Warum wird dieser Text mehrfach ausgegeben?
+                    this.game.textBox.addText(new Text("Du hast nicht genug Futter gesammelt. Du brauchst mind. 10 Energie-Bälle."));
+                }
+            } else if (this.darconosFedFText === false) {
+                this.darconosFedFText = true;
+                this.darconoText = this.game.add.text(this.darconoOne.x, this.darconoOne.y-50, 'Drücke F: Füttern', style);
+            }
+        }
+
+        if (typeof this.tamoText !== undefined && this.tamoTalked === true) {
+            this.tamoText.destroy();
+            this.tamoTalkFText = false;
+        }
         function talkToTamo(player, tamo) {
             if (this.fKey.isDown && this.tamoTalked === false) {
                 this.tamoTalked = true;
-                //tamo answers
-                window.farmAnswer1 = function() {
+
+                window.okAnswer = function() {
+                    that.tamoTalked = false;
                     textBox.addText(new Dialog("Beeil dich, es gibt gleich Abendessen.", tamoPerson));
                 }
-                window.farmAnswer2 = function() {
-                    if (that.ballCount >= 9) {
-                        let answers2 = [
-                            new Answer("Ich möchte noch draußen bleiben.", "farmAnswer1"),
+                window.checkTaskAnswer = function() {
+                    that.tamoTalked = false;
+                    if (that.ballCount >= 10 && that.darconosFed === true) {
+                        let goHomeAnswer = [
+                            new Answer("Ich möchte noch draußen bleiben.", "okAnswer"),
                             new Answer("Ok.", "startCutSceneAirshipArrival")
                         ];
                         textBox.addText(new Dialog("Sehr gut. Komm doch wieder ins Haus hinein.", tamoPerson));
-                        textBox.addText(new Decision(answers2));
+                        textBox.addText(new Decision(goHomeAnswer));
                     } else {
                         textBox.addText(new Dialog("Ich merke, wenn du mich anlügst. Füttere die Darconos, sonst gibt es kein Abendessen für dich.", tamoPerson));
                     }
                 }
-                let tamoPerson = new Person("Tamo Black", "tamo");
-
                 window.startCutSceneAirshipArrival = function() {
                     that.farmBackgroundSound.destroy();
                     that.state.start('AirshipArrival');
                 }
 
-            
-                let answers1 = [
-                    new Answer("Ok.", "farmAnswer1"),
-                    new Answer("Ich habe sie schon gefüttert.", "farmAnswer2")
+                let taskAnswer = [
+                    new Answer("Ok.", "okAnswer"),
+                    new Answer("Ich habe sie schon gefüttert.", "checkTaskAnswer")
                 ];
-          
-                // tamo dialog
+                let tamoPerson = new Person("Tamo Black", "tamo");
                 this.game.textBox.addText(new Dialog("Damian, du musst die Darconos noch füttern.", tamoPerson));
-                this.game.textBox.addText(new Decision(answers1));
+                this.game.textBox.addText(new Decision(taskAnswer));
             } else if (this.tamoTalkFText === false) {
                 this.tamoTalkFText = true;
-                this.text = this.game.add.text(this.tamo.x, this.tamo.y, 'Drücke F: Sprechen', style);
+                this.tamoText = this.game.add.text(this.tamo.x, this.tamo.y-50, 'Drücke F: Sprechen', style);
             }
         }
-      
-        /*
-        function destroyObject(weapon, object) {
-            weapon.kill();
-            object.kill();
 
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('kaboom', 30, false, true);
-        }
-        */
-
-        if(this.nKey.isDown) {
+        if (this.nKey.isDown) {
             this.farmBackgroundSound.destroy();
             this.state.start('AirshipArrival');
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
-        this.game.physics.arcade.collide(this.balls, this.layer);
-        this.game.physics.arcade.collide(this.darconoBaby, this.layer);
-        this.game.physics.arcade.collide(this.darconogroup, this.layer);
         this.game.physics.arcade.collide(this.tamo, this.layer);
-
+        this.game.physics.arcade.collide(this.balls, this.layer);
+        this.game.physics.arcade.collide(this.darconoOne, this.layer);
+        this.game.physics.arcade.collide(this.darconoTwo, this.layer);
+        this.game.physics.arcade.collide(this.darconoThree, this.layer);
+        this.game.physics.arcade.collide(this.darconoBabyOne, this.layer);
+        this.game.physics.arcade.collide(this.darconoBabyTwo, this.layer);
+        
         this.game.physics.arcade.overlap(this.player, this.tamo, talkToTamo, null, this);
         this.game.physics.arcade.overlap(this.player, this.balls, collectItem, null, this);
+        this.game.physics.arcade.overlap(this.player, this.darconoOne, feedDarcono, null, this);
 
         this.player.body.velocity.x = 0;
         if (this.cursors.left.isDown || this.aKey.isDown) {
@@ -269,19 +276,9 @@ export default class Farm extends Phaser.State {
         if (this.jumpButton.isDown &&
             this.player.body.onFloor() &&
             this.game.time.now > this.jumpTimer) {
-
-            this.player.body.velocity.y = -250;
-            this.jumpTimer = this.game.time.now + 750;
+                this.player.body.velocity.y = -250;
+                this.jumpTimer = this.game.time.now + 750;
         }
-/*
-        if (this.game.input.activePointer.isDown) {
-            var bullet = this.bullets.getFirstExists(false);
-            if (bullet) {
-                bullet.reset(this.player.x, this.player.y);
-                bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 1000, this.game.input.activePointer, 500);
-            } 
-        }
-*/
     
     }
 

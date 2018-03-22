@@ -10,20 +10,21 @@ export default class Ship extends Phaser.State {
         this.load.audio('fight_tutorial_sound', 'audio/fight_tutorial/liquid-energy_terrasound_de.mp3');
         this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
-        this.game.load.tilemap('map', 'farm/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tiles-ground', 'farm/tiles-ground.png');
-        this.game.load.spritesheet('damian', 'farm/damian.png', 150, 370);
-        this.game.load.spritesheet('damian-magic', 'farm/character_asset_damian_magicAttackAndWalk_250x260.png', 250, 260);
-        this.game.load.spritesheet('damian-sword', 'farm/character_asset_damian_swordAttack_240x350px.png', 240, 350);
-        this.game.load.spritesheet('lorcan', 'farm/character_asset_lorcan_190x260px.png', 190, 260);
+        this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
+        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
+        this.game.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_250x260.png', 250, 260);
+        this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
+        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_190x260px.png', 190, 260);
         this.game.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
-        this.game.load.image('bullet', 'farm/magicBullet_100x100.png');
-        this.game.load.spritesheet('kaboom', 'farm/explode.png', 128, 128);
-        this.game.load.image('box', 'farm/chest_100x100.png');
+        this.game.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
+        this.game.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
+        this.game.load.image('box', 'image/item/chest_100x100.png', 100, 100);
     }
 
     create() {
-
+        this.facing = 'right';
+        this.jumpTimer = 0;
         let textBox = this.game.textBox;
         
         window.shipAnswer1 = function() {
@@ -39,18 +40,7 @@ export default class Ship extends Phaser.State {
         this.game.textBox.addText(new Dialog("Hallo mein Name ist Damian", damianPerson));
         this.game.textBox.addText(new Decision(answers));
     
-
-        this.map;
-        this.tileset;
-        this.layer;
-        this.player;
-        this.lorcan;
-        this.facing = 'right';
-        this.jumpTimer = 0;
-        this.cursors;
-        this.jumpButton;
-        this.background;
-
+        
         this.fightTutorialBackgroundSound = this.game.add.audio('fight_tutorial_sound');
         this.fightTutorialBackgroundSound.loopFull();
 
@@ -66,59 +56,10 @@ export default class Ship extends Phaser.State {
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
         this.layer = this.map.createLayer('tile-layer_ground');
-        //this.layer.resizeWorld();
+        this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4);
 
-
         this.game.physics.arcade.gravity.y = 500;
-
-   
-        this.player = createDamian(this.game);
-
-
-        function createDamian(game) {
-            let player = game.add.sprite(0, 300, 'damian');
-            player.scale.set(1.3);
-            game.camera.follow(player);
-            game.physics.enable(player, Phaser.Physics.ARCADE);
-            player.body.bounce.y = 0.2;
-            player.body.collideWorldBounds = true;
-            player.body.setSize(150, 370, 0, 0);
-            player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
-            player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
-            return player;
-        }
-
-     
-
-        this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
-        this.lorcan.scale.set(2);
-        this.lorcan.frame = 4;
-        this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
-        this.lorcan.body.bounce.y = 0.2;
-        this.lorcan.body.collideWorldBounds = true;
-        this.lorcan.body.setSize(190, 260, 0, 0);
-
-        this.cursors = this.game.input.keyboard.createCursorKeys();
-        this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-    
-
-        this.bullets = this.game.add.group();
-        this.bullets.enableBody = true;
-        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.bullets.createMultiple(30, 'bullet', 0, false);
-        this.bullets.setAll('outOfBoundsKill', true);
-        this.bullets.setAll('checkWorldBounds', true);
-        this.bullets.forEach(setupInvader, this);
-
-     
-        this.explosions = this.game.add.group();
-        this.explosions.createMultiple(30, 'kaboom');
-        this.explosions.forEach(setupInvader, this);
-
 
         this.box1 = this.game.add.sprite(2610, 200, 'box');
         this.game.physics.enable(this.box1, Phaser.Physics.ARCADE);
@@ -134,7 +75,44 @@ export default class Ship extends Phaser.State {
         this.game.physics.enable(this.box3, Phaser.Physics.ARCADE);
         this.box3.body.collideWorldBounds = true;
         this.box3.body.bounce.set(1);
+
+        this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
+        this.lorcan.scale.set(2);
+        this.lorcan.frame = 4;
+        this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
+        this.lorcan.body.bounce.y = 0.2;
+        this.lorcan.body.collideWorldBounds = true;
+        this.lorcan.body.setSize(190, 260, 0, 0);
         
+        this.player = createDamian(this.game);
+        function createDamian(game) {
+            let player = game.add.sprite(0, 0, 'damian_amulet');
+            game.camera.follow(player);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            player.body.bounce.y = 0.2;
+            player.body.collideWorldBounds = true;
+            player.body.setSize(210, 495, 0, 0);
+            player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
+            player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
+            return player;
+        }
+        
+        this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    
+        this.bullets = this.game.add.group();
+        this.bullets.enableBody = true;
+        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bullets.createMultiple(30, 'bullet', 0, false);
+        this.bullets.setAll('outOfBoundsKill', true);
+        this.bullets.setAll('checkWorldBounds', true);
+        this.bullets.forEach(setupInvader, this);
+
+        this.explosions = this.game.add.group();
+        this.explosions.createMultiple(30, 'explode');
+        this.explosions.forEach(setupInvader, this);
 
        /*
         this.boxgroup = this.game.add.group();
@@ -162,13 +140,12 @@ export default class Ship extends Phaser.State {
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
-            invader.animations.add('kaboom');
+            invader.animations.add('explode');
         }
 
     }
 
     update() {
-
         function createDamianMagic(game, x, y) {
             let player = game.add.sprite(x, y, 'damian-magic');
             player.scale.set(1.9);
@@ -185,16 +162,15 @@ export default class Ship extends Phaser.State {
         }
         function createDamianSword(game, x, y) {
             let player = game.add.sprite(x, y, 'damian-sword');
-            player.scale.set(1);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
-            player.body.setSize(240, 350, 0, 0);
-            player.animations.add('left', [9, 8, 7, 6], 8, true);
-            player.animations.add('right', [2, 3, 4, 5], 8, true);
-            player.animations.add('shootRight', [1, 0]);
-            player.animations.add('shootLeft', [10, 11]);
+            player.body.setSize(610, 880, 0, 0);
+            player.animations.add('left', [10, 11, 12, 13], 8, true);
+            player.animations.add('right', [16, 17, 18, 19], 8, true);
+            player.animations.add('shootRight', [5, 6, 7, 8, 9]);
+            player.animations.add('shootLeft', [4, 3, 2, 1, 0]);
             return player;
         }
         function collectItem(player, item) {
@@ -217,8 +193,8 @@ export default class Ship extends Phaser.State {
                 let x = this.player.x;
                 let y = this.player.y;
                 this.player.destroy();
-                this.player = createDamianMagic(this.game, x, y);
-                //this.player = createDamianSword(this.game, x, y);
+                //this.player = createDamianMagic(this.game, x, y);
+                this.player = createDamianSword(this.game, x, y);
                 this.fText = this.game.add.text(900, 900, 'Hallo Damian', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
                 this.lorcanHatDamianBegrüßt = true;
             } else {
@@ -232,7 +208,7 @@ export default class Ship extends Phaser.State {
 
             var explosion = this.explosions.getFirstExists(false);
             explosion.reset(object.body.x, object.body.y);
-            explosion.play('kaboom', 30, false, true);
+            explosion.play('explode', 30, false, true);
 
             this.explosionSound.play("", 0, 5, false, true);
         }
@@ -268,10 +244,10 @@ export default class Ship extends Phaser.State {
             if (this.facing != 'idleRight' || this.facing != 'idleLeft') {
                 this.player.animations.stop();
                 if (this.facing == 'left') {
-                    this.player.frame = 11;
+                    this.player.frame = 4;
                     this.facing = 'idleLeft';
                 } else if (this.facing == 'right') {
-                    this.player.frame = 0;
+                    this.player.frame = 5;
                     this.facing = 'idleRight';
                 }
                 //this.facing = 'idle';
@@ -296,7 +272,7 @@ export default class Ship extends Phaser.State {
                     this.facing == "idleRight";
                 } else if (this.facing == 'idleLeft') {
                     this.player.animations.play('shootLeft');
-                    this.facing == "idleRight";
+                    this.facing == "idleLeft";
                 }
                 
             }
