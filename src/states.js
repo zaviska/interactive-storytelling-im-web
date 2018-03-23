@@ -18,3 +18,4 @@ export {default as FarmEscapeWay} from './states/FarmEscapeWay';
 export {default as AirshipDeparture} from './states/AirshipDeparture';
 export {default as OrdinaryWorld} from './states/OrdinaryWorld';
 export {default as FarmAfterVisit} from './states/FarmAfterVisit';
+export {default as ToBeContinued} from './states/ToBeContinued';

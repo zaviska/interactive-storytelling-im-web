@@ -33,9 +33,9 @@ export default class FarmAfterVisit extends Phaser.State {
         this.farmBackgroundSound.loopFull();
 
         let textBox = this.game.textBox;
-        this.game.textBox.addText(new Text("KAPITEL 2: SIR LORCAN'S ANGEBOT <hr>"));
-        this.game.textBox.addText(new Text("Kapitän Sir Lorcan bat Tamo Black, seinen Sohn zum Luftritter ausbilden zu lassen. Die Reise sollte für Damian noch heute beginnen. Damian war über diese Chance überaus glücklich... doch sein Vater lehnte das Angebot ab. Sir Lorcan gab der Familie Black Bedenkzeit. Das Luftschiff wartete nur eine Nacht. Damian sollte auf das Luftschiff kommen, noch bevor die Sonne aufgeht. Ansonsten wird das Luftschiff ohne ihn weiterziehen."));
-        this.game.textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Überzeuge Tamo davon, auf das Luftschiff gehen zu dürfen.</i></span>"));
+        textBox.addText(new Text("KAPITEL 2: SIR LORCAN'S ANGEBOT <hr>"));
+        textBox.addText(new Text("Kapitän Sir Lorcan bat Tamo Black, seinen Sohn zum Luftritter ausbilden zu lassen. Die Reise sollte für Damian noch heute beginnen. Damian war über diese Chance überaus glücklich... doch sein Vater lehnte das Angebot ab. Sir Lorcan gab der Familie Black Bedenkzeit. Das Luftschiff wartete nur eine Nacht. Damian sollte auf das Luftschiff kommen, noch bevor die Sonne aufgeht. Ansonsten wird das Luftschiff ohne ihn weiterziehen."));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Überzeuge Tamo davon, auf das Luftschiff gehen zu dürfen.</i></span>"));
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 

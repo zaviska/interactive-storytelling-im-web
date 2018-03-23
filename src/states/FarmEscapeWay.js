@@ -83,7 +83,7 @@ export default class FarmEscapeWay extends Phaser.State {
         this.lorcanTalkFText = false;
 
         this.player = this.game.add.sprite(0, 370, 'damian_amulet');
-        this.player.scale.set(0.5);
+        this.player.scale.set(0.53);
         this.game.camera.follow(this.player);
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.anchor.set(0.75);

@@ -7,15 +7,18 @@ import { Answer } from "../textbox/api/Answer";
 export default class Ship extends Phaser.State {
 
     preload() {
+        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
         this.load.audio('fight_tutorial_sound', 'audio/fight_tutorial/liquid-energy_terrasound_de.mp3');
+        this.load.audio('box_sound', 'audio/sound_effects/appear/appear.mp3');
         this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
+        this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_250x260.png', 250, 260);
+        this.game.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_300x500px.png', 500, 500);
         this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
-        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_190x260px.png', 190, 260);
+        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
         this.game.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
         this.game.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
         this.game.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
@@ -29,38 +32,20 @@ export default class Ship extends Phaser.State {
         this.mage = false;
         this.knight = false;
         let textBox = this.game.textBox;
-        
-        window.beAMage = function() {
-            let x = that.player.x;
-            let y = that.player.y;
-            that.player.destroy();
-            that.player = createDamianMagic(that.game, x, y);
-            textBox.addText(new Text("Damian ist jetzt ein Magier"));
-        }
-        window.beAKnight = function() {
-            let x = that.player.x;
-            let y = that.player.y;
-            that.player.destroy();
-            that.player = createDamianSword(that.game, x, y);
-            textBox.addText(new Text("Damian ist jetzt ein Schwertkämpfer"));
-        }
 
-        let damianPerson = new Person("Damian", "damian");
-        let answers = [
-            new Answer("Ich will ein Magier sein.", "beAMage"),
-            new Answer("Ich will ein Schwertkämpfer sein.", "beAKnight")
-        ]
-        this.game.textBox.addText(new Text("Ship level was started"));
-        this.game.textBox.addText(new Dialog("Hallo mein Name ist Damian", damianPerson));
-        this.game.textBox.addText(new Decision(answers));
-    
-        
+        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
+        this.airshipBackgroundSound.loopFull();
         this.fightTutorialBackgroundSound = this.game.add.audio('fight_tutorial_sound');
-        this.fightTutorialBackgroundSound.loopFull();
-
-        this.explosionSound = this.game.add.audio('explosion_sound');
         this.shootSound = this.game.add.audio('shoot_sound');
+        this.swordSound = this.game.add.audio('sword_sound');
+        this.explosionSound = this.game.add.audio('explosion_sound');
+        this.boxSound = this.game.add.audio('box_sound');
   
+        textBox.addText(new Text("KAPITEL 4: DAS LUFTSCHIFF DER BLACK AIR KNIGHTS <hr>"));
+        textBox.addText(new Text("Nachdem Damian es geschafft hatte, sich unbemerkt aus dem Haus zu schleichen, stieg er in das Luftschiff der Black Air Knights ein."));
+        textBox.addText(new Text("Im Luftschiff erwartete und begrüßte ihn Kapitän Sir Lorcan."));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit Sir Lorcan. Nachdem du deine Ausbildungsklasse gewählt hast, musst du eine Kampfübung absolvieren.</i></span>"));
+    
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
@@ -91,12 +76,14 @@ export default class Ship extends Phaser.State {
         this.box3.body.bounce.set(1);
 
         this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
-        this.lorcan.scale.set(2);
+        //this.lorcan.scale.set(2);
         this.lorcan.frame = 4;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;
         this.lorcan.body.collideWorldBounds = true;
-        this.lorcan.body.setSize(190, 260, 0, 0);
+        this.lorcan.body.setSize(378, 510, 0, 0);
+        this.lorcanTalked = false;
+        this.lorcanTalkFText = false;
         
         this.player = createDamian(this.game);
         function createDamian(game) {
@@ -156,17 +143,32 @@ export default class Ship extends Phaser.State {
             invader.anchor.y = 2.2;
             invader.animations.add('explode');
         }
+        this.boxCount = 0;
+    }
 
+    update() {
+        let textBox = this.game.textBox;
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        let that = this;
+
+        function collectItem(player, item) {
+            item.kill();
+        }
+        if (this.nKey.isDown) {
+            this.airshipBackgroundSound.destroy();
+            this.fightTutorialBackgroundSound.destroy();
+            this.state.start('Intro');
+        }  
         function createDamianMagic(game, x, y) {
             that.mage = true;
             that.knight = false;
-            let player = game.add.sprite(x, 300, 'damian-magic');
-            player.scale.set(1.9);
+            let player = game.add.sprite(x, y, 'damian-magic');
+            player.scale.set(0.97);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
-            player.body.setSize(250, 260, 0, 0);
+            player.body.setSize(300, 500, 0, 0);
             player.animations.add('left', [9, 8, 7, 6], 8, true);
             player.animations.add('right', [2, 3, 4, 5], 8, true);
             player.animations.add('shootRight', [1, 0]);
@@ -176,8 +178,8 @@ export default class Ship extends Phaser.State {
         function createDamianSword(game, x, y) {
             that.knight = true;
             that.mage = false;
-            let player = game.add.sprite(x, 0, 'damian-sword');
-            player.scale.set(0.7);
+            let player = game.add.sprite(x, 100, 'damian-sword');
+            player.scale.set(0.75);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
@@ -189,40 +191,96 @@ export default class Ship extends Phaser.State {
             player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
-
-    }
-
-    update() {
-       
-     
-        function collectItem(player, item) {
-            item.kill();
+        if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
+            this.lorcanText.destroy();
+            this.lorcanTalkFText = false;
         }
+        function talkToLorcan(player, lorcan) {
+            if (this.fKey.isDown && this.lorcanTalked === false) {
+                this.lorcanTalked = true;
+                let lorcanPerson = new Person("Sir Lorcan", "lorcan");
+                window.loadBoxes = function () {
+                    that.boxSound.play();
 
-        if (this.nKey.isDown) {
-            this.fightTutorialBackgroundSound.destroy();
-            this.state.start('Intro');
-        }  
+                    that.box1 = that.game.add.sprite(2610, 200, 'box');
+                    that.game.physics.enable(that.box1, Phaser.Physics.ARCADE);
+                    that.box1.body.collideWorldBounds = true;
+                    that.box1.body.bounce.set(1);
 
-        function talkToLorcan(player, item) {
-            if( this.lorcanHatDamianBegrüßt) {
-                
-            }
-            if (this.fKey.isDown && !this.lorcanHatDamianBegrüßt) {
-                if(sprechText) {
-                    sprechText.destroy();
+                    that.box2 = that.game.add.sprite(3060, 0, 'box');
+                    that.game.physics.enable(that.box2, Phaser.Physics.ARCADE);
+                    that.box2.body.collideWorldBounds = true;
+                    that.box2.body.bounce.set(1);
+
+                    that.box3 = that.game.add.sprite(3505, 300, 'box');
+                    that.game.physics.enable(that.box3, Phaser.Physics.ARCADE);
+                    that.box3.body.collideWorldBounds = true;
+                    that.box3.body.bounce.set(1);
                 }
-            
-                this.fText = this.game.add.text(900, 900, 'Hallo Damian', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
-                this.lorcanHatDamianBegrüßt = true;
-            } else {
-                var sprechText = this.game.add.text(1100, 300, 'Drücke F: sprechen', { font: "24px Arial", backgroundColor: "#000000", fill: "#FFFFFF" });
+                window.startToBeContinued = function () {
+                    that.airshipBackgroundSound.destroy();
+                    that.fightTutorialBackgroundSound.destroy();
+                    that.game.hideNavigation();
+                    that.state.start('ToBeContinued');
+                }
+                let repeatTask = [
+                    new Answer("Ja, ich möchte diese Aufgabe wiederholen.", "loadBoxes"),
+                    new Answer("Nein, das reicht.", "startToBeContinued")
+                ];
+                window.okAnswer = function() {
+                    textBox.addText(new Dialog("Viel Erfolg, Damian!", lorcanPerson));
+                }
+                window.checkBox = function() {
+                    if (that.boxCount >= 3) {
+                        textBox.addText(new Dialog("Sehr gut, Damian! Du hast deine erste Aufgabe erfolgreich abgeschlossen. <br> Möchtest du diese Übung wiederholen?", lorcanPerson));
+                        textBox.addText(new Decision(repeatTask));
+                    } else {
+                        textBox.addText(new Dialog("Netter Versuch, Damian... du musst <i>alle</i> Kisten zerstören!", lorcanPerson));
+                    }
+                }
+                let firstTask = [
+                    new Answer("Ok, mach ich.", "okAnswer"),
+                    new Answer("Ich habe alle Kisten zerstört.", "checkBox")
+                ];
+                window.beAMage = function() {
+                    that.airshipBackgroundSound.destroy();
+                    that.fightTutorialBackgroundSound.loopFull();
+                    let x = that.player.x;
+                    let y = that.player.y;
+                    that.player.destroy();
+                    that.player = createDamianMagic(that.game, x, y);
+                    textBox.addText(new Text("Du bist jetzt ein Magier."));
+                    textBox.addText(new Dialog("Du möchtest also ein Magier werden, eine gute Wahl. <br> Nun sollst du deine neue Waffe ausprobieren. Hier deine erste Aufgabe: <br> <i> Siehst du die drei Kisten im nächsten Raum? Ich möchte, dass du sie alle zerstörst. Komme zu mir, wenn du damit fertig bist. </i>", lorcanPerson));
+                    textBox.addText(new Decision(firstTask));
+                }
+                window.beAKnight = function() {
+                    that.airshipBackgroundSound.destroy();
+                    that.fightTutorialBackgroundSound.loopFull();
+                    let x = that.player.x;
+                    let y = that.player.y;
+                    that.player.destroy();
+                    that.player = createDamianSword(that.game, x, y);
+                    that.facing = 'right'; // bugfix
+                    textBox.addText(new Text("Du bist jetzt ein Schwertkämpfer."));
+                    textBox.addText(new Dialog("Du möchtest also ein Schwertkämpfer werden, eine gute Wahl. Ich wählte einst auch die Schwertkunst. <br> Nun sollst du deine neue Waffe ausprobieren. Hier deine erste Aufgabe: <br> <i> Siehst du die drei Kisten im nächsten Raum? Ich möchte, dass du sie alle zerstörst. Komme zu mir, wenn du damit fertig bist. </i>", lorcanPerson));
+                    textBox.addText(new Decision(firstTask));
+                }
+                let questionAnswer = [
+                    new Answer("Ein Schwertkämpfer.", "beAKnight"),
+                    new Answer("Ein Magier.", "beAMage")
+                ];
+                this.game.textBox.addText(new Dialog("Willkommen an Bord, Damian! Ich bin Sir Lorcan, Kapitän der Black Air Knights. <br> Es freut mich, dass du dich für uns entschieden hast. Deine Ausbildung soll noch heute beginnen. Möchtest du ein <i>Schwertkämpfer</i> oder ein <i>Magier</i> sein?", lorcanPerson));
+                this.game.textBox.addText(new Decision(questionAnswer));
+            } else if (this.lorcanTalkFText === false) {
+                this.lorcanTalkFText = true;
+                this.lorcanText = this.game.add.text(this.lorcan.x, this.lorcan.y-50, 'Drücke F: Sprechen', style);
             }
         }
 
         function destroyObject(weapon, object) {
             weapon.kill();
             object.kill();
+            ++this.boxCount;
 
             var explosion = this.explosions.getFirstExists(false);
             explosion.reset(object.body.x, object.body.y);
@@ -232,6 +290,7 @@ export default class Ship extends Phaser.State {
         }
         function slashObject(player, object) {
             object.kill();
+            ++this.boxCount;
 
             var explosion = this.explosions.getFirstExists(false);
             explosion.reset(object.body.x, object.body.y);
@@ -251,7 +310,7 @@ export default class Ship extends Phaser.State {
         this.game.physics.arcade.overlap(this.bullets, this.box2, destroyObject, null, this);
         this.game.physics.arcade.overlap(this.bullets, this.box3, destroyObject, null, this);
         //this.game.physics.arcade.overlap(this.bullets, this.boxgroup, destroyObject, null, this);
-        //this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
 
         this.player.body.velocity.x = 0;
         
@@ -280,7 +339,7 @@ export default class Ship extends Phaser.State {
                     
                 }
             } else if(this.knight === true) {
-                this.shootSound.play();
+                this.swordSound.play();
                 this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 this.game.physics.arcade.overlap(this.player, this.box2, slashObject, null, this);
                 this.game.physics.arcade.overlap(this.player, this.box3, slashObject, null, this);
@@ -308,12 +367,30 @@ export default class Ship extends Phaser.State {
         } else {
             if (this.facing != 'idleRight' || this.facing != 'idleLeft') {
                 this.player.animations.stop();
-                if (this.facing == 'left') {
-                    this.player.frame = 4;
-                    this.facing = 'idleLeft';
-                } else if (this.facing == 'right') {
-                    this.player.frame = 5;
-                    this.facing = 'idleRight';
+                if (this.knight === true) {
+                    if (this.facing == 'left') {
+                        this.player.frame = 14;
+                        this.facing = 'idleLeft';
+                    } else if (this.facing == 'right') {
+                        this.player.frame = 15;
+                        this.facing = 'idleRight';
+                    }
+                } else if (this.mage === true) {
+                    if (this.facing == 'left') {
+                        this.player.frame = 11;
+                        this.facing = 'idleLeft';
+                    } else if (this.facing == 'right') {
+                        this.player.frame = 0;
+                        this.facing = 'idleRight';
+                    }
+                } else {
+                    if (this.facing == 'left') {
+                        this.player.frame = 4;
+                        this.facing = 'idleLeft';
+                    } else if (this.facing == 'right') {
+                        this.player.frame = 5;
+                        this.facing = 'idleRight';
+                    }
                 }
                 //this.facing = 'idle';
             }
