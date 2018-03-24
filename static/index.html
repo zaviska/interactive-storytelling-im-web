@@ -7,16 +7,9 @@
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"> 
-    <style>
-      html { box-sizing: border-box; }
-      html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action: none; touch-action: none; }
-      * { margin: 0; padding: 0; }
-      *, *:before, *:after { box-sizing: inherit; }
-    </style>
   </head>
 
-  <body>
-
+  <body class="body">
     <script>
       let toggler = true;
       function toggleFullscreen() {
@@ -67,7 +60,7 @@
       }
     </script>
 
-    <div class="navigation">
+    <div class="navigation navigation-top">
       <ul class="navigation_list">
         <li class="navigation_list_item"><a class="navigation_link" href="#" onclick="openPopupHome()">Home</a></li>
         <li class="navigation_list_item"><a class="navigation_link" href="#" onclick="toggleFullscreen()" id="fullscreenButton">Enter Fullscreen</a></li>
@@ -89,6 +82,7 @@
       <p class="popupContent_control"><span class="popupContent_control_button">LINKE MAUSTASTE</span> : ATTACKIEREN</p>
       <button class="popupContent_button" onclick="cancelPopupControl()">Ausblenden</button>	
     </div>
+    <div id="game"></div>
     <div id="textbox" class="textbox navigation navigation_textbox">
       <a class="navigation_link navigation_link-textbox" href="#" onclick="toggleTextbox()" id="zoomTextboxButton">Textfeld maximieren</a></li>
     </div>

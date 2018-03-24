@@ -26,7 +26,7 @@ export default class Boot extends Phaser.State {
 
     //  Adjust the scaling mode of the game canvas. Example: If you're
     //  developing a pixel-art game, set it to 'USER_SCALE'.
-    this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     //  When using 'USER_SCALE' scaling mode, use this method to adjust the
     //  scaling factor.

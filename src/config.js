@@ -9,8 +9,8 @@
 //export const width = 1920;
 //export const height = 1080;
 
-export const width = "100%";
-export const height = "98vh";
+export const width = "100";
+export const height = "100";
 
 
 
@@ -36,3 +36,5 @@ export const resolution = 1;
 //  Uncomment to disable the Phaser debugging API.
 //  TODO: Automate the production build to conditionally enable this flag.
 // export const enableDebug = false;
+
+export const parent = "game";
