@@ -191,10 +191,7 @@ export default class Ship extends Phaser.State {
             player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
-        if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
-            this.lorcanText.destroy();
-            this.lorcanTalkFText = false;
-        }
+     
         function talkToLorcan(player, lorcan) {
             if (this.fKey.isDown && this.lorcanTalked === false) {
                 this.lorcanTalked = true;
@@ -310,7 +307,13 @@ export default class Ship extends Phaser.State {
         this.game.physics.arcade.overlap(this.bullets, this.box2, destroyObject, null, this);
         this.game.physics.arcade.overlap(this.bullets, this.box3, destroyObject, null, this);
         //this.game.physics.arcade.overlap(this.bullets, this.boxgroup, destroyObject, null, this);
-        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        let overlapLorcan = this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+
+        if (overlapLorcan === false && this.lorcanTalkFText === true) {
+            this.lorcanText.destroy();
+            this.lorcanTalkFText = false;
+            this.talkToLorcan = false;
+        }
 
         this.player.body.velocity.x = 0;
         

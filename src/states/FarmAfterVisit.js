@@ -112,10 +112,7 @@ export default class FarmAfterVisit extends Phaser.State {
     update() {
         let textBox = this.game.textBox;
         let that = this;
-        if (typeof this.text !== undefined && this.tamoTalked === true) {
-            this.TamoText.destroy();
-            this.tamoTalkFText = false;
-        }
+      
         var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         function talkToTamo(player, tamo) {
             if (this.fKey.isDown && this.tamoTalked === false) {
@@ -178,7 +175,13 @@ export default class FarmAfterVisit extends Phaser.State {
         this.game.physics.arcade.collide(this.darconoBabyOne, this.layer);
         this.game.physics.arcade.collide(this.darconoBabyTwo, this.layer);
         
-        this.game.physics.arcade.overlap(this.player, this.tamo, talkToTamo, null, this);
+        let overlapTamo = this.game.physics.arcade.overlap(this.player, this.tamo, talkToTamo, null, this);
+
+        if (overlapTamo === false && this.tamoTalkFText === true) {
+            this.TamoText.destroy();
+            this.tamoTalkFText = false;
+            this.tamoTalked = false;
+        }
 
         this.player.body.velocity.x = 0;
         if (this.cursors.left.isDown || this.aKey.isDown) {

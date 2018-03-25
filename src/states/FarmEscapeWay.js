@@ -112,10 +112,7 @@ export default class FarmEscapeWay extends Phaser.State {
             this.state.start('AirshipDeparture');
         }
 
-        if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
-            this.lorcanText.destroy();
-            this.lorcanTalkFText = false;
-        }
+     
         function talkToLorcan(player, lorcan) {
             if (this.fKey.isDown && this.lorcanTalked === false) {
                 this.lorcanTalked = true;
@@ -148,7 +145,13 @@ export default class FarmEscapeWay extends Phaser.State {
         this.game.physics.arcade.collide(this.darconoBabyOne, this.layer);
         this.game.physics.arcade.collide(this.darconoBabyTwo, this.layer);
 
-        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        let overlapLorcan = this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+
+        if (overlapLorcan === false && this.lorcanTalkFText === true) {
+            this.lorcanText.destroy();
+            this.lorcanTalkFText = false;
+            this.talkToLorcan = false;
+        }
 
         this.player.body.velocity.x = 0;
         if (this.cursors.left.isDown || this.aKey.isDown) {
