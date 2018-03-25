@@ -246,7 +246,6 @@ export default class Farm extends Phaser.State {
         if (overlapDarcono === false && this.darconosFedFText === true) {
             this.darconoText.destroy();
             this.darconosFedFText = false;
-            this.darconosFed = false;
         }
 
         this.player.body.velocity.x = 0;
