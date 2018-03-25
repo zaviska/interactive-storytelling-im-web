@@ -49,11 +49,15 @@
       }
       function toggleTextbox() {
           if(toggler) {
-            document.getElementById("textbox").style.height = "100%";
+            document.getElementById("textbox").style.height = "100vh";
+            document.getElementById("textbox").style.position = "absolute";
+            document.getElementById("textbox").style.top = "0px";
             toggler = false;
             document.getElementById("zoomTextboxButton").innerHTML = "Textfeld minimieren";
           } else {
             document.getElementById("textbox").style.height = "200px";
+            document.getElementById("textbox").style.position = "static";
+            document.getElementById("textbox").style.top = "auto";
             toggler = true;
             document.getElementById("zoomTextboxButton").innerHTML = "Textfeld maximieren";
           }
