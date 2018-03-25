@@ -163,20 +163,15 @@ export default class Farm extends Phaser.State {
             }
         }
 
-       if (typeof this.darconoText !== undefined && this.darconosFed === true) {
-            this.darconoText.destroy();
-            this.darconosFedFText = false;
-        }
         function feedDarcono(player, darcono) {
             if (this.fKey.isDown && this.darconosFed === false) {
+                this.darconosFed = true;
                 //this.darconoText.destroy();
                 if (this.ballCount >= 10) {
                     this.ballSound.play();
                     this.darconosFedFText = true;
-                    this.darconosFed = true;
                     this.game.textBox.addText(new Text("Du hast die Darconos gefüttert."));
                 } else {
-                    //Warum wird dieser Text mehrfach ausgegeben?
                     this.game.textBox.addText(new Text("Du hast nicht genug Futter gesammelt. Du brauchst mind. 10 Energie-Bälle."));
                 }
             } else if (this.darconosFedFText === false) {
@@ -185,10 +180,6 @@ export default class Farm extends Phaser.State {
             }
         }
 
-        if (typeof this.tamoText !== undefined && this.tamoTalked === true) {
-            this.tamoText.destroy();
-            this.tamoTalkFText = false;
-        }
         function talkToTamo(player, tamo) {
             if (this.fKey.isDown && this.tamoTalked === false) {
                 this.tamoTalked = true;
@@ -242,9 +233,21 @@ export default class Farm extends Phaser.State {
         this.game.physics.arcade.collide(this.darconoBabyOne, this.layer);
         this.game.physics.arcade.collide(this.darconoBabyTwo, this.layer);
         
-        this.game.physics.arcade.overlap(this.player, this.tamo, talkToTamo, null, this);
+        let overlapTamo = this.game.physics.arcade.overlap(this.player, this.tamo, talkToTamo, null, this);
         this.game.physics.arcade.overlap(this.player, this.balls, collectItem, null, this);
-        this.game.physics.arcade.overlap(this.player, this.darconoOne, feedDarcono, null, this);
+        let overlapDarcono = this.game.physics.arcade.overlap(this.player, this.darconoOne, feedDarcono, null, this);
+
+        if (overlapTamo === false && this.tamoTalkFText === true) {
+            this.tamoText.destroy();
+            this.tamoTalkFText = false;
+            this.tamoTalked = false;
+        }
+
+        if (overlapDarcono === false && this.darconosFedFText === true) {
+            this.darconoText.destroy();
+            this.darconosFedFText = false;
+            this.darconosFed = false;
+        }
 
         this.player.body.velocity.x = 0;
         if (this.cursors.left.isDown || this.aKey.isDown) {
