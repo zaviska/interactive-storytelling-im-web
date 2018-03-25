@@ -120,6 +120,44 @@ export default class Room extends Phaser.State {
             this.state.start('FarmEscapeWay');
         }
 
+
+        this.game.physics.arcade.collide(this.player, this.layer);
+        this.game.physics.arcade.collide(this.bag, this.layer);
+
+        let overlapBag = this.game.physics.arcade.overlap(this.player, this.bag, takeBag, null, this);
+        let overlapDoor = this.game.physics.arcade.overlap(this.player, this.door, openDoor, null, this);
+        let overlapWindow = this.game.physics.arcade.overlap(this.player, this.window, openWindow, null, this);
+        let overlapDrawer = this.game.physics.arcade.overlap(this.player, this.drawer, openDrawer, null, this);
+
+        if (overlapWindow === false && this.windowOpenedFText === true) {
+            this.windowText.destroy();
+            this.windowOpenedFText = false;
+            this.windowOpened = false;
+        }
+
+        if (overlapDrawer === false && this.drawerOpenedFText === true) {
+            this.drawerText.destroy();
+            this.drawerOpenedFText = false;
+            this.drawerOpened = false;
+        }
+
+        if (overlapDoor === false && this.doorOpenedFText === true) {
+            this.doorText.destroy();
+            this.doorOpenedFText = false;
+            this.doorOpened = false;
+        }
+
+        if (overlapBag === false && this.bagTakeFText === true) {
+            this.bagText.destroy();
+            this.bagTakeFText = false;
+        }
+      
+
+        this.fontStyle = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};   
+
+        this.damianPerson = new Person("Damian Black", "damian");
+
+
         function createDamianAmulet(game, x, y) {
             let player = game.add.sprite(x, y, 'damian_amulet');
             game.camera.follow(player);
@@ -136,23 +174,7 @@ export default class Room extends Phaser.State {
         function collectItem(player, item) {
             item.kill();
         }
-      
-        this.game.physics.arcade.collide(this.player, this.layer);
-        this.game.physics.arcade.collide(this.bag, this.layer);
 
-        this.game.physics.arcade.overlap(this.player, this.bag, takeBag, null, this);
-        this.game.physics.arcade.overlap(this.player, this.door, openDoor, null, this);
-        this.game.physics.arcade.overlap(this.player, this.window, openWindow, null, this);
-        this.game.physics.arcade.overlap(this.player, this.drawer, openDrawer, null, this);
-
-        this.fontStyle = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};   
-
-        this.damianPerson = new Person("Damian Black", "damian");
-
-        if (typeof this.bagText !== undefined && this.bagTaken === true) {
-            this.bagText.destroy();
-            this.bagTakeFText = false;
-        }
         function takeBag(player, item) {
             if (this.fKey.isDown && this.bagTaken === false) {
                 this.pickSound.play();
@@ -165,27 +187,18 @@ export default class Room extends Phaser.State {
             }
         }
 
-        if (typeof this.doorText !== undefined && this.doorOpened === true) {
-            this.doorText.destroy();
-            this.doorOpenedFText = false;
-        }
         function openDoor(player, item) {
             if (this.fKey.isDown && this.doorOpened === false) {
                 this.doorUnlockSound.play();
                 this.doorOpened = true;
                 this.game.textBox.addText(new Text("Die Tür ist verschlossen."));
                 this.game.textBox.addText(new Dialog("Mein Vater hat mich eingeschlossen? Ich muss einen anderen Ausgang finden...", this.damianPerson));
-            } else if (this.doorOpenedFText === false) {
+            } else if (this.doorOpenedFText === false && this.doorOpened !== true) {
                 this.doorOpenedFText = true;
                 this.doorText = this.game.add.text(this.door.x, this.door.y, 'Drücke F: Öffnen', this.fontStyle);
             }
         }
 
-    
-        if (typeof this.drawerText !== undefined && this.drawerOpened === true) {
-            this.drawerText.destroy();
-            this.drawerOpenedFText = false;
-        }
         function openDrawer(player, item) {
             if (this.amulet === false) {
                 if (this.fKey.isDown && this.drawerOpened === false) {
@@ -213,24 +226,22 @@ export default class Room extends Phaser.State {
                         new Answer("Dritte Schublade öffnen.", "foundAmulet")
                     ];
                     this.game.textBox.addText(new Decision(chooseDrawer));
-                } else if (this.doorOpenedFText === false) {
+                } 
+                
+                if (this.drawerOpenedFText === false) {
                     this.drawerOpenedFText = true;
                     this.drawerText = this.game.add.text(this.drawer.x, this.drawer.y, 'Drücke F: Durchsuchen', this.fontStyle);
                 }
             }
         }
 
-        if (typeof this.windowText !== undefined && this.windowOpened === true) {
-            this.windowText.destroy();
-            this.windowOpenedFText = false;
-            this.windowOpened = false; //mehrmals anklickbar, aber wird mehrfach ausgeführt
-        }
         function openWindow(player, item) {
             if (this.fKey.isDown && this.windowOpened === false)  {
                 this.windowOpened = true;
                 let that = this;
 
                 window.checkItem = function() {
+                    that.windowOpened = false;
                     if (that.bagTaken === true && that.amulet === true) {
                         that.escapeWayBackgroundSound.destroy();
                         that.state.start('FarmEscapeWay');
@@ -245,6 +256,7 @@ export default class Room extends Phaser.State {
                     }
                 }
                 window.closeWindow = function() {
+                    that.windowOpened = false;
                     that.windowSound.play();
                     that.game.textBox.addText(new Text("Damian schließt das Fenster."));
                 }
@@ -256,7 +268,9 @@ export default class Room extends Phaser.State {
                 this.windowSound.play();
                 this.game.textBox.addText(new Text("Damian öffnet das Fenster."));
                 this.game.textBox.addText(new Decision(windowAnswers));
-            } else if (this.windowOpenedFText === false) {
+            } 
+             
+            if (this.windowOpenedFText === false) {
                 this.windowOpenedFText = true;
                 this.windowText = this.game.add.text(this.window.x, this.window.y, 'Drücke F: Öffnen', this.fontStyle);
             }
