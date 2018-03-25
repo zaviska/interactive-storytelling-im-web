@@ -38,3 +38,4 @@ export const resolution = 1;
 // export const enableDebug = false;
 
 export const parent = "game";
+

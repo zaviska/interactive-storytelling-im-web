@@ -11,7 +11,7 @@ html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action:
     background-color: black;
 }
 #game {
-    height: calc(100vh - 250px);;
+    height: calc(100vh - 238px);
     width: 100vw;
 }
 .textbox {

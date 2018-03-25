@@ -27,9 +27,11 @@ export function init() {
   game.textBox = new TextBoxController();
 
   game.hideNavigation = function () {
-      document.getElementById('textbox').style.display = "none";
+    document.getElementById('game').style.height = "100vh";
+    document.getElementById('textbox').style.display = "none";
   }
   game.showNavigation = function() {
+    document.getElementById('game').style.height = "calc(100vh - 238px)";
     document.getElementById('textbox').style.display = "block";
   }
 

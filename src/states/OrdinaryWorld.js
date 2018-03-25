@@ -6,26 +6,41 @@ export default class OrdinaryWorld extends Phaser.State {
 
   create() {
     let that = this;
-
     this.game.hideNavigation();
+
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
     let cutSceneOrdinaryWorld = this.game.add.video('cut_scene_ordinary_world');
     
-    let videoImage = cutSceneOrdinaryWorld.addToWorld(0, 0);
+    this.game.videoImageOrdinaryWorld = cutSceneOrdinaryWorld.addToWorld(0, 0);
     cutSceneOrdinaryWorld.play();
     cutSceneOrdinaryWorld.onComplete.add(onClickNextButton); 
   
     
-    let nextButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+    this.game.nextOrdinareWorldButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
 
+    this.resize(this.game.width, this.game.height);
 
     function onClickNextButton() {
       cutSceneOrdinaryWorld.destroy();
-      nextButton.destroy();
+      that.game.nextOrdinareWorldButton.destroy();
       that.state.start('Farm');
       that.game.showNavigation();
     }
 
   }
 
+  resize (x, y) {
+    
+    console.log("SCALE MODE CREATE ORDINARY WORLD", x, y);
+    var scaleModiferX =  x/1920;
+    var scaleModiferY =  y/1080;
+
+    var videoScale = Math.min(scaleModiferX, scaleModiferY);
+    this.game.videoImageOrdinaryWorld.scale.set(videoScale);
+
+    this.game.nextOrdinareWorldButton.x = scaleModiferX*1200;
+		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
+
+  } 
 }
