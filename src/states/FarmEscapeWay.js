@@ -20,8 +20,6 @@ export default class FarmEscapeWay extends Phaser.State {
     create() {
         this.facing = 'right';
         this.jumpTimer = 0;
-
-
         
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
         this.game.scale.setShowAll();
@@ -36,7 +34,7 @@ export default class FarmEscapeWay extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background');
+        this.background = this.game.add.tileSprite(0, 0, 3840, 940, 'background');
         this.game.world.setBounds(0, 0, 3840, 940);
 
         this.map = this.game.add.tilemap('map');

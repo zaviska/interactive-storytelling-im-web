@@ -86,6 +86,9 @@
     background-color: black;
     font-size: 16px;
 }
+.navigation-top {
+    height: 38px;
+}
 .navigation_list {
     display: flex;
     list-style: none;

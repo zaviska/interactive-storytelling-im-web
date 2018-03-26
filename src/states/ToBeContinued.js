@@ -8,7 +8,7 @@ export default class ToBeContinued extends Phaser.State {
     create() {
       this.game.hideNavigation();
 
-      this.toBeContinued = this.add.image(100, 200, 'to_be_continued');
+      this.toBeContinued = this.add.image(500, 300, 'to_be_continued');
       this.toBeContinued.scale.set(0.5);
   
       let introTitleSound = this.game.add.audio('intro_title_sound');
@@ -22,7 +22,6 @@ export default class ToBeContinued extends Phaser.State {
           this.state.start('ShipTraining');
           this.game.showNavigation();
       }
-  
     }
   
   }

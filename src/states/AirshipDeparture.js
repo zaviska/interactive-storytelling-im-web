@@ -16,7 +16,7 @@ export default class AirshipDeparture extends Phaser.State {
     cutSceneAirshipDeparture.play();
     cutSceneAirshipDeparture.onComplete.add(onClickNextButton); 
     
-    this.game.nextAirshipDepartureButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+    this.game.nextAirshipDepartureButton = this.game.add.button(1730, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
 
     this.resize(this.game.width, this.game.height);
 
@@ -29,13 +29,13 @@ export default class AirshipDeparture extends Phaser.State {
   }
   resize (x, y) {
     console.log("SCALE MODE CREATE AIRSHIP DEPARTURE", x, y);
-    var scaleModiferX =  x/1920;
-    var scaleModiferY =  y/1080;
+    var scaleModiferX = x/1920;
+    var scaleModiferY = y/1080;
 
     var videoScale = Math.min(scaleModiferX, scaleModiferY);
     this.game.videoImageAirshipDeparture.scale.set(videoScale);
 
-    this.game.nextAirshipDepartureButton.x = scaleModiferX*1200;
+    this.game.nextAirshipDepartureButton.x = scaleModiferX*1730;
 		this.game.nextAirshipDepartureButton.y = scaleModiferY*10;
   }
 }

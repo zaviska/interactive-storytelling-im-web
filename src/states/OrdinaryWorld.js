@@ -17,7 +17,7 @@ export default class OrdinaryWorld extends Phaser.State {
     cutSceneOrdinaryWorld.onComplete.add(onClickNextButton); 
   
     
-    this.game.nextOrdinareWorldButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+    this.game.nextOrdinareWorldButton = this.game.add.button(1730, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
 
     this.resize(this.game.width, this.game.height);
 
@@ -31,13 +31,13 @@ export default class OrdinaryWorld extends Phaser.State {
 
   resize (x, y) {
     console.log("SCALE MODE CREATE ORDINARY WORLD", x, y);
-    var scaleModiferX =  x/1920;
-    var scaleModiferY =  y/1080;
+    var scaleModiferX = x/1920;
+    var scaleModiferY = y/1080;
 
     var videoScale = Math.min(scaleModiferX, scaleModiferY);
     this.game.videoImageOrdinaryWorld.scale.set(videoScale);
 
-    this.game.nextOrdinareWorldButton.x = scaleModiferX*1200;
+    this.game.nextOrdinareWorldButton.x = scaleModiferX*1730;
 		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
   } 
 }
