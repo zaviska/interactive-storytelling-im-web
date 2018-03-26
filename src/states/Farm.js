@@ -91,6 +91,7 @@ export default class Farm extends Phaser.State {
         //this.darconoBabyTwo.body.bounce.set(1);
         
         this.darconosFed = false;
+        this.darconosTalked = false;
         this.darconosFedFText = false;
 
         this.tamo = this.game.add.sprite(420, 640, 'tamo');
@@ -139,13 +140,6 @@ export default class Farm extends Phaser.State {
         let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
-        
-        /*
-        function collectItem(player, item) {
-            this.ballSound.play();
-            item.kill();
-            this.ballText.text = "Gesammelte Energie-Bälle: "+ (++this.ballCount);
-        }*/
 
         if (typeof this.itemText !== undefined && this.itemTaken === true) {
             this.itemText.destroy();
@@ -164,11 +158,11 @@ export default class Farm extends Phaser.State {
         }
 
         function feedDarcono(player, darcono) {
-            if (this.fKey.isDown && this.darconosFed === false) {
-                this.darconosFed = true;
-                //this.darconoText.destroy();
+            if (this.fKey.isDown && this.darconosFed === false && this.darconosTalked === false) {
+                this.darconosTalked = true;
                 if (this.ballCount >= 10) {
                     this.ballSound.play();
+                    this.darconosFed = true;
                     this.darconosFedFText = true;
                     this.game.textBox.addText(new Text("Du hast die Darconos gefüttert."));
                 } else {
@@ -176,6 +170,7 @@ export default class Farm extends Phaser.State {
                 }
             } else if (this.darconosFedFText === false) {
                 this.darconosFedFText = true;
+                this.darconosTalked = false;
                 this.darconoText = this.game.add.text(this.darconoOne.x, this.darconoOne.y-50, 'Drücke F: Füttern', style);
             }
         }
