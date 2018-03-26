@@ -39,6 +39,7 @@ export default class Ship extends Phaser.State {
         this.lorcanTalkFText = false;
         let textBox = this.game.textBox;
 
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.game.scale.setShowAll();
         window.addEventListener('resize', function () {  
           this.game.scale.refresh();
@@ -62,7 +63,7 @@ export default class Ship extends Phaser.State {
 
         this.game.stage.backgroundColor = '#000000';
         this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.game.world.setBounds(0, 0, 3840, 940);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');

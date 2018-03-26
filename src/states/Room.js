@@ -45,7 +45,7 @@ export default class Room extends Phaser.State {
 
         this.game.stage.backgroundColor = '#000000';
         this.background = this.game.add.tileSprite(0, 0, 1920, 1080, 'background-room');
-        this.game.world.setBounds(0, 0, 1920, 1080);
+        this.game.world.setBounds(0, 0, 1920, 880);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
