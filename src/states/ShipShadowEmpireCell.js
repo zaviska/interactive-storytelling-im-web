@@ -7,7 +7,7 @@ import { Answer } from "../textbox/api/Answer";
 export default class ShipShadowEmpireCell extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
+        this.load.audio('shadow_empire_sound', 'audio/shadow_empire/forgotten-caves_terrasound_de.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
@@ -23,8 +23,8 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.knight = false;
         let textBox = this.game.textBox;
 
-        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
-        this.airshipBackgroundSound.loopFull();
+        this.shadowEmpireBackgroundSound = this.game.add.audio('shadow_empire_sound');
+        this.shadowEmpireBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 10: DIE VERBANNUNG <hr>"));
         textBox.addText(new Text("Sir Lorcan streckte vor Zorn seine Hand aus, so dass das goldene Schwert in seine Hand flog. Er öffnete dadurch das Schattenreich, um Damian zu verbannen. Damian wurde zur Strafe dort in eine Zelle eingesperrt."));
@@ -84,7 +84,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipBackgroundSound.destroy();
+            this.shadowEmpireBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireCellEscape');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {

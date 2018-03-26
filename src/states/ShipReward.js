@@ -7,7 +7,7 @@ import { Answer } from "../textbox/api/Answer";
 export default class ShipReward extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
+        this.load.audio('airhsip_reward_sound', 'audio/reward/beautiful-mood_terrasound_de.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
@@ -23,8 +23,8 @@ export default class ShipReward extends Phaser.State {
         this.knight = false;
         let textBox = this.game.textBox;
 
-        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
-        this.airshipBackgroundSound.loopFull();
+        this.airshipRewardBackgroundSound = this.game.add.audio('airhsip_reward_sound');
+        this.airshipRewardBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 13: SIR KIAN'S ERLÖSUNG <hr>"));
         textBox.addText(new Text("Nachdem Damian den Schattengeist Lorcan besiegt hatte, fiel er ohnmächtig zu Boden. Als er wieder aufwachte, gab sich der unbekannte Mann zu erkennen. Er erzählte Damian, dass sein Name <i> Sir Kian </i> ist und er der richtige Kapitän der Black Air Knights ist. Es handelte sich dabei um ein königliches Luftschiffs, welches von dem Schattengeist Lorcan übernommen wurde, nachdem er Sir Kian gefangen genommen hatte."));
@@ -85,7 +85,7 @@ export default class ShipReward extends Phaser.State {
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipBackgroundSound.destroy();
+            this.airshipRewardBackgroundSound.destroy();
             this.state.start('ToBeContinued');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {

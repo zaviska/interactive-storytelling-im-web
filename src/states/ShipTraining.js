@@ -7,7 +7,7 @@ import { Answer } from "../textbox/api/Answer";
 export default class ShipTraining extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
+        this.load.audio('fight_tutorial_sound', 'audio/fight_tutorial/liquid-energy_terrasound_de.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
@@ -23,8 +23,8 @@ export default class ShipTraining extends Phaser.State {
         this.knight = false;
         let textBox = this.game.textBox;
 
-        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
-        this.airshipBackgroundSound.loopFull();
+        this.fightTutorialBackgroundSound = this.game.add.audio('fight_tutorial_sound');
+        this.fightTutorialBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 5: DAS LUFTSCHIFF DER BLACK AIR KNIGHTS <hr>"));
         textBox.addText(new Text("Das Luftschiff war mit vielen Gemeinschaftsräumen zum Trainieren, Speißen und Schlafen bestens ausgestattet. Es hatte zudem noch eine große Bibliothek für die Magier und eine Waffenkammer für die Schwertkämpfer. Damian lernte viele neue Leute kennen, mit denen er jeden Tag trainierte. Heute forderte Sir Lorcan Damian zu einem freundschaftlichen Duell auf. Das war die Gelegenheit, um dem Kapitän zu zeigen, was er gelernt hat."));
@@ -83,7 +83,7 @@ export default class ShipTraining extends Phaser.State {
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipBackgroundSound.destroy();
+            this.fightTutorialBackgroundSound.destroy();
             this.state.start('ShipEnimies');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {

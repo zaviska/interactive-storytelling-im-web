@@ -7,7 +7,7 @@ import { Answer } from "../textbox/api/Answer";
 export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
+        this.load.audio('final_fight_sound', 'audio/final_fight/accelerator_terrasound_de.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
@@ -23,8 +23,8 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.knight = false;
         let textBox = this.game.textBox;
 
-        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
-        this.airshipBackgroundSound.loopFull();
+        this.finalFightBackgroundSound = this.game.add.audio('final_fight_sound');
+        this.finalFightBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 12: SIR LORCAN'S VERWANDLUNG <hr>"));
         textBox.addText(new Text("Als Kapitän Sir Lorcan Damian den Weg versperrte, zeigte er sein wahres Gesicht. Er verwandelte sich in einen Schattengeist und griff Damian mit magischen Kräften an."));
@@ -83,7 +83,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipBackgroundSound.destroy();
+            this.finalFightBackgroundSound.destroy();
             this.state.start('ShipReward');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {

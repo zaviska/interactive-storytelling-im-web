@@ -7,7 +7,7 @@ import { Answer } from "../textbox/api/Answer";
 export default class ShipTestArmory extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
+        this.load.audio('airhsip_test_sound', 'audio/test/dance_of_the_imps_terrasound_de.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
@@ -23,8 +23,8 @@ export default class ShipTestArmory extends Phaser.State {
         this.knight = false;
         let textBox = this.game.textBox;
 
-        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
-        this.airshipBackgroundSound.loopFull();
+        this.airshipTestBackgroundSound = this.game.add.audio('airhsip_test_sound');
+        this.airshipTestBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 7: DAS VERBOTENE SCHWERT <hr>"));
         textBox.addText(new Text("Nachdem Damian alle Tumbras besiegen konnte, war Kapitän Sir Lorcan sehr stolz auf Damians Mut und Kampfgeist."));
@@ -84,7 +84,7 @@ export default class ShipTestArmory extends Phaser.State {
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipBackgroundSound.destroy();
+            this.airshipTestBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireArmory');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {

@@ -7,7 +7,7 @@ import { Answer } from "../textbox/api/Answer";
 export default class ShipEnimies extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_sound', 'audio/airship/fantastic_journey_terrasound_de.mp3');
+        this.load.audio('enimies_sound', 'audio/enimies/pole_position_terrasound.mp3');
         this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
@@ -23,8 +23,8 @@ export default class ShipEnimies extends Phaser.State {
         this.knight = false;
         let textBox = this.game.textBox;
 
-        this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
-        this.airshipBackgroundSound.loopFull();
+        this.enimiesBackgroundSound = this.game.add.audio('enimies_sound');
+        this.enimiesBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 6: DIE TUMBRAS: ANGRIFF DER SCHATTENGEISTER <hr>"));
         textBox.addText(new Text("Das Luftschiff wurde einestages von Schattengeistern angegriffen, die sich <i>Tumbras</i> nennen. Alle Luftritter kämpften gegen die Schattengeister und versuchten die Lehrlinge ebenfalls zu beschützen. Nur Damian war so mutig sich zu verteidigen und ebenfalls gegen die Tumbras zu kämpfen."));
@@ -83,7 +83,7 @@ export default class ShipEnimies extends Phaser.State {
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipBackgroundSound.destroy();
+            this.enimiesBackgroundSound.destroy();
             this.state.start('ShipTestLibrary');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
