@@ -41,7 +41,7 @@ export default class Ship extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
         this.boxSound = this.game.add.audio('box_sound');
   
-        textBox.addText(new Text("KAPITEL 4: DAS LUFTSCHIFF DER BLACK AIR KNIGHTS <hr>"));
+        textBox.addText(new Text("KAPITEL 4: DIE ANKUNFT AUF DEM LUFTSCHIFF <hr>"));
         textBox.addText(new Text("Nachdem Damian es geschafft hatte, sich unbemerkt aus dem Haus zu schleichen, stieg er in das Luftschiff der Black Air Knights ein."));
         textBox.addText(new Text("Im Luftschiff erwartete und begrüßte ihn Kapitän Sir Lorcan."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit Sir Lorcan. Nachdem du deine Ausbildungsklasse gewählt hast, musst du eine Kampfübung absolvieren.</i></span>"));
@@ -157,7 +157,7 @@ export default class Ship extends Phaser.State {
         if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
-            this.state.start('Intro');
+            this.state.start('ToBeContinued');
         }  
         function createDamianMagic(game, x, y) {
             that.mage = true;

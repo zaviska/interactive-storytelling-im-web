@@ -24,6 +24,7 @@ html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action:
     font-size: 18px;
     overflow-y: scroll;
     resize: both;
+    border-top: 2px solid #19de65;
 }
 .storyteller {
     font-size: 16px;
