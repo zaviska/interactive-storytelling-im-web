@@ -39,6 +39,12 @@ export default class Ship extends Phaser.State {
         this.lorcanTalkFText = false;
         let textBox = this.game.textBox;
 
+        this.game.scale.setShowAll();
+        window.addEventListener('resize', function () {  
+          this.game.scale.refresh();
+        });
+        this.game.scale.refresh();
+
         this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
         this.airshipBackgroundSound.loopFull();
         this.fightTutorialBackgroundSound = this.game.add.audio('fight_tutorial_sound');
@@ -104,8 +110,6 @@ export default class Ship extends Phaser.State {
         
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;

@@ -1,7 +1,5 @@
-html { box-sizing: border-box; }
-html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action: none; touch-action: none; }
 * { margin: 0; padding: 0; }
-*, *:before, *:after { box-sizing: inherit; }
+*, *:before, *:after { box-sizing: border-box; }
 .body {
     height: 100vh;
     width: 100vw;
@@ -9,6 +7,8 @@ html, body { background: rgb(255, 255, 255); overflow: hidden; -ms-touch-action:
     margin: 0;
     overflow: hidden;
     background-color: black;
+    -ms-touch-action: none; 
+    touch-action: none;
 }
 #game {
     height: calc(100vh - 238px);

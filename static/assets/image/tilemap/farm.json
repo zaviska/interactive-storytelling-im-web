@@ -199,12 +199,8 @@
          "tilewidth":30
         }, 
         {
-         "firstgid":6,
-         "source":"..\/..\/..\/..\/..\/2014-2018 TH N\u00fcrnberg - B.Eng. Media Engineering\/7. Semester ME7 - WS 2017-18\/Bachelorarbeit\/Konzeption\/Adobe CC\/Tiled Map Editor\/house_farm_3840x1080px.tsx"
-        }, 
-        {
          "columns":4,
-         "firstgid":4614,
+         "firstgid":6,
          "image":"tiles-ground.png",
          "imageheight":30,
          "imagewidth":120,

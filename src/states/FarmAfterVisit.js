@@ -22,7 +22,7 @@ export default class FarmAfterVisit extends Phaser.State {
         this.facing = 'left';
         this.jumpTimer = 0;
   
-        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        //this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.game.scale.setShowAll();
         window.addEventListener('resize', function () {  
           this.game.scale.refresh();

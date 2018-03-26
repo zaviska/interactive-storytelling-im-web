@@ -24,6 +24,8 @@ export default class Room extends Phaser.State {
     create() {
         this.facing = 'right';
         this.jumpTimer = 0;
+
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
         this.escapeWayBackgroundSound = this.game.add.audio('escape_way_sound');
         this.escapeWayBackgroundSound.loopFull();
@@ -103,15 +105,6 @@ export default class Room extends Phaser.State {
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
-        
-        /*
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.input.onDown.add(gofull, this);
-    
-        function gofull() {
-            this.game.scale.startFullScreen();
-        }
-        */
     }
 
     update() {
