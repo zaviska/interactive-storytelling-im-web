@@ -6,26 +6,37 @@ export default class AirshipArrival extends Phaser.State {
 
   create() {
     let that = this;
-
     this.game.hideNavigation();
 
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
     let cutSceneAirshipArrival = this.game.add.video('cut_scene_airship_arrival');
-    
-    let videoImage = cutSceneAirshipArrival.addToWorld(0, 0);
+
+    this.game.videoImageAirshipArrival = cutSceneAirshipArrival.addToWorld(0, 0);
     cutSceneAirshipArrival.play();
-    cutSceneAirshipArrival.onComplete.add(onClickNextButton); 
-  
+    cutSceneAirshipArrival.onComplete.add(onClickNextButton);
+
+    this.game.nextAirshipArrivalButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+
+    this.resize(this.game.width, this.game.height);
     
-    let nextButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
-
-
     function onClickNextButton() {
       cutSceneAirshipArrival.destroy();
-      nextButton.destroy();
+      that.game.nextAirshipArrivalButton.destroy();
       that.state.start('FarmAfterVisit');
       that.game.showNavigation();
     }
-
   }
 
+  resize (x, y) {
+    console.log("SCALE MODE CREATE AIRSHIP ARRIVAL", x, y);
+    var scaleModiferX =  x/1920;
+    var scaleModiferY =  y/1080;
+
+    var videoScale = Math.min(scaleModiferX, scaleModiferY);
+    this.game.videoImageAirshipArrival.scale.set(videoScale);
+
+    this.game.nextAirshipArrivalButton.x = scaleModiferX*1200;
+		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
+  } 
 }

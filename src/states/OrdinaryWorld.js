@@ -27,11 +27,9 @@ export default class OrdinaryWorld extends Phaser.State {
       that.state.start('Farm');
       that.game.showNavigation();
     }
-
   }
 
   resize (x, y) {
-    
     console.log("SCALE MODE CREATE ORDINARY WORLD", x, y);
     var scaleModiferX =  x/1920;
     var scaleModiferY =  y/1080;
@@ -41,6 +39,5 @@ export default class OrdinaryWorld extends Phaser.State {
 
     this.game.nextOrdinareWorldButton.x = scaleModiferX*1200;
 		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
-
   } 
 }

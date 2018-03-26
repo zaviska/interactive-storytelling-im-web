@@ -6,26 +6,36 @@ export default class AirshipDeparture extends Phaser.State {
 
   create() {
     let that = this;
-
     this.game.hideNavigation();
 
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
     let cutSceneAirshipDeparture = this.game.add.video('cut_scene_airship_departure');
-    
-    let videoImage = cutSceneAirshipDeparture.addToWorld(0, 0);
+
+    this.game.videoImageAirshipDeparture = cutSceneAirshipDeparture.addToWorld(0, 0);
     cutSceneAirshipDeparture.play();
     cutSceneAirshipDeparture.onComplete.add(onClickNextButton); 
-  
     
-    let nextButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+    this.game.nextAirshipDepartureButton = this.game.add.button(1200, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
 
+    this.resize(this.game.width, this.game.height);
 
     function onClickNextButton() {
       cutSceneAirshipDeparture.destroy();
-      nextButton.destroy();
+      that.game.nextAirshipDepartureButton.destroy();
       that.state.start('Ship');
       that.game.showNavigation();
     }
-
   }
+  resize (x, y) {
+    console.log("SCALE MODE CREATE AIRSHIP DEPARTURE", x, y);
+    var scaleModiferX =  x/1920;
+    var scaleModiferY =  y/1080;
 
+    var videoScale = Math.min(scaleModiferX, scaleModiferY);
+    this.game.videoImageAirshipDeparture.scale.set(videoScale);
+
+    this.game.nextAirshipDepartureButton.x = scaleModiferX*1200;
+		this.game.nextAirshipDepartureButton.y = scaleModiferY*10;
+  }
 }
