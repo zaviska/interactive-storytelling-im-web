@@ -12,11 +12,11 @@ export default class Room extends Phaser.State {
         this.load.audio('door_unlock_sound', 'audio/sound_effects/door/door_unlock.mp3');
         this.load.audio('pick_sound', 'audio/sound_effects/pick/click.mp3');
         this.load.audio('window_sound', 'audio/sound_effects/window/old_door_creaking.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('map', 'image/tilemap/room_1920px.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.image('background-room', 'image/background/house_room_1920x1080px.png');
+        this.game.load.image('background-room', 'image/background/house_room_1920x900px.png');
         this.game.load.image('bag', 'image/item/backpack_115_155px.png');
         this.game.load.image('marker', 'image/tilemap/marker_30x30px.png');
     }
@@ -44,8 +44,8 @@ export default class Room extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 1920, 1080, 'background-room');
-        this.game.world.setBounds(0, 0, 1920, 880);
+        this.background = this.game.add.tileSprite(0, 0, 1920, 900, 'background-room');
+        this.game.world.setBounds(0, 0, 1920, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');

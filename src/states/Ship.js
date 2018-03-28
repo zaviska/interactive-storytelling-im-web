@@ -13,13 +13,13 @@ export default class Ship extends Phaser.State {
         this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
         this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
         this.game.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_300x500px.png', 500, 500);
         this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
         this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
-        this.game.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.game.load.image('background-airship', 'image/background/airship_room_3840x900px.png');
         this.game.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
         this.game.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.game.load.image('box', 'image/item/chest_100x100.png', 100, 100);
@@ -62,8 +62,8 @@ export default class Ship extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');

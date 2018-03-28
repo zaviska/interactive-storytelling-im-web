@@ -14,7 +14,7 @@ export default class FarmAfterVisit extends Phaser.State {
         this.game.load.image('tamo', '/image/characters/tamo/tamo_140x270.png', 140, 270);
         this.game.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
         this.game.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
-        this.game.load.image('background', 'image/background/house_farm_3840x1080px.png');
+        this.game.load.image('background', 'image/background/house_farm_3840x900px.png');
         
     }
 
@@ -40,8 +40,8 @@ export default class FarmAfterVisit extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background');
-        this.game.world.setBounds(0, 0, 3840, 940);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
@@ -81,7 +81,7 @@ export default class FarmAfterVisit extends Phaser.State {
         this.darconoBabyTwo.scale.set(0.4);
         //this.darconoBabyTwo.body.bounce.set(1);
 
-        this.tamo = this.game.add.sprite(420, 640, 'tamo');
+        this.tamo = this.game.add.sprite(420, 600, 'tamo');
         this.game.physics.enable(this.tamo, Phaser.Physics.ARCADE);
         this.tamo.body.collideWorldBounds = true;
         this.tamo.body.setSize(140, 270, 0, 0);
