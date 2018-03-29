@@ -8,7 +8,7 @@ export default class ShipTraining extends Phaser.State {
 
     preload() {
         this.load.audio('fight_tutorial_sound', 'audio/fight_tutorial/liquid-energy_terrasound_de.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
         this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);

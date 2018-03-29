@@ -9,6 +9,9 @@
 export {default as Boot} from './states/Boot';
 export {default as Preloader} from './states/Preloader';
 export {default as Game} from './states/Game';
+export {default as ToBeContinued} from './states/ToBeContinued';
+
+// ACT 1
 export {default as Intro} from './states/Intro';
 export {default as OrdinaryWorld} from './states/OrdinaryWorld';
 export {default as Farm} from './states/Farm';
@@ -18,18 +21,21 @@ export {default as Room} from './states/Room';
 export {default as FarmEscapeWay} from './states/FarmEscapeWay';
 export {default as AirshipDeparture} from './states/AirshipDeparture';
 export {default as Ship} from './states/Ship';
-export {default as ToBeContinued} from './states/ToBeContinued';
+
+//ACT 2
 // Cut Scene Intro Act 2
 export {default as ShipTraining} from './states/ShipTraining';
 // Cut Scene Enimies Arrival
 export {default as ShipEnimies} from './states/ShipEnimies';
 
+// MAGE QUEST
 export {default as ShipTestLibrary} from './states/ShipTestLibrary';
 // Cut Scene Open Shadow Empire Library
 export {default as ShipShadowEmpireLibrary} from './states/ShipShadowEmpireLibrary';
 // Cut Scene Close Shadow Empire Library
 export {default as ShipTestArmoryBack} from './states/ShipTestArmoryBack';
 
+// KNIGHT QUEST
 export {default as ShipTestArmory} from './states/ShipTestArmory';
 export {default as EnterShadowEmpireArmory} from './states/EnterShadowEmpireArmory';
 export {default as ShipShadowEmpireArmory} from './states/ShipShadowEmpireArmory';

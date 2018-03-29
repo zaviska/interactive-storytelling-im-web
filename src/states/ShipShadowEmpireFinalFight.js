@@ -8,11 +8,16 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
     preload() {
         this.load.audio('final_fight_sound', 'audio/final_fight/accelerator_terrasound_de.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
+        this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
+        this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
+        this.game.load.tilemap('map', 'image/tilemap/room_1920px.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
-        this.game.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
+        //this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
+        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_schattengeist_800x800px.png', 800, 800);
+        this.game.load.image('air', 'image/item/yellow.png');
+        this.game.load.image('background-airship', 'image/background/airship_shadow_empire_final_fight_1920x900px.png');
     }
 
     create() {
@@ -20,11 +25,14 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.facing = 'right';
         this.jumpTimer = 0;
         this.mage = false;
-        this.knight = false;
+        this.knight = true;
         let textBox = this.game.textBox;
 
         this.finalFightBackgroundSound = this.game.add.audio('final_fight_sound');
         this.finalFightBackgroundSound.loopFull();
+        this.shootSound = this.game.add.audio('shoot_sound');
+        this.swordSound = this.game.add.audio('sword_sound');
+        this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 12: SIR LORCAN'S VERWANDLUNG <hr>"));
         textBox.addText(new Text("Als Kapitän Sir Lorcan Damian den Weg versperrte, zeigte er sein wahres Gesicht. Er verwandelte sich in einen Schattengeist und griff Damian mit magischen Kräften an."));
@@ -33,8 +41,17 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 1920, 900);
+
+        this.delay = 0;
+        for (var i = 0; i < 40; i++) {
+            this.air = this.game.add.sprite(-100 + (this.game.world.randomX), 600, 'air');
+            this.air.scale.set(this.game.rnd.realInRange(0.1, 0.6));
+            this.speed = this.game.rnd.between(4000, 6000);
+            this.game.add.tween(this.air).to({ y: -256 }, this.speed, Phaser.Easing.Sinusoidal.InOut, true, this.delay, 1000, false);
+            this.delay += 200;
+        }
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
@@ -44,25 +61,29 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
-        this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
-        this.lorcan.frame = 4;
+        this.lorcan = this.game.add.sprite(560, 0, 'lorcan');
+        //this.lorcan.frame = 4;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;
         this.lorcan.body.collideWorldBounds = true;
-        this.lorcan.body.setSize(378, 510, 0, 0);
+        this.lorcan.body.setSize(800, 800, 0, 0);
+        this.lorcan.body.bounce.set(1);
         this.lorcanTalked = false;
         this.lorcanTalkFText = false;
         
-        this.player = createDamian(this.game);
-        function createDamian(game) {
-            let player = game.add.sprite(0, 300, 'damian_amulet');
+        this.player = createDamianSword(this.game);
+        function createDamianSword(game) {
+            let player = game.add.sprite(0, 100, 'damian-sword');
+            player.scale.set(0.75);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
-            player.body.setSize(210, 495, 0, 0);
-            player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
-            player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
+            player.body.setSize(610, 880, 0, 0);
+            player.animations.add('left', [10, 11, 12, 13], 8, true);
+            player.animations.add('right', [16, 17, 18, 19], 8, true);
+            player.animations.add('slashRight', [5, 6, 7, 8, 9], 16 );
+            player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
         
@@ -70,6 +91,28 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+        this.bullets = this.game.add.group();
+        this.bullets.enableBody = true;
+        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bullets.createMultiple(30, 'bullet', 0, false);
+        this.bullets.setAll('outOfBoundsKill', true);
+        this.bullets.setAll('checkWorldBounds', true);
+        this.bullets.forEach(setupInvader, this);
+
+        this.explosions = this.game.add.group();
+        this.explosions.createMultiple(30, 'explode');
+        this.explosions.forEach(setupInvader, this);
+
+        function setupTrackSprite(weapon) {
+            weapon.trackSprite(this.player, 0, 0, true);
+        }
+                
+        function setupInvader(invader) {
+            invader.anchor.x = -0.5;
+            invader.anchor.y = 2.2;
+            invader.animations.add('explode');
+        }
 
         this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -86,6 +129,29 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             this.finalFightBackgroundSound.destroy();
             this.state.start('ShipReward');
         }  
+
+        function destroyObject(weapon, object) {
+            weapon.kill();
+            object.kill();
+            ++this.boxCount;
+
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(object.body.x, object.body.y);
+            explosion.play('explode', 30, false, true);
+
+            this.explosionSound.play("", 0, 5, false, true);
+        }
+        function slashObject(player, object) {
+            object.kill();
+            ++this.boxCount;
+
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(object.body.x, object.body.y);
+            explosion.play('explode', 30, false, true);
+
+            this.explosionSound.play("", 0, 5, false, true);
+        }
+
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
             this.lorcanText.destroy();
             this.lorcanTalkFText = false;
