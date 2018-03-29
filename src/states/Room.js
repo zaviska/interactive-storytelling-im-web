@@ -172,7 +172,7 @@ export default class Room extends Phaser.State {
             if (this.fKey.isDown && this.bagTaken === false) {
                 this.pickSound.play();
                 this.bagTaken = true;
-                this.game.textBox.addText(new Text("Damian hat seinen Rucksack genommen."));
+                this.game.textBox.addText(new Text("Du hast den Rucksack genommen."));
                 item.kill();
             } else if (this.bagTakeFText === false) {
                 this.bagTakeFText = true;
@@ -204,7 +204,7 @@ export default class Room extends Phaser.State {
                     window.foundAmulet = function() {
                         that.drawerOpeningSound.play();
                         that.amulet = true;
-                        that.game.textBox.addText(new Text("Damian findet sein Amulett und legt es um seinen Hals."));
+                        that.game.textBox.addText(new Text("Du findest das Amulett und legst es um deinen Hals."));
 
                         let x = that.player.x;
                         let y = that.player.y;
@@ -238,7 +238,7 @@ export default class Room extends Phaser.State {
                     if (that.bagTaken === true && that.amulet === true) {
                         that.escapeWayBackgroundSound.destroy();
                         that.state.start('FarmEscapeWay');
-                        that.game.textBox.addText(new Text("Damian ist aus dem Fenster geklettert."));
+                        that.game.textBox.addText(new Text("Du bist aus dem Fenster geklettert."));
                         that.game.textBox.addText(new Text("Jetzt muss er nur noch in das Luftschiff einsteigen."));
                     } else if (that.bagTaken === true && that.amulet === false){
                         that.game.textBox.addText(new Dialog("Ich muss noch mein Amulett finden.", that.damianPerson));
@@ -251,7 +251,7 @@ export default class Room extends Phaser.State {
                 window.closeWindow = function() {
                     that.windowOpened = false;
                     that.windowSound.play();
-                    that.game.textBox.addText(new Text("Damian schließt das Fenster."));
+                    that.game.textBox.addText(new Text("Du schließt das Fenster."));
                 }
                 let windowAnswers = [
                     new Answer("Aus dem Fenster klettern.", "checkItem"),
@@ -259,7 +259,7 @@ export default class Room extends Phaser.State {
                 ];
 
                 this.windowSound.play();
-                this.game.textBox.addText(new Text("Damian öffnet das Fenster."));
+                this.game.textBox.addText(new Text("Du öffnest das Fenster."));
                 this.game.textBox.addText(new Decision(windowAnswers));
             } 
              

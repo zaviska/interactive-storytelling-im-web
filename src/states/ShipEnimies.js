@@ -84,7 +84,7 @@ export default class ShipEnimies extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.enimiesBackgroundSound.destroy();
-            this.state.start('ShipTestLibrary');
+            this.state.start('ShipTestArmory');
         }  
         if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
             this.lorcanText.destroy();

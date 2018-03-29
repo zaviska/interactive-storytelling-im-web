@@ -8,11 +8,14 @@ export default class ShipTestArmoryBack extends Phaser.State {
 
     preload() {
         this.load.audio('airhsip_test_sound', 'audio/test/dance_of_the_imps_terrasound_de.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room_airship.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
+        this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
+        this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
+        this.game.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
-        this.game.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
+        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_red_378x510px.png', 378, 510);
+        this.game.load.image('background-airship', 'image/background/airship_armory_red_sword_3840x900px.png');
     }
 
     create() {
@@ -20,23 +23,26 @@ export default class ShipTestArmoryBack extends Phaser.State {
         this.facing = 'right';
         this.jumpTimer = 0;
         this.mage = false;
-        this.knight = false;
+        this.knight = true;
         let textBox = this.game.textBox;
 
         this.airshipTestBackgroundSound = this.game.add.audio('airhsip_test_sound');
         this.airshipTestBackgroundSound.loopFull();
+        this.shootSound = this.game.add.audio('shoot_sound');
+        this.swordSound = this.game.add.audio('sword_sound');
+        this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 9: SIR LORCAN'S RÜCKKEHR <hr>"));
         textBox.addText(new Text("Nachdem Damian in letzter Minute zum goldenen Schwert greifte, verschwand die rote Atmosphäre und der Raum drehte sich erneut zurück in die alte Dimension."));
-        textBox.addText(new Text("Zunächst erleichtert über die Rückkehr musste Damian jedoch feststellen, dass das goldene Schwert anfing zu bluten. Damian versuchte das Blut zu entfernen, aber das Schwert hörte nicht auf zu bluten. Aus Panik wollte er ein Tuch um das Tuch wickeln und es in eine Truhe verstecken. Er hoffte nämlich, dass das Schwert dadurch am nächsten Tag aufhört zu bluten."));
+        textBox.addText(new Text("Zunächst erleichtert über die Rückkehr musste Damian jedoch feststellen, dass das goldene Schwert anfing zu bluten. Damian versuchte das Blut zu entfernen, aber das Schwert hörte nicht auf zu bluten. Aus Panik wollte er ein Tuch um das Schwert wickeln und es in eine Truhe verstecken. Er hoffte nämlich, dass das Schwert dadurch am nächsten Tag aufhört zu bluten."));
         textBox.addText(new Text("Kurze Zeit später kam Kapitän Sir Lorcan zurück auf das Luftschiff und wollte von Damian sofort den Schlüssel zur Waffenkammer zurück haben... "));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Verstecke das blutige Schwert und spreche mit Sir Lorcan.</i></span>"));
-        
+    
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
@@ -46,25 +52,30 @@ export default class ShipTestArmoryBack extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
-        this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
-        this.lorcan.frame = 4;
+        this.lorcan = this.game.add.sprite(0, 300, 'lorcan');
+        this.lorcan.frame = 5;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;
         this.lorcan.body.collideWorldBounds = true;
         this.lorcan.body.setSize(378, 510, 0, 0);
         this.lorcanTalked = false;
         this.lorcanTalkFText = false;
+        this.lorcanMoveSpeed = 3000;
+        this.lorcanMovePosition = 1200;
         
-        this.player = createDamian(this.game);
-        function createDamian(game) {
-            let player = game.add.sprite(0, 300, 'damian_amulet');
+        this.player = createDamianSword(this.game);
+        function createDamianSword(game) {
+            let player = game.add.sprite(1500, 200, 'damian-sword');
+            player.scale.set(0.75);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
-            player.body.setSize(210, 495, 0, 0);
-            player.animations.add('left', [4, 3, 2, 1, 0], 8, true);
-            player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
+            player.body.setSize(610, 880, 0, 0);
+            player.animations.add('left', [10, 11, 12, 13], 8, true);
+            player.animations.add('right', [16, 17, 18, 19], 8, true);
+            player.animations.add('slashRight', [5, 6, 7, 8, 9], 16 );
+            player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
         
@@ -72,6 +83,28 @@ export default class ShipTestArmoryBack extends Phaser.State {
         this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+        this.bullets = this.game.add.group();
+        this.bullets.enableBody = true;
+        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bullets.createMultiple(30, 'bullet', 0, false);
+        this.bullets.setAll('outOfBoundsKill', true);
+        this.bullets.setAll('checkWorldBounds', true);
+        this.bullets.forEach(setupInvader, this);
+
+        this.explosions = this.game.add.group();
+        this.explosions.createMultiple(30, 'explode');
+        this.explosions.forEach(setupInvader, this);
+
+        function setupTrackSprite(weapon) {
+            weapon.trackSprite(this.player, 0, 0, true);
+        }
+                
+        function setupInvader(invader) {
+            invader.anchor.x = -0.5;
+            invader.anchor.y = 2.2;
+            invader.animations.add('explode');
+        }
 
         this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -88,25 +121,42 @@ export default class ShipTestArmoryBack extends Phaser.State {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireCell');
         }  
-        if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
-            this.lorcanText.destroy();
-            this.lorcanTalkFText = false;
+
+        function destroyObject(weapon, object) {
+            weapon.kill();
+            object.kill();
+            ++this.boxCount;
+
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(object.body.x, object.body.y);
+            explosion.play('explode', 30, false, true);
+
+            this.explosionSound.play("", 0, 5, false, true);
         }
-        function talkToLorcan(player, lorcan) {
-            if (this.fKey.isDown && this.lorcanTalked === false) {
-                this.lorcanTalked = true;
-                let lorcanPerson = new Person("Sir Lorcan", "lorcan");
-                this.game.textBox.addText(new Dialog("Hallo Damian.", lorcanPerson));
-            } else if (this.lorcanTalkFText === false) {
-                this.lorcanTalkFText = true;
-                this.lorcanText = this.game.add.text(this.lorcan.x, this.lorcan.y-50, 'Drücke F: Sprechen', style);
-            }
+        function slashObject(player, object) {
+            object.kill();
+            ++this.boxCount;
+
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(object.body.x, object.body.y);
+            explosion.play('explode', 30, false, true);
+
+            this.explosionSound.play("", 0, 5, false, true);
+        }
+
+        if (this.lorcan.x === 0) {
+            this.game.add.tween(this.lorcan).to( { x: +this.lorcanMovePosition }, this.lorcanMoveSpeed, Phaser.Easing.Linear.None, true);
+            this.lorcan.animations.add('right', [6, 7, 8, 9], 8, true);
+            this.lorcan.animations.play('right');
+        } else if (this.lorcan.x === this.lorcanMovePosition) {
+            this.lorcan.animations.stop();
+            this.lorcan.frame = 5;
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.lorcan, this.layer);
 
-        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        //this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
 
         this.player.body.velocity.x = 0;
         
