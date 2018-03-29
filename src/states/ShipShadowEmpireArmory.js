@@ -124,7 +124,7 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('ShipTestArmoryBack');
+            this.state.start('LeaveShadowEmpireArmory');
         }  
 
         function destroyObject(weapon, object) {
@@ -163,7 +163,7 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
                 this.swordTouched = true;
                 this.game.textBox.addText(new Text("Du hast das goldene Schwert berührt."));
                 this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('ShipTestArmoryBack');  
+            this.state.start('LeaveShadowEmpireArmory');  
             } else if (this.swordTouchedFText === false) {
                 this.swordTouchedFText = true;
                 this.swordText = this.game.add.text(this.sword.x-70, this.sword.y-120, 'Drücke F: Berühren', this.fontStyle);

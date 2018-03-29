@@ -27,7 +27,7 @@ export default class ShipTestLibraryBack extends Phaser.State {
         this.airshipTestBackgroundSound.loopFull();
   
         textBox.addText(new Text("KAPITEL 9: SIR LORCAN'S RÜCKKEHR <hr>"));
-        textBox.addText(new Text("Nachdem Damian in letzter Minute zum goldenen Buch greifte, verschwand die rote Atmosphäre und der Raum drehte sich erneut zurück in die alte Dimension."));
+        textBox.addText(new Text("Nachdem Damian in letzter Minute zum goldenen Buch griff, verschwand die rote Atmosphäre und der Raum drehte sich erneut zurück in die alte Dimension."));
         textBox.addText(new Text("Zunächst erleichtert über die Rückkehr musste Damian jedoch feststellen, dass das goldene Buch anfing zu bluten. Damian versuchte das Blut zu entfernen, aber das Buch hörte nicht auf zu bluten. Aus Panik wollte er ein Tuch um das Buch wickeln und es in eine Truhe verstecken. Er hoffte nämlich, dass das Buch dadurch am nächsten Tag aufhört zu bluten."));
         textBox.addText(new Text("Kurze Zeit später kam Kapitän Sir Lorcan zurück auf das Luftschiff und wollte von Damian sofort den Schlüssel zur Bibliothek zurück haben... "));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Verstecke das blutige Buch und spreche mit Sir Lorcan.</i></span>"));

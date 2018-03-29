@@ -24,6 +24,7 @@ export default class Preloader extends Phaser.State {
     // this.game.myPlugin = this.plugins.add(MyPlugin/*, ... parameters ... */);
 
     this.state.start('ShipTestArmory');
+    //this.state.start('Intro');
   }
 
   // --------------------------------------------------------------------------

@@ -23,16 +23,20 @@ export {default as ToBeContinued} from './states/ToBeContinued';
 export {default as ShipTraining} from './states/ShipTraining';
 // Cut Scene Enimies Arrival
 export {default as ShipEnimies} from './states/ShipEnimies';
+
 export {default as ShipTestLibrary} from './states/ShipTestLibrary';
-export {default as ShipTestArmory} from './states/ShipTestArmory';
 // Cut Scene Open Shadow Empire Library
 export {default as ShipShadowEmpireLibrary} from './states/ShipShadowEmpireLibrary';
-// Cut Scene Open Shadow Empire Armory
-export {default as ShipShadowEmpireArmory} from './states/ShipShadowEmpireArmory';
 // Cut Scene Close Shadow Empire Library
-export {default as ShipTestLibraryBack} from './states/ShipTestLibraryBack';
-// Cut Scene Close Shadow Empire Armory
 export {default as ShipTestArmoryBack} from './states/ShipTestArmoryBack';
+
+export {default as ShipTestArmory} from './states/ShipTestArmory';
+export {default as EnterShadowEmpireArmory} from './states/EnterShadowEmpireArmory';
+export {default as ShipShadowEmpireArmory} from './states/ShipShadowEmpireArmory';
+export {default as LeaveShadowEmpireArmory} from './states/LeaveShadowEmpireArmory';
+export {default as ShipTestLibraryBack} from './states/ShipTestLibraryBack';
+
+
 export {default as ShipShadowEmpireCell} from './states/ShipShadowEmpireCell';
 // Cut Scene Lumitras Help
 export {default as ShipShadowEmpireCellEscape} from './states/ShipShadowEmpireCellEscape';

@@ -33,10 +33,10 @@ export default class ShipTestArmoryBack extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 9: SIR LORCAN'S RÜCKKEHR <hr>"));
-        textBox.addText(new Text("Nachdem Damian in letzter Minute zum goldenen Schwert greifte, verschwand die rote Atmosphäre und der Raum drehte sich erneut zurück in die alte Dimension."));
-        textBox.addText(new Text("Zunächst erleichtert über die Rückkehr musste Damian jedoch feststellen, dass das goldene Schwert anfing zu bluten. Damian versuchte das Blut zu entfernen, aber das Schwert hörte nicht auf zu bluten. Aus Panik wollte er ein Tuch um das Schwert wickeln und es in eine Truhe verstecken. Er hoffte nämlich, dass das Schwert dadurch am nächsten Tag aufhört zu bluten."));
-        textBox.addText(new Text("Kurze Zeit später kam Kapitän Sir Lorcan zurück auf das Luftschiff und wollte von Damian sofort den Schlüssel zur Waffenkammer zurück haben... "));
-        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Verstecke das blutige Schwert und spreche mit Sir Lorcan.</i></span>"));
+        textBox.addText(new Text("Nachdem Damian in letzter Minute zum goldenen Schwert griff, verschwand die rote Atmosphäre und der Raum drehte sich erneut zurück in die alte Dimension."));
+        textBox.addText(new Text("Zunächst erleichtert über die Rückkehr musste Damian jedoch feststellen, dass das goldene Schwert anfing zu bluten. Damian versuchte das Blut zu entfernen, aber das Schwert hörte nicht auf zu bluten..."));
+        textBox.addText(new Text("Doch plötzlich trat Kapitän Sir Lorcan in die Waffenkammer ein... "));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit Sir Lorcan.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
