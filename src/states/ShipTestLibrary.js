@@ -15,7 +15,7 @@ export default class ShipTestLibrary extends Phaser.State {
         this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.load.image('marker', 'image/tilemap/marker_30x30px.png');
-        this.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.load.image('background-airship', 'image/background/airship_library_3840x900px.png');
     }
 
     create() {
@@ -37,8 +37,8 @@ export default class ShipTestLibrary extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
