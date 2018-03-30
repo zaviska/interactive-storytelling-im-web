@@ -8,7 +8,7 @@ export default class AirshipDeparture extends Phaser.State {
     let that = this;
     this.game.hideNavigation();
 
-    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+    //this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
     let cutSceneAirshipDeparture = this.game.add.video('cut_scene_airship_departure');
 

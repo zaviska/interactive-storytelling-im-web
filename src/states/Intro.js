@@ -6,8 +6,8 @@ export default class Intro extends Phaser.State {
 
   create() {
 
-    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-    console.log("SCALE MODE CREATE",  this.scale.scaleMode);
+    this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
 
     this.game.hideNavigation();
 

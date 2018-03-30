@@ -19,13 +19,15 @@ export default class Ship extends Phaser.State {
         this.game.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_300x500px.png', 500, 500);
         this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
         this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
-        this.game.load.image('background-airship', 'image/background/airship_room_3840x900px.png');
+        this.game.load.image('background-airship', 'image/background/airship_room_3840x900px.png', 3830, 900);
         this.game.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
         this.game.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.game.load.image('box', 'image/item/chest_100x100.png', 100, 100);
     }
 
     create() {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
@@ -38,13 +40,6 @@ export default class Ship extends Phaser.State {
         this.lorcanThirdTalked = false;
         this.lorcanTalkFText = false;
         let textBox = this.game.textBox;
-
-        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.scale.setShowAll();
-        window.addEventListener('resize', function () {  
-          this.game.scale.refresh();
-        });
-        this.game.scale.refresh();
 
         this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
         this.airshipBackgroundSound.loopFull();
@@ -68,7 +63,7 @@ export default class Ship extends Phaser.State {
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
         this.layer = this.map.createLayer('tile-layer_ground');
-        this.layer.resizeWorld();
+       // this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
@@ -142,6 +137,7 @@ export default class Ship extends Phaser.State {
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
+        this.rKey = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
 
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
@@ -155,7 +151,9 @@ export default class Ship extends Phaser.State {
         this.boxCount = 0;
     }
 
+
     update() {
+
         let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;

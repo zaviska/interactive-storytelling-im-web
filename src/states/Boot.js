@@ -22,14 +22,15 @@ export default class Boot extends Phaser.State {
     this.input.maxPointers = 2;
 
     //  Set the alignment of the game canvas within the page.
-    this.scale.pageAlignHorizontally = true;
-    this.scale.pageAlignVertically  = true;
+    /*his.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically  = true;*/
 
     //  Adjust the scaling mode of the game canvas. Example: If you're
     //  developing a pixel-art game, set it to 'USER_SCALE'.
+    //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    //this.scale.compatibility.canExpandParent = false;
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    console.log("SCALE MODE BOOT",  this.scale.scaleMode);
-
+    this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     //  When using 'USER_SCALE' scaling mode, use this method to adjust the
     //  scaling factor.
     // this.scale.setUserScale(2);
