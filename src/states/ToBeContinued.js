@@ -19,11 +19,7 @@ export default class ToBeContinued extends Phaser.State {
       function onClickNextButton() {
           introTitleSound.destroy();
           nextButton.destroy();
-          if(this.game.mage === true) {
-            this.state.start('ShipTestLibrary');
-          } else {
-            this.state.start('ShipTraining');
-          }
+          this.state.start('Intro');
           this.game.showNavigation();
       }
     }
