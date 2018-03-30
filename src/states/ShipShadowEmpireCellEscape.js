@@ -18,7 +18,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.load.image('air', 'image/item/yellow.png');
         this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.load.image('background-airship', 'image/background/airship_shadow_empire_armory_3840x900px.png');
     }
 
     create() {
@@ -41,8 +41,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.delay = 0;
         for (var i = 0; i < 40; i++) {

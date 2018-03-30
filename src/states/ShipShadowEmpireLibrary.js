@@ -15,7 +15,7 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
         this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.load.image('air', 'image/item/yellow.png');
-        this.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.load.image('background-airship', 'image/background/airship_shadow_empire_library_3840x900px.png');
     }
 
     create() {
@@ -37,8 +37,8 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.delay = 0;
         for (var i = 0; i < 40; i++) {
@@ -56,6 +56,13 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
+
+        this.book = this.game.add.sprite(3700, 600, 'marker');
+        this.game.physics.enable(this.book, Phaser.Physics.ARCADE);
+        this.book.body.allowGravity = false;
+        //this.book.visible = false;
+        this.bookTouched = false;
+        this.bookTouchedFText = false;
         
         this.player = createDamianMagic(this.game);
         function createDamianMagic(game) {
@@ -129,6 +136,24 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
        
         this.game.physics.arcade.collide(this.player, this.layer);
 
+        let overlapBook = this.game.physics.arcade.overlap(this.player, this.book, touchBook, null, this);
+
+        this.fontStyle = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};   
+        if (overlapBook === false && this.bookTouchedFText === true) {
+            this.bookText.destroy();
+            this.bookTouchedFText = false;
+        }
+        function touchBook(player, item) {
+            if (this.fKey.isDown && this.bookTouched === false) {
+                this.bookTouched = true;
+                this.game.textBox.addText(new Text("Du hast das goldene Buch berührt."));
+                this.shadowEmpireBackgroundSound.destroy();
+            this.state.start('ShipTestLibraryBack');  
+            } else if (this.bookTouchedFText === false) {
+                this.bookTouchedFText = true;
+                this.bookText = this.game.add.text(this.book.x-70, this.book.y-120, 'Drücke F: Berühren', this.fontStyle);
+            }
+        }
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
