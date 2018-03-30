@@ -29,8 +29,8 @@ export default class Ship extends Phaser.State {
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
-        this.mage = false;
-        this.knight = false;
+        this.game.mage = false;
+        this.game.knight = false;
         this.roleChose = false;
         this.boxesDestroyed = false;
         this.lorcanTalked = false;
@@ -169,8 +169,8 @@ export default class Ship extends Phaser.State {
             this.state.start('ToBeContinued');
         }  
         function createDamianMagic(game, x, y) {
-            that.mage = true;
-            that.knight = false;
+            that.game.mage = true;
+            that.game.knight = false;
             that.roleChose = true;
             let player = game.add.sprite(x, y, 'damian-magic');
             player.scale.set(0.97);
@@ -187,7 +187,7 @@ export default class Ship extends Phaser.State {
         }
         function createDamianSword(game, x, y) {
             that.knight = true;
-            that.mage = false;
+            that.game.mage = false;
             that.roleChose = true;
             let player = game.add.sprite(x, 100, 'damian-sword');
             player.scale.set(0.75);
@@ -372,7 +372,7 @@ export default class Ship extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown) {
-            if(this.mage === true) {
+            if(this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -387,7 +387,7 @@ export default class Ship extends Phaser.State {
                     }
                     
                 }
-            } else if(this.knight === true) {
+            } else if(this.game.knight === true) {
                 this.swordSound.play();
                 this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 this.game.physics.arcade.overlap(this.player, this.box2, slashObject, null, this);
@@ -416,7 +416,7 @@ export default class Ship extends Phaser.State {
         } else {
             if (this.facing != 'idleRight' || this.facing != 'idleLeft') {
                 this.player.animations.stop();
-                if (this.knight === true) {
+                if (this.game.knight === true) {
                     if (this.facing == 'left') {
                         this.player.frame = 14;
                         this.facing = 'idleLeft';
@@ -424,7 +424,7 @@ export default class Ship extends Phaser.State {
                         this.player.frame = 15;
                         this.facing = 'idleRight';
                     }
-                } else if (this.mage === true) {
+                } else if (this.game.mage === true) {
                     if (this.facing == 'left') {
                         this.player.frame = 11;
                         this.facing = 'idleLeft';
