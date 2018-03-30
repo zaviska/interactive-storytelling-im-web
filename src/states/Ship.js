@@ -26,6 +26,8 @@ export default class Ship extends Phaser.State {
     }
 
     create() {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
@@ -38,13 +40,6 @@ export default class Ship extends Phaser.State {
         this.lorcanThirdTalked = false;
         this.lorcanTalkFText = false;
         let textBox = this.game.textBox;
-
-        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.scale.setShowAll();
-        window.addEventListener('resize', function () {  
-          this.game.scale.refresh();
-        });
-        this.game.scale.refresh();
 
         this.airshipBackgroundSound = this.game.add.audio('airhsip_sound');
         this.airshipBackgroundSound.loopFull();
@@ -68,7 +63,7 @@ export default class Ship extends Phaser.State {
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
         this.layer = this.map.createLayer('tile-layer_ground');
-        this.layer.resizeWorld();
+       // this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
@@ -154,7 +149,9 @@ export default class Ship extends Phaser.State {
         this.boxCount = 0;
     }
 
+
     update() {
+
         let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;

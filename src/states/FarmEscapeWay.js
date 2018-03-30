@@ -18,14 +18,10 @@ export default class FarmEscapeWay extends Phaser.State {
     }
 
     create() {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.facing = 'right';
         this.jumpTimer = 0;
-        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-        this.game.scale.setShowAll();
-        window.addEventListener('resize', function () {  
-          this.game.scale.refresh();
-        });
-        this.game.scale.refresh();
 
         this.escapeWayBackgroundSound = this.game.add.audio('escape_way_sound');
         this.escapeWayBackgroundSound.loopFull();

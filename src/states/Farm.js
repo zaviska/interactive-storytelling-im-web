@@ -20,15 +20,10 @@ export default class Farm extends Phaser.State {
     }
 
     create() {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.facing = 'left';
         this.jumpTimer = 0;
-  
-        //this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.scale.setShowAll();
-        window.addEventListener('resize', function () {  
-          this.game.scale.refresh();
-        });
-        this.game.scale.refresh();
 
         this.farmBackgroundSound = this.game.add.audio('farm_sound');
         this.farmBackgroundSound.loopFull();
