@@ -119,7 +119,7 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('ShipTestLibraryBack');
+            this.state.start('LeaveShadowEmpireLibrary');
         }  
 
         function destroyObject(weapon, object) {
@@ -148,7 +148,7 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
                 this.bookTouched = true;
                 this.game.textBox.addText(new Text("Du hast das goldene Buch berührt."));
                 this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('ShipTestLibraryBack');  
+            this.state.start('LeaveShadowEmpireLibrary');  
             } else if (this.bookTouchedFText === false) {
                 this.bookTouchedFText = true;
                 this.bookText = this.game.add.text(this.book.x-70, this.book.y-120, 'Drücke F: Berühren', this.fontStyle);

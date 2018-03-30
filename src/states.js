@@ -30,9 +30,9 @@ export {default as ShipEnimies} from './states/ShipEnimies';
 
 // MAGE QUEST
 export {default as ShipTestLibrary} from './states/ShipTestLibrary';
-// Cut Scene Open Shadow Empire Library
+export {default as EnterShadowEmpireLibrary} from './states/EnterShadowEmpireLibrary';
 export {default as ShipShadowEmpireLibrary} from './states/ShipShadowEmpireLibrary';
-// Cut Scene Close Shadow Empire Library
+export {default as LeaveShadowEmpireLibrary} from './states/LeaveShadowEmpireLibrary';
 export {default as ShipTestArmoryBack} from './states/ShipTestArmoryBack';
 
 // KNIGHT QUEST
