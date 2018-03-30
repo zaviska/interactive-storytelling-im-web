@@ -13,16 +13,16 @@ export default class Ship extends Phaser.State {
         this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
         this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_300x500px.png', 500, 500);
-        this.game.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
-        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
-        this.game.load.image('background-airship', 'image/background/airship_room_3840x900px.png');
-        this.game.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
-        this.game.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
-        this.game.load.image('box', 'image/item/chest_100x100.png', 100, 100);
+        this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
+        this.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
+        this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
+        this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
+        this.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
+        this.load.image('background-airship', 'image/background/airship_room_3840x900px.png');
+        this.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
+        this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
+        this.load.image('box', 'image/item/chest_100x100.png', 100, 100);
     }
 
     create() {
@@ -89,7 +89,6 @@ export default class Ship extends Phaser.State {
         this.box3.body.bounce.set(1);
 
         this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
-        //this.lorcan.scale.set(2);
         this.lorcan.frame = 4;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;
@@ -109,21 +108,6 @@ export default class Ship extends Phaser.State {
             return player;
         }
         
-        this.cursors = this.game.input.keyboard.createCursorKeys();
-        this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    
-        this.bullets = this.game.add.group();
-        this.bullets.enableBody = true;
-        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.bullets.createMultiple(30, 'bullet', 0, false);
-        this.bullets.setAll('outOfBoundsKill', true);
-        this.bullets.setAll('checkWorldBounds', true);
-        this.bullets.forEach(setupInvader, this);
-
-        this.explosions = this.game.add.group();
-        this.explosions.createMultiple(30, 'explode');
-        this.explosions.forEach(setupInvader, this);
-
        /*
         this.boxgroup = this.game.add.group();
         this.boxgroup.enableBody = true;
@@ -138,20 +122,35 @@ export default class Ship extends Phaser.State {
         this.boxgroup.body.bounce.setTo(0.9, 0.9);
         */
 
-        this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
-        this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-        this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
+        this.bullets = this.game.add.group();
+        this.bullets.enableBody = true;
+        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bullets.createMultiple(30, 'bullet', 0, false);
+        this.bullets.setAll('outOfBoundsKill', true);
+        this.bullets.setAll('checkWorldBounds', true);
+        this.bullets.forEach(setupInvader, this);
 
+        this.explosions = this.game.add.group();
+        this.explosions.createMultiple(30, 'explode');
+
+        this.explosions.forEach(setupInvader, this);
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
-        }
-                
+        }     
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
             invader.animations.add('explode');
         }
+
+        this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
+        this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
+        this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+
         this.boxCount = 0;
     }
 
@@ -166,7 +165,7 @@ export default class Ship extends Phaser.State {
         if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
-            this.state.start('ToBeContinued');
+            this.state.start('ShipTraining');
         }  
         function createDamianMagic(game, x, y) {
             that.game.mage = true;
@@ -178,7 +177,7 @@ export default class Ship extends Phaser.State {
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
-            player.body.setSize(300, 500, 0, 0);
+            player.body.setSize(500, 500, 0, 0);
             player.animations.add('left', [9, 8, 7, 6], 8, true);
             player.animations.add('right', [2, 3, 4, 5], 8, true);
             player.animations.add('shootRight', [1, 0]);
@@ -186,7 +185,7 @@ export default class Ship extends Phaser.State {
             return player;
         }
         function createDamianSword(game, x, y) {
-            that.knight = true;
+            that.game.knight = true;
             that.game.mage = false;
             that.roleChose = true;
             let player = game.add.sprite(x, 100, 'damian-sword');
@@ -256,15 +255,15 @@ export default class Ship extends Phaser.State {
                     that.box3.body.collideWorldBounds = true;
                     that.box3.body.bounce.set(1);
                 }
-                window.startToBeContinued = function () {
+                window.startCutSceneAct2 = function () {
                     that.airshipBackgroundSound.destroy();
                     that.fightTutorialBackgroundSound.destroy();
                     that.game.hideNavigation();
-                    that.state.start('ToBeContinued');
+                    that.state.start('ShipTraining'); // replace with cut scene for act 2
                 }
                 let repeatTask = [
                     new Answer("Ja, ich möchte diese Aufgabe wiederholen.", "loadBoxes"),
-                    new Answer("Nein, das reicht.", "startToBeContinued")
+                    new Answer("Nein, das reicht.", "startCutSceneAct2")
                 ];
                 window.noAnswer = function() {
                     that.lorcanSecondTalked = false;
@@ -364,6 +363,7 @@ export default class Ship extends Phaser.State {
             this.lorcanTalkFText = false;
             this.talkToLorcan = false;
         }
+
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
             this.player.body.onFloor() &&
@@ -371,7 +371,7 @@ export default class Ship extends Phaser.State {
                 this.player.body.velocity.y = -250;
                 this.jumpTimer = this.game.time.now + 750;
         }
-        if (this.game.input.activePointer.isDown) {
+        if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
             if(this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
