@@ -24,7 +24,7 @@ export {default as AirshipDeparture} from './states/AirshipDeparture';
 export {default as Ship} from './states/Ship';
 
 //ACT 2
-// Cut Scene Enimies Arrival
+export {default as Tumbras} from './states/Tumbras';
 export {default as ShipEnimies} from './states/ShipEnimies';
 
 // MAGE QUEST

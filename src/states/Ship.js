@@ -162,7 +162,7 @@ export default class Ship extends Phaser.State {
         if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
-            this.state.start('ShipEnimies');
+            this.state.start('Tumbras');
         }  
         function createDamianMagic(game, x, y) {
             that.game.mage = true;
@@ -252,15 +252,15 @@ export default class Ship extends Phaser.State {
                     that.box3.body.collideWorldBounds = true;
                     that.box3.body.bounce.set(1);
                 }
-                window.startCutSceneAct2 = function () {
+                window.startCutSceneTumbras = function () {
                     that.airshipBackgroundSound.destroy();
                     that.fightTutorialBackgroundSound.destroy();
                     that.game.hideNavigation();
-                    that.state.start('ShipEnimies'); // replace with cut scene for act 2
+                    that.state.start('Tumbras');
                 }
                 let repeatTask = [
                     new Answer("Ja, ich möchte diese Aufgabe wiederholen.", "loadBoxes"),
-                    new Answer("Nein, das reicht.", "startCutSceneAct2")
+                    new Answer("Nein, das reicht.", "startCutSceneTumbras")
                 ];
                 window.noAnswer = function() {
                     that.lorcanSecondTalked = false;
