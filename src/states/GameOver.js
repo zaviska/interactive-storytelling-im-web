@@ -18,7 +18,7 @@ export default class GameOver extends Phaser.State {
       function onClickNextButton() {
           introTitleSound.destroy();
           nextButton.destroy();
-          this.state.start('Intro');
+          this.state.start(this.game.lastState);
           this.game.showNavigation();
       }
     }

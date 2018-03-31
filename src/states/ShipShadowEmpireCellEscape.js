@@ -28,6 +28,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
+        this.tumbraJumpDownTimer = 0;
+        this.tumbraJumpUpTimer = 0;
         let textBox = this.game.textBox;
 
         this.shadowEmpireBackgroundSound = this.game.add.audio('shadow_empire_sound');
@@ -67,18 +69,26 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.tumbraOne = this.game.add.sprite(500, 400, 'tumbra');
         this.game.physics.enable(this.tumbraOne, Phaser.Physics.ARCADE);
         this.tumbraOne.body.collideWorldBounds = true;
+        this.tumbraOne.body.allowGravity = false;
+        this.tumbraOne.health = 30;
 
         this.tumbraTwo = this.game.add.sprite(1000, 400, 'tumbra');
         this.game.physics.enable(this.tumbraTwo, Phaser.Physics.ARCADE);
         this.tumbraTwo.body.collideWorldBounds = true;
+        this.tumbraTwo.body.allowGravity = false;
+        this.tumbraTwo.health = 30;
 
         this.tumbraThree = this.game.add.sprite(1500, 400, 'tumbra');
         this.game.physics.enable(this.tumbraThree, Phaser.Physics.ARCADE);
         this.tumbraThree.body.collideWorldBounds = true;
+        this.tumbraThree.body.allowGravity = false;
+        this.tumbraThree.health = 30;
 
         this.tumbraFour = this.game.add.sprite(2000, 400, 'tumbra');
         this.game.physics.enable(this.tumbraFour, Phaser.Physics.ARCADE);
         this.tumbraFour.body.collideWorldBounds = true;
+        this.tumbraFour.body.allowGravity = false;
+        this.tumbraFour.health = 30;
 
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
@@ -108,10 +118,19 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
+        this.game.knight = true;
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
+            this.game.mage = true;
             this.player = createDamianMagic(this.game);
+        } 
+        this.player.setHealth(100); 
+        this.player.events.onKilled.add(playerDied, this);
+
+        function playerDied(player) {
+            this.game.lastState = 'ShipShadowEmpireCellEscape';
+            this.state.start('GameOver');
         }
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -127,13 +146,19 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
 
-        this.explosions.forEach(setupInvader, this);
+        this.explosions.forEach(setupExplosion, this);
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
         }     
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
+            invader.animations.add('explode');
+        }
+
+        function setupExplosion(invader) {
+            invader.anchor.x = 0;
+            invader.anchor.y = 0;
             invader.animations.add('explode');
         }
 
@@ -144,9 +169,29 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+             
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian:' + this.player.health, style);
     }
 
     update() {
+
+        function hitTumbraWithMagic(tumbra, bullet) {
+            tumbra.damage(1);
+            var explosion = this.explosions.getFirstExists(false);
+            if(explosion) {
+                explosion.reset(bullet.body.x, bullet.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+
+            this.explosionSound.play("", 0, 5, false, true);
+            bullet.kill();
+        }
+        
+        function slashTumbra(player, tumbra) {
+            tumbra.damage(1);
+        }
+
         let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
@@ -154,26 +199,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireFinalFight');
-        }  
-
-        function destroyObject(weapon, object) {
-            weapon.kill();
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
-        }
-        function slashObject(player, object) {
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
@@ -181,6 +206,42 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.game.physics.arcade.collide(this.tumbraTwo, this.layer);
         this.game.physics.arcade.collide(this.tumbraThree, this.layer);
         this.game.physics.arcade.collide(this.tumbraFour, this.layer);
+
+        
+        if(this.game.time.now > this.tumbraJumpDownTimer) {
+            this.tumbraOne.body.velocity.y = -100;
+            this.tumbraTwo.body.velocity.y = -40;
+            this.tumbraThree.body.velocity.y = -90;
+            this.tumbraFour.body.velocity.y = -120;
+            this.tumbraJumpUpTimer = this.game.time.now + 2000;
+            this.tumbraJumpDownTimer = this.game.time.now + 4000;
+        } else if(this.game.time.now > this.tumbraJumpUpTimer) {
+            this.tumbraOne.body.velocity.y = 100;
+            this.tumbraTwo.body.velocity.y = 40;
+            this.tumbraThree.body.velocity.y = 100;
+            this.tumbraFour.body.velocity.y = 100;
+        }
+
+        let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
+
+        if(knightAttacks) {
+            this.game.physics.arcade.overlap(this.player, this.tumbraOne, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.player, this.tumbraTwo, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.player, this.tumbraThree, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.player, this.tumbraFour, slashTumbra, null, this);
+        } else {
+            this.game.physics.arcade.overlap(this.tumbraOne, this.player, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.tumbraTwo, this.player, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.tumbraThree, this.player, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.tumbraFour, this.player, slashTumbra, null, this);
+        }
+
+        this.playerHitPointsText.setText('Lebenspunkte Damian:' + this.player.health, true); 
+
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraOne, hitTumbraWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraTwo, hitTumbraWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraThree, hitTumbraWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraFour, hitTumbraWithMagic, null, this);
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&

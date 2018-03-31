@@ -115,6 +115,13 @@ export default class ShipEnimies extends Phaser.State {
             this.player = createDamianMagic(this.game);
         } 
         this.player.setHealth(100);
+        this.player.events.onKilled.add(playerDied, this);
+
+        function playerDied(player) {
+            this.game.lastState = 'ShipEnimies';
+            this.state.start('GameOver');
+        }
+
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 

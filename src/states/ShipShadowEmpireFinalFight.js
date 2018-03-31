@@ -81,11 +81,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             console.log("Lorcan died", lorcan);
             this.game.add.text(300, 300, 'Das böse ist besiegt', style);
         }
-        function playerDied(player) {
-            let style = { font: "40px Hind, Arial", fill: "red", backgroundColor: "black"};
-            console.log("Player died", player);
-            this.game.add.text(300, 300, 'Game Over', style);
-        }
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
             player.scale.set(0.75);
@@ -123,6 +118,10 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.player.setHealth(100);
         this.player.events.onKilled.add(playerDied, this);
 
+        function playerDied(player) {
+            this.game.lastState = 'ShipShadowEmpireFinalFight';
+            this.state.start('GameOver');
+        }
 
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
