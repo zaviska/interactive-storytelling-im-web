@@ -6,6 +6,7 @@ export default class ToBeContinued extends Phaser.State {
     }
   
     create() {
+      
       this.game.hideNavigation();
 
       this.toBeContinued = this.add.image(500, 300, 'to_be_continued');

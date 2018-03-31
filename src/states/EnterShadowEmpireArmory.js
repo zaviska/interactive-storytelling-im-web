@@ -9,6 +9,7 @@ export default class EnterShadowEmpireArmory extends Phaser.State {
       this.game.hideNavigation();
   
       this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+      this.scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
   
       let cutSceneEnterShadowEmpireArmory = this.game.add.video('cut_scene_enter_shadow_empire_armory');
   
