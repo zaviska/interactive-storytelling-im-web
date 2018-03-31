@@ -15,7 +15,7 @@ export default class ShipEnimies extends Phaser.State {
         this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
-        this.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
+        this.load.spritesheet('tumbra', 'image/characters/tumbras/tumbra_440x260px.png', 440, 260);
         this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
@@ -53,14 +53,21 @@ export default class ShipEnimies extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
-        this.lorcan = this.game.add.sprite(1000, 300, 'lorcan');
-        this.lorcan.frame = 4;
-        this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
-        this.lorcan.body.bounce.y = 0.2;
-        this.lorcan.body.collideWorldBounds = true;
-        this.lorcan.body.setSize(378, 510, 0, 0);
-        this.lorcanTalked = false;
-        this.lorcanTalkFText = false;
+        this.tumbraOne = this.game.add.sprite(500, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraOne, Phaser.Physics.ARCADE);
+        this.tumbraOne.body.collideWorldBounds = true;
+
+        this.tumbraTwo = this.game.add.sprite(1000, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraTwo, Phaser.Physics.ARCADE);
+        this.tumbraTwo.body.collideWorldBounds = true;
+
+        this.tumbraThree = this.game.add.sprite(1500, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraThree, Phaser.Physics.ARCADE);
+        this.tumbraThree.body.collideWorldBounds = true;
+
+        this.tumbraFour = this.game.add.sprite(2000, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraFour, Phaser.Physics.ARCADE);
+        this.tumbraFour.body.collideWorldBounds = true;
         
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
@@ -141,25 +148,13 @@ export default class ShipEnimies extends Phaser.State {
                 this.state.start('ShipTestLibrary');
             } 
         }  
-        if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
-            this.lorcanText.destroy();
-            this.lorcanTalkFText = false;
-        }
-        function talkToLorcan(player, lorcan) {
-            if (this.fKey.isDown && this.lorcanTalked === false) {
-                this.lorcanTalked = true;
-                let lorcanPerson = new Person("Sir Lorcan", "lorcan");
-                this.game.textBox.addText(new Dialog("Hallo Damian.", lorcanPerson));
-            } else if (this.lorcanTalkFText === false) {
-                this.lorcanTalkFText = true;
-                this.lorcanText = this.game.add.text(this.lorcan.x, this.lorcan.y-50, 'Drücke F: Sprechen', style);
-            }
-        }
 
         this.game.physics.arcade.collide(this.player, this.layer);
-        this.game.physics.arcade.collide(this.lorcan, this.layer);
+        this.game.physics.arcade.collide(this.tumbraOne, this.layer);
+        this.game.physics.arcade.collide(this.tumbraTwo, this.layer);
+        this.game.physics.arcade.collide(this.tumbraThree, this.layer);
+        this.game.physics.arcade.collide(this.tumbraFour, this.layer);
 
-        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&

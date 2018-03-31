@@ -239,7 +239,7 @@ export default class Room extends Phaser.State {
                         that.escapeWayBackgroundSound.destroy();
                         that.state.start('FarmEscapeWay');
                         that.game.textBox.addText(new Text("Du bist aus dem Fenster geklettert."));
-                        that.game.textBox.addText(new Text("Jetzt muss er nur noch in das Luftschiff einsteigen."));
+                        that.game.textBox.addText(new Text("Jetzt musst du nur noch in das Luftschiff einsteigen."));
                     } else if (that.bagTaken === true && that.amulet === false){
                         that.game.textBox.addText(new Dialog("Ich muss noch mein Amulett finden.", that.damianPerson));
                     } else if (that.bagTaken === false && that.amulet === true){

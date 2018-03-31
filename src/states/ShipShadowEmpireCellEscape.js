@@ -15,6 +15,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
+        this.load.spritesheet('tumbra', 'image/characters/tumbras/tumbra_440x260px.png', 440, 260);
         this.load.image('air', 'image/item/yellow.png');
         this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
@@ -62,6 +63,22 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
+
+        this.tumbraOne = this.game.add.sprite(500, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraOne, Phaser.Physics.ARCADE);
+        this.tumbraOne.body.collideWorldBounds = true;
+
+        this.tumbraTwo = this.game.add.sprite(1000, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraTwo, Phaser.Physics.ARCADE);
+        this.tumbraTwo.body.collideWorldBounds = true;
+
+        this.tumbraThree = this.game.add.sprite(1500, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraThree, Phaser.Physics.ARCADE);
+        this.tumbraThree.body.collideWorldBounds = true;
+
+        this.tumbraFour = this.game.add.sprite(2000, 400, 'tumbra');
+        this.game.physics.enable(this.tumbraFour, Phaser.Physics.ARCADE);
+        this.tumbraFour.body.collideWorldBounds = true;
 
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
@@ -160,6 +177,10 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
+        this.game.physics.arcade.collide(this.tumbraOne, this.layer);
+        this.game.physics.arcade.collide(this.tumbraTwo, this.layer);
+        this.game.physics.arcade.collide(this.tumbraThree, this.layer);
+        this.game.physics.arcade.collide(this.tumbraFour, this.layer);
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&

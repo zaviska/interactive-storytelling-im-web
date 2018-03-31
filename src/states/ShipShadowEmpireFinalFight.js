@@ -114,7 +114,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
-        
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
