@@ -12,10 +12,10 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
         this.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
+        this.load.image('green', 'image/bullet/lorcanBullet_100x100.png', 100, 100);
         this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
-        //this.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_378x510px.png', 378, 510);
         this.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_schattengeist_800x800px.png', 800, 800);
         this.load.image('air', 'image/item/yellow.png');
         this.load.tilemap('map', 'image/tilemap/room_1920px.json', null, Phaser.Tilemap.TILED_JSON);
@@ -39,7 +39,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 11: SIR LORCAN'S VERWANDLUNG <hr>"));
-        textBox.addText(new Text("Als Kapitän Sir Lorcan Damian den Weg versperrte, zeigte er sein wahres Gesicht. Er verwandelte sich in einen Schattengeist und griff Damian mit magischen Kräften an."));
+        textBox.addText(new Text("Sir Lorcan zeigt sein wahres Gesicht. Er ist ein Schattengeist."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Besiege den Schattengeist Lorcan.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -66,7 +66,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.game.physics.arcade.gravity.y = 500;
 
         this.lorcan = this.game.add.sprite(860, 0, 'lorcan');
-        //this.lorcan.frame = 4;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;
         this.lorcan.body.collideWorldBounds = true;
@@ -79,7 +78,16 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
         function lorcanDied(lorcan) {
             console.log("Lorcan died", lorcan);
-            this.game.add.text(300, 300, 'Das böse ist besiegt', style);
+            window.startCutSceneShipReward = function() {
+                that.finalFightBackgroundSound.destroy();
+                that.state.start('ShipReward');
+            }
+            let backToShip = [
+                new Answer("Weiter", "startCutSceneShipReward"),
+            ];
+            this.game.textBox.addText(new Text("Du hast den Schattengeist Lorcan besiegt."));
+            this.game.textBox.addText(new Text("Das Schattenreich löst sich langsam auf und alle Gefangene werden dadurch befreit."));
+            this.game.textBox.addText(new Decision(backToShip));
         }
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
@@ -123,7 +131,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             this.state.start('GameOver');
         }
 
-
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.bullets = this.game.add.group();
@@ -136,8 +143,9 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
         this.bossBullets = this.game.add.group();
         this.bossBullets.enableBody = true;
+        this.bossBullets.scale.set(1.5);
         this.bossBullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.bossBullets.createMultiple(10, 'bullet', 0, false);
+        this.bossBullets.createMultiple(10, 'green', 0, false);
         this.bossBullets.setAll('outOfBoundsKill', true);
         this.bossBullets.setAll('checkWorldBounds', true);
         this.bossBullets.forEach(setupBossBullets, this);
@@ -175,11 +183,9 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
-
         
-        
-        this.endBossHitPointsText = this.game.add.text(10, 10, 'Lebenspunkte Endboss:' + this.lorcan.health, style);
-        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian:' + this.player.health, style);
+        this.endBossHitPointsText = this.game.add.text(10, 10, 'Lebenspunkte Endboss: ' + this.lorcan.health, style);
+        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian: ' + this.player.health, style);
     }
 
     update() {
@@ -195,7 +201,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
         function hitEndBossWithMagic(boss, bullet) {
             boss.damage(1);
-            this.endBossHitPointsText.setText('Lebenspunkte Endboss:' + boss.health, true);
+            this.endBossHitPointsText.setText('Lebenspunkte Endboss: ' + boss.health, true);
             var explosion = this.explosions.getFirstExists(false);
             if(explosion) {
                 explosion.reset(bullet.body.x, bullet.body.y);
@@ -209,7 +215,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         function hitPlayerWithBullets(player, bullet) {
             if(!knightAttacks || this.game.mage === true) {
                 player.damage(1);
-                this.playerHitPointsText.setText('Lebenspunkte Damian:' + player.health, true); 
+                this.playerHitPointsText.setText('Lebenspunkte Damian: ' + player.health, true); 
             }
             var explosion = this.explosions.getFirstExists(false);
             if(explosion) {
@@ -233,13 +239,11 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
             this.explosionSound.play("", 0, 5, false, true);
         }
-
     
         function slashBoss(player, boss) {
             boss.damage(1);
             this.endBossHitPointsText.setText('Lebenspunkte Endboss:' + boss.health, true);
         }
-       
 
         if(this.lorcan.alive) {
             var bossBullets = this.bossBullets.getFirstExists(false);
@@ -285,7 +289,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
                 }
             } else if(this.game.knight === true) {
                 this.swordSound.play();
-                //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
                     this.facing == "idleRight";

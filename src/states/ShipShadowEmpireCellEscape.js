@@ -118,7 +118,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
-        this.game.knight = true;
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {

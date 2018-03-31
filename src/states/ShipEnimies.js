@@ -164,7 +164,7 @@ export default class ShipEnimies extends Phaser.State {
 
         
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian:' + this.player.health, style);
+        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian: ' + this.player.health, style);
     }
 
     update() {
@@ -232,7 +232,7 @@ export default class ShipEnimies extends Phaser.State {
             this.game.physics.arcade.overlap(this.tumbraFour, this.player, slashTumbra, null, this);
         }
 
-        this.playerHitPointsText.setText('Lebenspunkte Damian:' + this.player.health, true); 
+        this.playerHitPointsText.setText('Lebenspunkte Damian: ' + this.player.health, true); 
 
         this.game.physics.arcade.overlap(this.bullets, this.tumbraOne, hitTumbraWithMagic, null, this);
         this.game.physics.arcade.overlap(this.bullets, this.tumbraTwo, hitTumbraWithMagic, null, this);
@@ -264,7 +264,6 @@ export default class ShipEnimies extends Phaser.State {
                 }
             } else if(this.game.knight === true) {
                 this.swordSound.play();
-                //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
                     this.facing == "idleRight";
