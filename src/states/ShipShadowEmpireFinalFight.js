@@ -24,6 +24,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
     }
 
     create() {
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         let that = this;
@@ -64,16 +65,27 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
-        this.lorcan = this.game.add.sprite(560, 0, 'lorcan');
+        this.lorcan = this.game.add.sprite(860, 0, 'lorcan');
         //this.lorcan.frame = 4;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;
         this.lorcan.body.collideWorldBounds = true;
         this.lorcan.body.setSize(800, 800, 0, 0);
         this.lorcan.body.bounce.set(1);
+        this.lorcan.setHealth(1200);
         this.lorcanTalked = false;
         this.lorcanTalkFText = false;
-        
+        this.lorcan.events.onKilled.add(lorcanDied, this);
+
+        function lorcanDied(lorcan) {
+            console.log("Lorcan died", lorcan);
+            this.game.add.text(300, 300, 'Das böse ist besiegt', style);
+        }
+        function playerDied(player) {
+            let style = { font: "40px Hind, Arial", fill: "red", backgroundColor: "black"};
+            console.log("Player died", player);
+            this.game.add.text(300, 300, 'Game Over', style);
+        }
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
             player.scale.set(0.75);
@@ -102,11 +114,17 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
+        
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
+            this.game.mage = true;
             this.player = createDamianMagic(this.game);
         }
+        this.player.setHealth(100);
+        this.player.events.onKilled.add(playerDied, this);
+
+
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
@@ -116,7 +134,15 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.bullets.createMultiple(30, 'bullet', 0, false);
         this.bullets.setAll('outOfBoundsKill', true);
         this.bullets.setAll('checkWorldBounds', true);
-        this.bullets.forEach(setupInvader, this);
+        this.bullets.forEach(setupPlayerBullets, this);
+
+        this.bossBullets = this.game.add.group();
+        this.bossBullets.enableBody = true;
+        this.bossBullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bossBullets.createMultiple(10, 'bullet', 0, false);
+        this.bossBullets.setAll('outOfBoundsKill', true);
+        this.bossBullets.setAll('checkWorldBounds', true);
+        this.bossBullets.forEach(setupBossBullets, this);
 
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
@@ -125,9 +151,22 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
         }     
+
+        function setupBossBullets(invader) {
+            invader.anchor.x = 1;
+            invader.anchor.y = 1;
+            invader.body.allowGravity = false;
+            invader.animations.add('explode');
+        }
+        function setupPlayerBullets(player) {
+            player.anchor.x = -0.5;
+            player.anchor.y = 2.2;
+            player.body.allowGravity = false;
+            player.animations.add('explode');
+        }
         function setupInvader(invader) {
-            invader.anchor.x = -0.5;
-            invader.anchor.y = 2.2;
+            invader.anchor.x = 0;
+            invader.anchor.y = 0;
             invader.animations.add('explode');
         }
 
@@ -138,65 +177,96 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+
+        
+        
+        this.endBossHitPointsText = this.game.add.text(10, 10, 'Lebenspunkte Endboss:' + this.lorcan.health, style);
+        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian:' + this.player.health, style);
     }
 
     update() {
         let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
-
+        let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
+    
         if (this.nKey.isDown) {
             this.finalFightBackgroundSound.destroy();
             this.state.start('ShipReward');
         }  
 
-        function destroyObject(weapon, object) {
-            weapon.kill();
-            object.kill();
-            ++this.boxCount;
-
+        function hitEndBossWithMagic(boss, bullet) {
+            boss.damage(1);
+            this.endBossHitPointsText.setText('Lebenspunkte Endboss:' + boss.health, true);
             var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
+            if(explosion) {
+                explosion.reset(bullet.body.x, bullet.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+
+            this.explosionSound.play("", 0, 5, false, true);
+            bullet.kill();
+        }
+        
+        function hitPlayerWithBullets(player, bullet) {
+            if(!knightAttacks || this.game.mage === true) {
+                player.damage(1);
+                this.playerHitPointsText.setText('Lebenspunkte Damian:' + player.health, true); 
+            }
+            var explosion = this.explosions.getFirstExists(false);
+            if(explosion) {
+                explosion.reset(bullet.body.x, bullet.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+
+            this.explosionSound.play("", 0, 5, false, true);
+        
+            bullet.kill();
+        }
+
+        function bulletHitBullets(bullet, bossBullet) {
+            bullet.kill();
+            bossBullet.kill();
+            var explosion = this.explosions.getFirstExists(false);
+            if(explosion) {
+                explosion.reset(bullet.body.x, bullet.body.y);
+                explosion.play('explode', 30, false, true);
+            }
 
             this.explosionSound.play("", 0, 5, false, true);
         }
-        function slashObject(player, object) {
-            object.kill();
-            ++this.boxCount;
 
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
+    
+        function slashBoss(player, boss) {
+            boss.damage(1);
+            this.endBossHitPointsText.setText('Lebenspunkte Endboss:' + boss.health, true);
         }
+       
 
-        if (typeof this.lorcanText !== undefined && this.talkToLorcan === true) {
-            this.lorcanText.destroy();
-            this.lorcanTalkFText = false;
-        }
-        function talkToLorcan(player, lorcan) {
-            if (this.fKey.isDown && this.lorcanTalked === false) {
-                this.lorcanTalked = true;
-                let lorcanPerson = new Person("Sir Lorcan", "lorcan");
-                this.game.textBox.addText(new Dialog("Hallo Damian.", lorcanPerson));
-            } else if (this.lorcanTalkFText === false) {
-                this.lorcanTalkFText = true;
-                this.lorcanText = this.game.add.text(this.lorcan.x, this.lorcan.y-50, 'Drücke F: Sprechen', style);
+        if(this.lorcan.alive) {
+            var bossBullets = this.bossBullets.getFirstExists(false);
+            if (bossBullets) {
+                bossBullets.reset(this.lorcan.x+350, this.lorcan.y+300);
+                let x = Math.round(Math.random()) * 1920;
+                let y = Math.random() * 900;
+                console.log("X, Y", x, y);
+                bossBullets.rotation = this.game.physics.arcade.moveToXY(bossBullets, x, y, 400);
             }
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.lorcan, this.layer);
 
-        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.lorcan, hitEndBossWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bossBullets, this.player, hitPlayerWithBullets, null, this);
+        this.game.physics.arcade.overlap(this.bossBullets, this.bullets, bulletHitBullets, null, this);
+        this.game.physics.arcade.overlap(this.player, this.lorcan, slashBoss, null, this);
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
             this.player.body.onFloor() &&
             this.game.time.now > this.jumpTimer) {
-                this.player.body.velocity.y = -250;
+                this.player.body.velocity.y = -550;
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {

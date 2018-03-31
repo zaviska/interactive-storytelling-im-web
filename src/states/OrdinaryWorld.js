@@ -8,7 +8,7 @@ export default class OrdinaryWorld extends Phaser.State {
     let that = this;
     this.game.hideNavigation();
 
-    //this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
     let cutSceneOrdinaryWorld = this.game.add.video('cut_scene_ordinary_world');
     

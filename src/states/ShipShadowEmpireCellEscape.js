@@ -22,6 +22,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
     }
 
     create() {
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
