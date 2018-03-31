@@ -25,7 +25,8 @@ export default class Preloader extends Phaser.State {
 
     //this.state.start('ShipShadowEmpireFinalFight');
     //this.state.start('ShipShadowEmpireFinalFight');
-    this.state.start('Ship');
+    //this.state.start('Ship');
+    this.state.start('GameOver');
     //this.state.start('Intro');
   }
 
