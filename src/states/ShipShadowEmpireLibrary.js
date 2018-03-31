@@ -31,7 +31,7 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
         this.shootSound = this.game.add.audio('shoot_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 8: DAS SCHATTENREICH <hr>"));
+        textBox.addText(new Text("KAPITEL 7: DAS SCHATTENREICH <hr>"));
         textBox.addText(new Text("Plötzlich drehte sich der Raum und es strömte Blut in den Raum hinein. Wie ein Nebel bildete sich jetzt eine rote Atmosphäre im Raum. Damian hörte seltsame Schreie und Kettengeräusche. Er sah einige Gefange, die ihn einzelne Zellen eingesperrt waren und von Schattengeister bewacht wurden."));
         textBox.addText(new Text("Damian suchte das goldene Buch, um damit wieder zurückkehren zu können. Allerdings bemerkten ihn ein paar Wächter, die ihn verfolgten."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Berühre das goldene Buch bevor die Wächter dich einholen.</i></span>"));

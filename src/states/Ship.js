@@ -49,10 +49,10 @@ export default class Ship extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
         this.boxSound = this.game.add.audio('box_sound');
   
-        textBox.addText(new Text("KAPITEL 4: DIE ANKUNFT AUF DEM LUFTSCHIFF <hr>"));
-        textBox.addText(new Text("Nachdem Damian es geschafft hatte, sich unbemerkt aus dem Haus zu schleichen, stieg er in das Luftschiff der Black Air Knights ein."));
-        textBox.addText(new Text("Im Luftschiff erwartete und begrüßte ihn Kapitän Sir Lorcan."));
-        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit Sir Lorcan. Nachdem du deine Ausbildungsklasse gewählt hast, musst du eine Kampfübung absolvieren.</i></span>"));
+        textBox.addText(new Text("KAPITEL 4: DAS LUFTSCHIFF DER BLACK AIR KNIGHTS <hr>"));
+        textBox.addText(new Text("Nachdem Damian es geschafft hatte, sich unbemerkt aus dem Haus zu schleichen, stieg er in das Luftschiff der Black Air Knights ein. Das Luftschiff war mit vielen Gemeinschaftsräumen zum Trainieren, Speißen und Schlafen ausgestattet. Es hatte zudem noch eine große Magier-Bibliothek und eine Waffenkammer."));
+        textBox.addText(new Text("Im Luftschiff erwartete ihn Kapitän Sir Lorcan."));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit Sir Lorcan, wähle eine Ausbildungsklasse und bestehe die erste Kampfübung.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -162,7 +162,7 @@ export default class Ship extends Phaser.State {
         if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
-            this.state.start('ShipTraining');
+            this.state.start('ShipEnimies');
         }  
         function createDamianMagic(game, x, y) {
             that.game.mage = true;
@@ -256,7 +256,7 @@ export default class Ship extends Phaser.State {
                     that.airshipBackgroundSound.destroy();
                     that.fightTutorialBackgroundSound.destroy();
                     that.game.hideNavigation();
-                    that.state.start('ShipTraining'); // replace with cut scene for act 2
+                    that.state.start('ShipEnimies'); // replace with cut scene for act 2
                 }
                 let repeatTask = [
                     new Answer("Ja, ich möchte diese Aufgabe wiederholen.", "loadBoxes"),

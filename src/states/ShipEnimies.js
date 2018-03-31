@@ -37,7 +37,7 @@ export default class ShipEnimies extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 6: DIE TUMBRAS: ANGRIFF DER SCHATTENGEISTER <hr>"));
+        textBox.addText(new Text("KAPITEL 5: DIE TUMBRAS: ANGRIFF DER SCHATTENGEISTER <hr>"));
         textBox.addText(new Text("Das Luftschiff wurde einestages von Schattengeistern angegriffen, die sich <i>Tumbras</i> nennen. Alle Luftritter kämpften gegen die Schattengeister und versuchten die Lehrlinge ebenfalls zu beschützen. Nur Damian war so mutig sich zu verteidigen und ebenfalls gegen die Tumbras zu kämpfen."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Besiege die Tumbras.</i></span>"));
     

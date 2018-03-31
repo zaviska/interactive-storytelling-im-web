@@ -34,7 +34,7 @@ export default class ShipReward extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 13: SIR KIAN'S ERLÖSUNG <hr>"));
+        textBox.addText(new Text("KAPITEL 12: SIR KIAN'S ERLÖSUNG <hr>"));
         textBox.addText(new Text("Nachdem Damian den Schattengeist Lorcan besiegt hatte, fiel er ohnmächtig zu Boden. Als er wieder aufwachte, gab sich der unbekannte Mann zu erkennen. Er erzählte Damian, dass sein Name <i> Sir Kian </i> ist und er der richtige Kapitän der Black Air Knights ist. Es handelte sich dabei um ein königliches Luftschiffs, welches von dem Schattengeist Lorcan übernommen wurde, nachdem er Sir Kian gefangen genommen hatte."));
         textBox.addText(new Text("Aus Dankbarkeit und zu Ehren wurde Damian von Kapitän Sir Kian zum Luftritter geschlagen und gehörte ab sofort zum festen Bestandteil der königlichen Luftritter."));
         textBox.addText(new Text("Damian war sehr stolz, dass er nun ein richtiger Luftritter wurde. Er bat jedoch Sir Kian um einen Gefallen. Er wollte seine Familie besuchen, um sich nochmal richtig verabschieden zu können."));

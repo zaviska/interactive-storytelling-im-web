@@ -31,7 +31,7 @@ export default class ShipTestArmory extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 7: DAS VERBOTENE SCHWERT <hr>"));
+        textBox.addText(new Text("KAPITEL 6: DAS VERBOTENE SCHWERT <hr>"));
         textBox.addText(new Text("Nachdem Damian alle Tumbras besiegen konnte, war Kapitän Sir Lorcan sehr stolz auf Damians Mut und Kampfgeist."));
         textBox.addText(new Text("Eines Tages musste Kapitän Sir Lorcan für einen kurzen Zeitraum das Luftschiff verlassen und übergab seinem Lieblingsschüler Damian die Verantwortung für die Kapitän-Waffenkammer. Damian bekam somit als einziger den Schlüssel zu dieser Waffenkammer. Er durfte jede Waffe ausprobieren bis auf das goldene Schwert aus der Kapitän-Waffenkammer. Falls er sich nicht an dieses Gebot hielt, drohte ihm der Austritt der Luftritter. Als er alleine in der Waffenkammer war, sah er sich fast jede Waffe an, doch seine Neugier wurde immer größer. Er dachte sich, dass es doch niemand merken würde, wenn er dieses goldene Schwert nur einmal kurz in den Händen hielt..."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Berühre nicht das goldene Schwert.</i></span>"));

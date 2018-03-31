@@ -31,7 +31,7 @@ export default class ShipTestArmoryBack extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 9: SIR LORCAN'S RÜCKKEHR <hr>"));
+        textBox.addText(new Text("KAPITEL 8: SIR LORCAN'S RÜCKKEHR <hr>"));
         textBox.addText(new Text("Nachdem Damian in letzter Minute zum goldenen Schwert griff, verschwand die rote Atmosphäre und der Raum drehte sich erneut zurück in die alte Dimension."));
         textBox.addText(new Text("Zunächst erleichtert über die Rückkehr musste Damian jedoch feststellen, dass das goldene Schwert anfing zu bluten. Damian versuchte das Blut zu entfernen, aber das Schwert hörte nicht auf zu bluten..."));
         textBox.addText(new Text("Doch plötzlich trat Kapitän Sir Lorcan in die Waffenkammer ein... "));

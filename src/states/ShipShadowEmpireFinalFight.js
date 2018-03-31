@@ -38,7 +38,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 12: SIR LORCAN'S VERWANDLUNG <hr>"));
+        textBox.addText(new Text("KAPITEL 11: SIR LORCAN'S VERWANDLUNG <hr>"));
         textBox.addText(new Text("Als Kapitän Sir Lorcan Damian den Weg versperrte, zeigte er sein wahres Gesicht. Er verwandelte sich in einen Schattengeist und griff Damian mit magischen Kräften an."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Besiege den Schattengeist Lorcan.</i></span>"));
     

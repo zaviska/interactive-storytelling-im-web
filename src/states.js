@@ -24,8 +24,6 @@ export {default as AirshipDeparture} from './states/AirshipDeparture';
 export {default as Ship} from './states/Ship';
 
 //ACT 2
-// Cut Scene Intro Act 2
-export {default as ShipTraining} from './states/ShipTraining';
 // Cut Scene Enimies Arrival
 export {default as ShipEnimies} from './states/ShipEnimies';
 
@@ -43,10 +41,10 @@ export {default as ShipShadowEmpireArmory} from './states/ShipShadowEmpireArmory
 export {default as LeaveShadowEmpireArmory} from './states/LeaveShadowEmpireArmory';
 export {default as ShipTestLibraryBack} from './states/ShipTestLibraryBack';
 
-
 export {default as ShipShadowEmpireCell} from './states/ShipShadowEmpireCell';
 // Cut Scene Lumitras Help
 export {default as ShipShadowEmpireCellEscape} from './states/ShipShadowEmpireCellEscape';
-// Cut Scene Lorcans Transformation
+// Level with Lorcan before transformation
+export {default as LorcansTransformation} from './states/LorcansTransformation';
 export {default as ShipShadowEmpireFinalFight} from './states/ShipShadowEmpireFinalFight';
 export {default as ShipReward} from './states/ShipReward';

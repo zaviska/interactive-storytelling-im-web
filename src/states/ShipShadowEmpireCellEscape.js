@@ -38,7 +38,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 11: EINE UNERWARTETE BEGEGNUNG <hr>"));
+        textBox.addText(new Text("KAPITEL 10: EINE UNERWARTETE BEGEGNUNG <hr>"));
         textBox.addText(new Text("Nachdem Damian sein Amulett, aufgrund einer Träne, trocken gerieben hatte, erschien ein Lumitra aus dem Stein. Lumitras waren gute Lichtgeister, die ebenfalls gegen die Tumbras, also die bösen Schattengeister, kämpften. Dieses Lichtwesen öffnete Damian's verschlossene Zellentür und verschwand danach wieder. Nun konnte Damian sich aus seiner Zelle hinaus schleichen."));
         textBox.addText(new Text("Plötzlich rufte ihn eine dunkle Gestalt aus einer anderen Zelle. Es war ein geschwächter Mann, der um Hilfe bat..."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Befreie den unbekannten Mann und bekämpfe die Schattengeister.</i></span>"));
@@ -198,7 +198,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('ShipShadowEmpireFinalFight');
+            this.state.start('LorcansTransformation');
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
