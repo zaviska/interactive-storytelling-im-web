@@ -30,6 +30,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.jumpTimer = 0;
         this.tumbraJumpDownTimer = 0;
         this.tumbraJumpUpTimer = 0;
+        this.tumbraAttackTimer = 0;
         let textBox = this.game.textBox;
 
         this.shadowEmpireBackgroundSound = this.game.add.audio('shadow_empire_sound');
@@ -187,8 +188,16 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             bullet.kill();
         }
         
+    
         function slashTumbra(player, tumbra) {
             tumbra.damage(1);
+        }
+
+        function tumbraAttacksPlayer(player, tumbra) {
+            if(this.game.time.now > this.tumbraAttackTimer) {
+                tumbra.damage(1);
+                this.tumbraAttackTimer = this.game.time.now + 200;
+            }
         }
 
         let textBox = this.game.textBox;
@@ -229,10 +238,10 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.game.physics.arcade.overlap(this.player, this.tumbraThree, slashTumbra, null, this);
             this.game.physics.arcade.overlap(this.player, this.tumbraFour, slashTumbra, null, this);
         } else {
-            this.game.physics.arcade.overlap(this.tumbraOne, this.player, slashTumbra, null, this);
-            this.game.physics.arcade.overlap(this.tumbraTwo, this.player, slashTumbra, null, this);
-            this.game.physics.arcade.overlap(this.tumbraThree, this.player, slashTumbra, null, this);
-            this.game.physics.arcade.overlap(this.tumbraFour, this.player, slashTumbra, null, this);
+            this.game.physics.arcade.overlap(this.tumbraOne, this.player, tumbraAttacksPlayer, null, this);
+            this.game.physics.arcade.overlap(this.tumbraTwo, this.player, tumbraAttacksPlayer, null, this);
+            this.game.physics.arcade.overlap(this.tumbraThree, this.player, tumbraAttacksPlayer, null, this);
+            this.game.physics.arcade.overlap(this.tumbraFour, this.player, tumbraAttacksPlayer, null, this);
         }
 
         this.playerHitPointsText.setText('Lebenspunkte Damian:' + this.player.health, true); 

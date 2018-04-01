@@ -110,7 +110,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
-            player.body.setSize(500, 500, 0, 0);
+            player.body.setSize(200, 500, 0, 0);
             player.animations.add('left', [9, 8, 7, 6], 8, true);
             player.animations.add('right', [2, 3, 4, 5], 8, true);
             player.animations.add('shootRight', [1, 0]);
