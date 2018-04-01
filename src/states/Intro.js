@@ -33,7 +33,8 @@ export default class Intro extends Phaser.State {
     this.game.videoImage.scale.set(videoScale);
 
     this.game.nextButton.x = scaleModiferX*1710;
-		this.game.nextButton.y = scaleModiferY*10;
+    this.game.nextButton.y = scaleModiferY*10;
+    this.game.nextButton.scale.set(videoScale);
   } 
 
 }
