@@ -11,15 +11,18 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
         this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
+        this.load.audio('appear_sound', 'audio/sound_effects/appear/appear.mp3');
         this.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
         this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
+        this.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_red_378x510px.png', 378, 510);
         this.load.spritesheet('tumbra', 'image/characters/tumbras/tumbra_440x260px.png', 440, 260);
         this.load.image('air', 'image/item/yellow.png');
-        this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('map', 'image/tilemap/cell_escape_1920x2700px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.load.image('background-airship', 'image/background/airship_shadow_empire_armory_3840x900px.png');
+        this.load.image('background-airship', 'image/background/cell_escape_1920x2700px.png');
+        this.load.image('marker', 'image/tilemap/marker_30x30px.png');
     }
 
     create() {
@@ -38,21 +41,21 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.shootSound = this.game.add.audio('shoot_sound');
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
+        this.appearSound = this.game.add.audio('appear_sound');
   
-        textBox.addText(new Text("KAPITEL 10: EINE UNERWARTETE BEGEGNUNG <hr>"));
-        textBox.addText(new Text("Nachdem Damian sein Amulett, aufgrund einer Träne, trocken gerieben hatte, erschien ein Lumitra aus dem Stein. Lumitras waren gute Lichtgeister, die ebenfalls gegen die Tumbras, also die bösen Schattengeister, kämpften. Dieses Lichtwesen öffnete Damian's verschlossene Zellentür und verschwand danach wieder. Nun konnte Damian sich aus seiner Zelle hinaus schleichen."));
-        textBox.addText(new Text("Plötzlich rufte ihn eine dunkle Gestalt aus einer anderen Zelle. Es war ein geschwächter Mann, der um Hilfe bat..."));
-        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Befreie den unbekannten Mann und bekämpfe die Schattengeister.</i></span>"));
+        textBox.addText(new Text("KAPITEL 10: DAMIAN'S AUSBRUCH <hr>"));
+        textBox.addText(new Text("Nachdem Damian sein Amulett, aufgrund einer Träne, trocken gerieben hatte, erschien ein Lumitra aus dem Stein. Lumitras waren gute Lichtgeister. Dieses Lichtwesen öffnete Damian's verschlossene Zellentür und verschwand danach wieder. Nun konnte Damian aus seiner Zelle ausbrechen."));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Breche aus deiner Zelle aus und suche den Ausgang.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 900);
+        this.background = this.game.add.tileSprite(0, 0, 1920, 2700, 'background-airship');
+        this.game.world.setBounds(0, 0, 1920, 2700);
 
         this.delay = 0;
         for (var i = 0; i < 40; i++) {
-            this.air = this.game.add.sprite(-100 + (this.game.world.randomX), 600, 'air');
+            this.air = this.game.add.sprite(-100 + (this.game.world.randomX), 2400, 'air');
             this.air.scale.set(this.game.rnd.realInRange(0.1, 0.6));
             this.speed = this.game.rnd.between(4000, 6000);
             this.game.add.tween(this.air).to({ y: -256 }, this.speed, Phaser.Easing.Sinusoidal.InOut, true, this.delay, 1000, false);
@@ -67,32 +70,48 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
+        this.cell = this.game.add.sprite(1600, 900, 'marker');
+        this.game.physics.enable(this.cell, Phaser.Physics.ARCADE);
+        this.cell.body.allowGravity = false;
+        this.cell.visible = false;
+        this.cellTouched = false;
+        this.cellTouchedFText = false;
+
         this.tumbraOne = this.game.add.sprite(500, 400, 'tumbra');
         this.game.physics.enable(this.tumbraOne, Phaser.Physics.ARCADE);
         this.tumbraOne.body.collideWorldBounds = true;
         this.tumbraOne.body.allowGravity = false;
         this.tumbraOne.health = 30;
 
-        this.tumbraTwo = this.game.add.sprite(1000, 400, 'tumbra');
+        this.tumbraTwo = this.game.add.sprite(800, 400, 'tumbra');
         this.game.physics.enable(this.tumbraTwo, Phaser.Physics.ARCADE);
         this.tumbraTwo.body.collideWorldBounds = true;
         this.tumbraTwo.body.allowGravity = false;
         this.tumbraTwo.health = 30;
 
-        this.tumbraThree = this.game.add.sprite(1500, 400, 'tumbra');
+        this.tumbraThree = this.game.add.sprite(1100, 600, 'tumbra');
         this.game.physics.enable(this.tumbraThree, Phaser.Physics.ARCADE);
         this.tumbraThree.body.collideWorldBounds = true;
         this.tumbraThree.body.allowGravity = false;
         this.tumbraThree.health = 30;
 
-        this.tumbraFour = this.game.add.sprite(2000, 400, 'tumbra');
+        this.tumbraFour = this.game.add.sprite(1300, 500, 'tumbra');
         this.game.physics.enable(this.tumbraFour, Phaser.Physics.ARCADE);
         this.tumbraFour.body.collideWorldBounds = true;
         this.tumbraFour.body.allowGravity = false;
         this.tumbraFour.health = 30;
 
+        this.lorcan = this.game.add.sprite(800, 1400, 'lorcan');
+        this.lorcan.frame = 4;
+        this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
+        this.lorcan.body.bounce.y = 0.2;
+        this.lorcan.body.collideWorldBounds = true;
+        this.lorcan.body.setSize(378, 510, 0, 0);
+        this.lorcanTalked = false;
+        this.lorcanTalkFText = false;
+
         function createDamianSword(game) {
-            let player = game.add.sprite(0, 100, 'damian-sword');
+            let player = game.add.sprite(0, 0, 'damian-sword');
             player.scale.set(0.75);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -106,7 +125,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             return player;
         }
         function createDamianMagic(game) {
-            let player = game.add.sprite(0, 100, 'damian-magic');
+            let player = game.add.sprite(0, 0, 'damian-magic');
             player.scale.set(0.97);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -171,7 +190,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
              
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian:' + this.player.health, style);
+        this.playerHitPointsText = this.game.add.text(10, 730, 'Lebenspunkte Damian: ' + this.player.health, style);
     }
 
     update() {
@@ -179,7 +198,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         function hitTumbraWithMagic(tumbra, bullet) {
             tumbra.damage(1);
             var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
+            if (explosion) {
                 explosion.reset(bullet.body.x, bullet.body.y);
                 explosion.play('explode', 30, false, true);
             }
@@ -187,14 +206,13 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.explosionSound.play("", 0, 5, false, true);
             bullet.kill();
         }
-        
     
         function slashTumbra(player, tumbra) {
             tumbra.damage(1);
         }
 
         function tumbraAttacksPlayer(player, tumbra) {
-            if(this.game.time.now > this.tumbraAttackTimer) {
+            if (this.game.time.now > this.tumbraAttackTimer) {
                 tumbra.damage(1);
                 this.tumbraAttackTimer = this.game.time.now + 200;
             }
@@ -209,30 +227,81 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.state.start('LorcansTransformation');
         }
 
-        this.game.physics.arcade.collide(this.player, this.layer);
-        this.game.physics.arcade.collide(this.tumbraOne, this.layer);
-        this.game.physics.arcade.collide(this.tumbraTwo, this.layer);
-        this.game.physics.arcade.collide(this.tumbraThree, this.layer);
-        this.game.physics.arcade.collide(this.tumbraFour, this.layer);
-
-        
-        if(this.game.time.now > this.tumbraJumpDownTimer) {
+        if (this.game.time.now > this.tumbraJumpDownTimer) {
             this.tumbraOne.body.velocity.y = -100;
             this.tumbraTwo.body.velocity.y = -40;
             this.tumbraThree.body.velocity.y = -90;
             this.tumbraFour.body.velocity.y = -120;
             this.tumbraJumpUpTimer = this.game.time.now + 2000;
             this.tumbraJumpDownTimer = this.game.time.now + 4000;
-        } else if(this.game.time.now > this.tumbraJumpUpTimer) {
+        } else if (this.game.time.now > this.tumbraJumpUpTimer) {
             this.tumbraOne.body.velocity.y = 100;
             this.tumbraTwo.body.velocity.y = 40;
             this.tumbraThree.body.velocity.y = 100;
             this.tumbraFour.body.velocity.y = 100;
         }
 
+        function talkToLorcan(player, lorcan) {
+            if (this.fKey.isDown && this.lorcanTalked === false) {
+                this.lorcanTalked = true;
+                let lorcanPerson = new Person("Sir Lorcan", "lorcan");
+                window.startCutSceneLorcansTransformation = function() {
+                    that.shadowEmpireBackgroundSound.destroy();
+                    that.state.start('LorcansTransformation');
+                }
+                let answer = [
+                    new Answer("Du willst kämpfen?", "startCutSceneLorcansTransformation"),
+                    new Answer("Nein, ich werde dich vernichten.", "startCutSceneLorcansTransformation")
+                ];
+                this.game.textBox.addText(new Dialog("Du entkommst mir nicht! Ich werde dich jetzt vernichten!", lorcanPerson));
+                this.game.textBox.addText(new Decision(answer));
+            } else if (this.lorcanTalkFText === false) {
+                this.lorcanTalkFText = true;
+                this.lorcanText = this.game.add.text(this.lorcan.x, this.lorcan.y-50, 'Drücke F: Sprechen', style);
+            }
+        }
+
+        this.game.physics.arcade.collide(this.lorcan, this.layer);
+        this.game.physics.arcade.collide(this.player, this.layer);
+        this.game.physics.arcade.collide(this.tumbraOne, this.layer);
+        this.game.physics.arcade.collide(this.tumbraTwo, this.layer);
+        this.game.physics.arcade.collide(this.tumbraThree, this.layer);
+        this.game.physics.arcade.collide(this.tumbraFour, this.layer);
+
+        this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraOne, hitTumbraWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraTwo, hitTumbraWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraThree, hitTumbraWithMagic, null, this);
+        this.game.physics.arcade.overlap(this.bullets, this.tumbraFour, hitTumbraWithMagic, null, this);
+
+        let overlapCell = this.game.physics.arcade.overlap(this.player, this.cell, touchCell, null, this);
+        this.fontStyle = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};   
+        if (overlapCell === false && this.cellTouchedFText === true) {
+            this.cellText.destroy();
+            this.cellTouchedFText = false;
+        }
+        function touchCell(player, item) {
+            if (this.fKey.isDown && this.cellTouched === false) {
+                this.cellTouched = true;
+                let cellPerson = new Person("Gefangener", "tamo");
+                window.openCell = function() {
+                    that.game.textBox.addText(new Dialog("Ich danke dir. Endlich bin ich frei.", cellPerson));
+                    that.appearSound.play();
+                }
+                let answer = [
+                    new Answer("Die Zelle mithilfe deines Amuletts öffnen", "openCell"),
+                ];
+                this.game.textBox.addText(new Dialog("Bitte befreie mich.", cellPerson));
+                this.game.textBox.addText(new Decision(answer));
+            } else if (this.cellTouchedFText === false) {
+                this.cellTouchedFText = true;
+                this.cellText = this.game.add.text(this.cell.x-70, this.cell.y-50, 'Drücke F: Sprechen', this.fontStyle);
+            }
+        }
+
         let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
 
-        if(knightAttacks) {
+        if (knightAttacks) {
             this.game.physics.arcade.overlap(this.player, this.tumbraOne, slashTumbra, null, this);
             this.game.physics.arcade.overlap(this.player, this.tumbraTwo, slashTumbra, null, this);
             this.game.physics.arcade.overlap(this.player, this.tumbraThree, slashTumbra, null, this);
@@ -244,12 +313,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.game.physics.arcade.overlap(this.tumbraFour, this.player, tumbraAttacksPlayer, null, this);
         }
 
-        this.playerHitPointsText.setText('Lebenspunkte Damian:' + this.player.health, true); 
-
-        this.game.physics.arcade.overlap(this.bullets, this.tumbraOne, hitTumbraWithMagic, null, this);
-        this.game.physics.arcade.overlap(this.bullets, this.tumbraTwo, hitTumbraWithMagic, null, this);
-        this.game.physics.arcade.overlap(this.bullets, this.tumbraThree, hitTumbraWithMagic, null, this);
-        this.game.physics.arcade.overlap(this.bullets, this.tumbraFour, hitTumbraWithMagic, null, this);
+        this.playerHitPointsText.setText('Lebenspunkte Damian: ' + this.player.health, true); 
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
@@ -259,7 +323,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
-            if(this.game.mage === true) {
+            if (this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -272,11 +336,9 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
                         this.player.animations.play('shootLeft');
                         this.facing == "idleLeft";
                     }
-                    
                 }
-            } else if(this.game.knight === true) {
+            } else if (this.game.knight === true) {
                 this.swordSound.play();
-                //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
                     this.facing == "idleRight";

@@ -39,6 +39,7 @@ export default class OrdinaryWorld extends Phaser.State {
     this.game.videoImageOrdinaryWorld.scale.set(videoScale);
 
     this.game.nextOrdinareWorldButton.x = scaleModiferX*1710;
-		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
+    this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
+    this.game.nextOrdinareWorldButton.scale.set(videoScale);
   } 
 }

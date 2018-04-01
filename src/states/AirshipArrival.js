@@ -38,6 +38,7 @@ export default class AirshipArrival extends Phaser.State {
     this.game.videoImageAirshipArrival.scale.set(videoScale);
 
     this.game.nextAirshipArrivalButton.x = scaleModiferX*1710;
-		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
+    this.game.nextAirshipArrivalButton.y = scaleModiferY*10;
+    this.game.nextAirshipArrivalButton.scale.set(videoScale);
   } 
 }

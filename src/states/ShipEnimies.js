@@ -123,7 +123,6 @@ export default class ShipEnimies extends Phaser.State {
             this.state.start('GameOver');
         }
 
-
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.bullets = this.game.add.group();
@@ -141,7 +140,6 @@ export default class ShipEnimies extends Phaser.State {
         function setupTrackSprite(weapon) {
             weapon.trackSprite(this.player, 0, 0, true);
         }   
-        
         
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
@@ -163,7 +161,6 @@ export default class ShipEnimies extends Phaser.State {
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
 
-        
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian: ' + this.player.health, style);
     }
@@ -211,15 +208,14 @@ export default class ShipEnimies extends Phaser.State {
         this.game.physics.arcade.collide(this.tumbraThree, this.layer);
         this.game.physics.arcade.collide(this.tumbraFour, this.layer);
 
-
-        if(this.game.time.now > this.tumbraJumpDownTimer) {
+        if (this.game.time.now > this.tumbraJumpDownTimer) {
             this.tumbraOne.body.velocity.y = -100;
             this.tumbraTwo.body.velocity.y = -40;
             this.tumbraThree.body.velocity.y = -90;
             this.tumbraFour.body.velocity.y = -120;
             this.tumbraJumpUpTimer = this.game.time.now + 2000;
             this.tumbraJumpDownTimer = this.game.time.now + 4000;
-        } else if(this.game.time.now > this.tumbraJumpUpTimer) {
+        } else if (this.game.time.now > this.tumbraJumpUpTimer) {
             this.tumbraOne.body.velocity.y = 100;
             this.tumbraTwo.body.velocity.y = 40;
             this.tumbraThree.body.velocity.y = 100;
@@ -228,7 +224,7 @@ export default class ShipEnimies extends Phaser.State {
 
         let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
 
-        if(knightAttacks) {
+        if (knightAttacks) {
             this.game.physics.arcade.overlap(this.player, this.tumbraOne, slashTumbra, null, this);
             this.game.physics.arcade.overlap(this.player, this.tumbraTwo, slashTumbra, null, this);
             this.game.physics.arcade.overlap(this.player, this.tumbraThree, slashTumbra, null, this);
@@ -255,7 +251,7 @@ export default class ShipEnimies extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
-            if(this.game.mage === true) {
+            if (this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -270,7 +266,7 @@ export default class ShipEnimies extends Phaser.State {
                     }
                     
                 }
-            } else if(this.game.knight === true) {
+            } else if (this.game.knight === true) {
                 this.swordSound.play();
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');

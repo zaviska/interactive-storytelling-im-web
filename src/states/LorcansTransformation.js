@@ -37,6 +37,7 @@ export default class LorcansTransformation extends Phaser.State {
       this.game.videoImageLorcansTransformation.scale.set(videoScale);
   
       this.game.nextLorcansTransformationButton.x = scaleModiferX*1710;
-          this.game.nextLorcansTransformationButton.y = scaleModiferY*10;
+      this.game.nextLorcansTransformationButton.y = scaleModiferY*10;
+      this.game.nextLorcansTransformationButton.scale.set(videoScale);
     }
   }

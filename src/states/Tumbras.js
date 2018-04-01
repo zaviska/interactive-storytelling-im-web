@@ -38,6 +38,7 @@ export default class Tumbras extends Phaser.State {
       this.game.videoImageTumbras.scale.set(videoScale);
   
       this.game.nextTumbrasButton.x = scaleModiferX*1710;
-          this.game.nextTumbrasButton.y = scaleModiferY*10;
+      this.game.nextTumbrasButton.y = scaleModiferY*10;
+      this.game.nextTumbrasButton.scale.set(videoScale);
     } 
   }

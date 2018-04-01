@@ -37,6 +37,7 @@ export default class LeaveShadowEmpireLibrary extends Phaser.State {
       this.game.videoImageLeaveShadowEmpireLibrary.scale.set(videoScale);
   
       this.game.nextLeaveShadowEmpireLibraryButton.x = scaleModiferX*1710;
-          this.game.nextLeaveShadowEmpireLibraryButton.y = scaleModiferY*10;
+      this.game.nextLeaveShadowEmpireLibraryButton.y = scaleModiferY*10;
+      this.game.nextLeaveShadowEmpireLibraryButton.scale.set(videoScale);
     }
   }

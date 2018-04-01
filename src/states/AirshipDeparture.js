@@ -36,6 +36,7 @@ export default class AirshipDeparture extends Phaser.State {
     this.game.videoImageAirshipDeparture.scale.set(videoScale);
 
     this.game.nextAirshipDepartureButton.x = scaleModiferX*1710;
-		this.game.nextAirshipDepartureButton.y = scaleModiferY*10;
+    this.game.nextAirshipDepartureButton.y = scaleModiferY*10;
+    this.game.nextAirshipDepartureButton.scale.set(videoScale);
   }
 }

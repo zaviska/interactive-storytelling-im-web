@@ -113,7 +113,6 @@ export default class FarmEscapeWay extends Phaser.State {
             this.escapeWayBackgroundSound.destroy();
             this.state.start('AirshipDeparture');
         }
-
      
         function talkToLorcan(player, lorcan) {
             if (this.fKey.isDown && this.lorcanTalked === false) {

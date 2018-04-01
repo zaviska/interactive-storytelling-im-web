@@ -39,7 +39,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 11: SIR LORCAN'S VERWANDLUNG <hr>"));
-        textBox.addText(new Text("Sir Lorcan zeigte sein wahres Gesicht. Er war ein Schattengeist."));
+        textBox.addText(new Text("Sir Lorcan zeigte sein wahres Gesicht."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Besiege den Schattengeist Lorcan.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);

@@ -16,9 +16,10 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
         this.load.image('air', 'image/item/yellow.png');
-        this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('map', 'image/tilemap/cell_1920px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.load.image('background-airship', 'image/background/airship_shadow_empire_armory_3840x900px.png');
+        this.load.image('cell', 'image/background/cell_1920x900px.png');
+        this.load.image('background-airship', 'image/background/airship_shadow_empire_cell_1920x900px.png');
     }
 
     create() {
@@ -43,12 +44,12 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 900);
+        this.background = this.game.add.tileSprite(0, 0, 1920, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 1920, 900);
 
         this.delay = 0;
         for (var i = 0; i < 40; i++) {
-            this.air = this.game.add.sprite(-100 + (this.game.world.randomX), 600, 'air');
+            this.air = this.game.add.sprite(-100 + (this.game.world.randomX), 900, 'air');
             this.air.scale.set(this.game.rnd.realInRange(0.1, 0.6));
             this.speed = this.game.rnd.between(4000, 6000);
             this.game.add.tween(this.air).to({ y: -256 }, this.speed, Phaser.Easing.Sinusoidal.InOut, true, this.delay, 1000, false);
@@ -64,7 +65,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.game.physics.arcade.gravity.y = 500;
         
         function createDamianSword(game) {
-            let player = game.add.sprite(0, 100, 'damian-sword');
+            let player = game.add.sprite(600, 0, 'damian-sword');
             player.scale.set(0.75);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -78,7 +79,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
             return player;
         }
         function createDamianMagic(game) {
-            let player = game.add.sprite(0, 100, 'damian-magic');
+            let player = game.add.sprite(600, 0, 'damian-magic');
             player.scale.set(0.97);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -94,8 +95,11 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
+            this.game.mage = true;
             this.player = createDamianMagic(this.game);
         }
+
+        this.cell = this.game.add.tileSprite(0, 0, 1920, 900, 'cell');
 
         this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
@@ -188,7 +192,6 @@ export default class ShipShadowEmpireCell extends Phaser.State {
                 }
             } else if(this.game.knight === true) {
                 this.swordSound.play();
-                //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
                     this.facing == "idleRight";

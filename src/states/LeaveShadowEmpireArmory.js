@@ -37,6 +37,7 @@ export default class LeaveShadowEmpireArmory extends Phaser.State {
       this.game.videoImageLeaveShadowEmpireArmory.scale.set(videoScale);
   
       this.game.nextLeaveShadowEmpireArmoryButton.x = scaleModiferX*1710;
-          this.game.nextLeaveShadowEmpireArmoryButton.y = scaleModiferY*10;
+      this.game.nextLeaveShadowEmpireArmoryButton.y = scaleModiferY*10;
+      this.game.nextLeaveShadowEmpireArmoryButton.scale.set(videoScale);
     }
   }

@@ -37,6 +37,7 @@ export default class EnterShadowEmpireLibrary extends Phaser.State {
       this.game.videoImageEnterShadowEmpireLibrary.scale.set(videoScale);
   
       this.game.nextEnterShadowEmpireLibraryButton.x = scaleModiferX*1710;
-          this.game.nextEnterShadowEmpireLibraryButton.y = scaleModiferY*10;
+      this.game.nextEnterShadowEmpireLibraryButton.y = scaleModiferY*10;
+      this.game.nextEnterShadowEmpireLibraryButton.scale.set(videoScale);
     }
   }
