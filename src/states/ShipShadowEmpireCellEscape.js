@@ -21,8 +21,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.load.image('air', 'image/item/yellow.png');
         this.load.tilemap('map', 'image/tilemap/cell_escape_1920x2700px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.load.image('background-airship', 'image/background/cell_escape_1920x2700px.png');
         this.load.image('marker', 'image/tilemap/marker_30x30px.png');
+        this.load.image('background-airship', 'image/background/cell_escape_1920x2700px.png');
     }
 
     create() {

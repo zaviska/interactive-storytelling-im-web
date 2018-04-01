@@ -19,6 +19,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.load.tilemap('map', 'image/tilemap/cell_1920px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.load.image('cell', 'image/background/cell_1920x900px.png');
+        this.load.image('marker', 'image/tilemap/marker_30x30px.png');
         this.load.image('background-airship', 'image/background/airship_shadow_empire_cell_1920x900px.png');
     }
 
@@ -38,7 +39,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
   
         textBox.addText(new Text("KAPITEL 9: DIE VERBANNUNG <hr>"));
         textBox.addText(new Text("Sir Lorcan streckte vor Zorn seine Hand aus, so dass das goldene Schwert in seine Hand flog. Er öffnete dadurch das Schattenreich, um Damian zu verbannen. Damian wurde zur Strafe dort in eine Zelle eingesperrt."));
-        textBox.addText(new Text("Als Damian hoffnunglos und verzweifelt in seiner Zelle saß, wusste er nicht, wie er sich befreien sollte. Dann schaute er sich sein Amulett von seinem Onkel an. Er dachte, dieses Amulett würde ihn beschützen... eine Träne fiel auf sein Amulett..."));
+        textBox.addText(new Text("Als Damian hoffnunglos und verzweifelt in seiner Zelle saß, wusste er nicht, wie er sich befreien sollte. Dann schaute er sich sein Amulett von seinem Onkel an... eine Träne fiel auf sein Amulett..."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Finde einen Weg aus der Zelle auszubrechen.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -63,6 +64,13 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
+
+        this.amulet = this.game.add.sprite(1300, 500, 'marker');
+        this.game.physics.enable(this.amulet, Phaser.Physics.ARCADE);
+        this.amulet.body.allowGravity = false;
+        this.amulet.visible = false;
+        this.amuletTouched = false;
+        this.amuletTouchedFText = false;
         
         function createDamianSword(game) {
             let player = game.add.sprite(600, 0, 'damian-sword');
@@ -166,6 +174,31 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
+
+        let overlapAmulet = this.game.physics.arcade.overlap(this.player, this.amulet, touchAmulet, null, this);
+        this.fontStyle = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};   
+        if (overlapAmulet === false && this.amuletTouchedFText === true) {
+            this.amuletText.destroy();
+            this.amuletTouchedFText = false;
+        }
+        function touchAmulet(player, item) {
+            if (this.fKey.isDown && this.amuletTouched === false) {
+                this.amuletTouched = true;
+                let damianPerson = new Person("Damian Black", "damian");
+                window.startNextCutScene = function() {
+                    that.shadowEmpireBackgroundSound.destroy();
+                    that.state.start('ShipShadowEmpireCellEscape');
+                }
+                let answer = [
+                    new Answer("Deine Träne auf dem Amulett wegwischen.", "startNextCutScene"),
+                ];
+                this.game.textBox.addText(new Dialog("Ich dachte, dieses Amulett würde mich beschützen...", damianPerson));
+                this.game.textBox.addText(new Decision(answer));
+            } else if (this.amuletTouchedFText === false) {
+                this.amuletTouchedFText = true;
+                this.amuletText = this.game.add.text(this.amulet.x-200, this.amulet.y-300, 'Drücke F: Amulett ansehen', this.fontStyle);
+            }
+        }
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
