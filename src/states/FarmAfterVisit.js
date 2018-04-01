@@ -14,7 +14,7 @@ export default class FarmAfterVisit extends Phaser.State {
         this.game.load.image('tamo', '/image/characters/tamo/tamo_140x270.png', 140, 270);
         this.game.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
         this.game.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
-        this.game.load.image('background', 'image/background/house_farm_3840x900px.png');
+        this.game.load.image('background', 'image/background/house_farm_airship_3840x900px.png');
         
     }
 

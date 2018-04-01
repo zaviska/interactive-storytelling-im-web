@@ -4,59 +4,92 @@ import { Dialog } from "../textbox/api/Dialog";
 import { Decision } from "../textbox/api/Decision";
 import { Answer } from "../textbox/api/Answer";
 
-export default class ShipReward extends Phaser.State {
+export default class FarmBack extends Phaser.State {
 
     preload() {
-        this.load.audio('airhsip_reward_sound', 'audio/reward/beautiful-mood_terrasound_de.mp3');
+        this.load.audio('farm_sound', 'audio/farm/piano_rain_terrasound_de.mp3');
         this.load.audio('shoot_sound', 'audio/sound_effects/magic/magic.mp3');
         this.load.audio('sword_sound', 'audio/sound_effects/sword/sword_swing.mp3');
         this.load.audio('explosion_sound', 'audio/sound_effects/explosion/bomb.mp3');
         this.load.image('bullet', 'image/bullet/magicBullet_100x100.png', 100, 100);
         this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
+        this.load.tilemap('map', 'image/tilemap/farm.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
-        this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.load.image('tamo', '/image/characters/tamo/tamo_140x270.png', 140, 270);
+        this.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
+        this.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
+        this.load.image('background', 'image/background/house_farm_airship_3840x900px.png');
     }
 
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        let that = this;
-        this.facing = 'right';
+        this.facing = 'left';
         this.jumpTimer = 0;
-        let textBox = this.game.textBox;
 
-        this.airshipRewardBackgroundSound = this.game.add.audio('airhsip_reward_sound');
-        this.airshipRewardBackgroundSound.loopFull();
+        this.farmBackgroundSound = this.game.add.audio('farm_sound');
+        this.farmBackgroundSound.loopFull();
         this.shootSound = this.game.add.audio('shoot_sound');
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
-  
-        textBox.addText(new Text("KAPITEL 12: SIR KIAN'S ERLÖSUNG <hr>"));
-        textBox.addText(new Text("Nachdem Damian den Schattengeist Lorcan besiegt hatte, fiel er ohnmächtig zu Boden. Als er wieder aufwachte, gab sich der unbekannte Mann zu erkennen. Er erzählte Damian, dass sein Name <i> Sir Kian </i> ist und er der richtige Kapitän der Black Air Knights ist. Es handelte sich dabei um ein königliches Luftschiffs, welches von dem Schattengeist Lorcan übernommen wurde, nachdem er Sir Kian gefangen genommen hatte."));
-        textBox.addText(new Text("Aus Dankbarkeit und zu Ehren wurde Damian von Kapitän Sir Kian zum Luftritter geschlagen und gehörte ab sofort zum festen Bestandteil der königlichen Luftritter."));
-        textBox.addText(new Text("Damian war sehr stolz, dass er nun ein richtiger Luftritter wurde. Er bat jedoch Sir Kian um einen Gefallen. Er wollte seine Familie besuchen, um sich nochmal richtig verabschieden zu können."));
-        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Fliege zurück zur Black's Darcono Farm.</i></span>"));
-    
+
+        let textBox = this.game.textBox;
+        textBox.addText(new Text("KAPITEL 13: HEIMFLUG <hr>"));
+        textBox.addText(new Text("...."));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit deinem Vater Tamo.</i></span>"));
+
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background');
+        this.game.world.setBounds(0, 0, 3840, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
         this.layer = this.map.createLayer('tile-layer_ground');
-        this.layer.resizeWorld();
-        this.map.setCollisionBetween(1,4);
+        this.map.setCollisionBetween(1,4); 
 
-        this.game.physics.arcade.gravity.y = 500;
+        this.game.physics.arcade.gravity.y = 250;
+
+        this.darconoOne = this.game.add.sprite(3200, 500, 'darcono');
+        this.game.physics.enable(this.darconoOne, Phaser.Physics.ARCADE);
+        this.darconoOne.body.collideWorldBounds = true;
+        this.darconoOne.scale.set(0.6);
+
+        this.darconoTwo = this.game.add.sprite(3500, 500, 'darcono');
+        this.game.physics.enable(this.darconoTwo, Phaser.Physics.ARCADE);
+        this.darconoTwo.body.collideWorldBounds = true;
+        this.darconoTwo.scale.set(0.6);
+
+        this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
+        this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
+        this.darconoThree.body.collideWorldBounds = true;
+        this.darconoThree.scale.set(0.6);
+        this.darconoThree.body.bounce.set(1);
+
+        this.darconoBabyOne = this.game.add.sprite(3400, 600, 'darcono-baby');
+        this.game.physics.enable(this.darconoBabyOne, Phaser.Physics.ARCADE);
+        this.darconoBabyOne.body.collideWorldBounds = true;
+        this.darconoBabyOne.scale.set(0.4);
+        this.darconoBabyOne.body.bounce.set(1);
+
+        this.darconoBabyTwo = this.game.add.sprite(3500, 680, 'darcono-baby');
+        this.game.physics.enable(this.darconoBabyTwo, Phaser.Physics.ARCADE);
+        this.darconoBabyTwo.body.collideWorldBounds = true;
+        this.darconoBabyTwo.scale.set(0.4);
+
+        this.tamo = this.game.add.sprite(420, 600, 'tamo');
+        this.game.physics.enable(this.tamo, Phaser.Physics.ARCADE);
+        this.tamo.body.collideWorldBounds = true;
+        this.tamo.body.setSize(140, 270, 0, 0);
+        this.tamoTalked = false;
+        this.tamoTalkFText = false;
 
         function createDamianSword(game) {
-            let player = game.add.sprite(0, 100, 'damian-sword');
-            player.scale.set(0.75);
+            let player = game.add.sprite(2500, 300, 'damian-sword');
+            player.scale.set(0.4);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
@@ -69,8 +102,8 @@ export default class ShipReward extends Phaser.State {
             return player;
         }
         function createDamianMagic(game) {
-            let player = game.add.sprite(0, 100, 'damian-magic');
-            player.scale.set(0.97);
+            let player = game.add.sprite(2500, 300, 'damian-magic');
+            player.scale.set(0.55);
             game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
@@ -88,8 +121,6 @@ export default class ShipReward extends Phaser.State {
             this.game.mage = true;
             this.player = createDamianMagic(this.game);
         }
-
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
@@ -114,22 +145,35 @@ export default class ShipReward extends Phaser.State {
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
     }
 
     update() {
         let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
         if (this.nKey.isDown) {
-            this.airshipRewardBackgroundSound.destroy();
-            this.state.start('RoadBack');
-        }  
+            this.farmBackgroundSound.destroy();
+            this.state.start('TheEnd');
+        }
+      
+        var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        function talkToTamo(player, tamo) {
+            if (this.fKey.isDown && this.tamoTalked === false) {
+                this.tamoTalked = true;
+                let tamoPerson = new Person("Tamo Black", "tamo");
+               
+                this.game.textBox.addText(new Dialog("Damian...! Wo warst du die ganze Zeit?!", tamoPerson));
+                //this.game.textBox.addText(new Decision(taskAnswer));
+            } else if (this.tamoTalkFText === false) {
+                this.tamoTalkFText = true;
+                this.TamoText = this.game.add.text(this.tamo.x, this.tamo.y-50, 'Drücke F: Sprechen', style);
+            }
+        }
 
         function destroyObject(weapon, object) {
             weapon.kill();
@@ -154,6 +198,20 @@ export default class ShipReward extends Phaser.State {
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
+        this.game.physics.arcade.collide(this.tamo, this.layer);
+        this.game.physics.arcade.collide(this.darconoOne, this.layer);
+        this.game.physics.arcade.collide(this.darconoTwo, this.layer);
+        this.game.physics.arcade.collide(this.darconoThree, this.layer);
+        this.game.physics.arcade.collide(this.darconoBabyOne, this.layer);
+        this.game.physics.arcade.collide(this.darconoBabyTwo, this.layer);
+        
+        let overlapTamo = this.game.physics.arcade.overlap(this.player, this.tamo, talkToTamo, null, this);
+
+        if (overlapTamo === false && this.tamoTalkFText === true) {
+            this.TamoText.destroy();
+            this.tamoTalkFText = false;
+            this.tamoTalked = false;
+        }
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
@@ -180,7 +238,6 @@ export default class ShipReward extends Phaser.State {
                 }
             } else if(this.game.knight === true) {
                 this.swordSound.play();
-                //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
                     this.facing == "idleRight";

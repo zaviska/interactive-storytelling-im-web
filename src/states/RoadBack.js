@@ -24,7 +24,7 @@ export default class RoadBack extends Phaser.State {
       function onClickNextButton() {
         cutSceneRoadBack.destroy();
         that.game.nextRoadBackButton.destroy();
-        that.state.start('FarmAfterVisit');
+        that.state.start('FarmBack');
         that.game.showNavigation();
       }
     }

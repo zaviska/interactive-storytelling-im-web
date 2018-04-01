@@ -51,5 +51,5 @@ export {default as ShipReward} from './states/ShipReward';
 
 //ACT 3
 export {default as RoadBack} from './states/RoadBack';
-//export {default as FarmBack} from './states/FarmBack';
+export {default as FarmBack} from './states/FarmBack';
 export {default as TheEnd} from './states/TheEnd';
