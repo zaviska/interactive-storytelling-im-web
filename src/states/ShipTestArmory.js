@@ -53,6 +53,7 @@ export default class ShipTestArmory extends Phaser.State {
         this.sword = this.game.add.sprite(1910, 500, 'marker');
         this.game.physics.enable(this.sword, Phaser.Physics.ARCADE);
         this.sword.body.allowGravity = false;
+        this.sword.alpha = 0;
         //this.sword.visible = false;
         this.swordTouched = false;
         this.swordTouchedFText = false;
