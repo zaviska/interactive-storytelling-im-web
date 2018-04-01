@@ -48,3 +48,7 @@ export {default as ShipShadowEmpireCellEscape} from './states/ShipShadowEmpireCe
 export {default as LorcansTransformation} from './states/LorcansTransformation';
 export {default as ShipShadowEmpireFinalFight} from './states/ShipShadowEmpireFinalFight';
 export {default as ShipReward} from './states/ShipReward';
+
+//ACT 3
+export {default as RoadBack} from './states/RoadBack';
+//export {default as FarmBack} from './states/FarmBack';

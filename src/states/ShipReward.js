@@ -127,7 +127,7 @@ export default class ShipReward extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.airshipRewardBackgroundSound.destroy();
-            this.state.start('ToBeContinued');
+            this.state.start('RoadBack');
         }  
 
         function destroyObject(weapon, object) {
