@@ -17,7 +17,7 @@ export default class LeaveShadowEmpireArmory extends Phaser.State {
       cutSceneLeaveShadowEmpireArmory.play();
       cutSceneLeaveShadowEmpireArmory.onComplete.add(onClickNextButton); 
       
-      this.game.nextLeaveShadowEmpireArmoryButton = this.game.add.button(1730, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+      this.game.nextLeaveShadowEmpireArmoryButton = this.game.add.button(1710, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
   
       this.resize(this.game.width, this.game.height);
   
@@ -36,7 +36,7 @@ export default class LeaveShadowEmpireArmory extends Phaser.State {
       var videoScale = Math.min(scaleModiferX, scaleModiferY);
       this.game.videoImageLeaveShadowEmpireArmory.scale.set(videoScale);
   
-      this.game.nextLeaveShadowEmpireArmoryButton.x = scaleModiferX*1730;
+      this.game.nextLeaveShadowEmpireArmoryButton.x = scaleModiferX*1710;
           this.game.nextLeaveShadowEmpireArmoryButton.y = scaleModiferY*10;
     }
   }

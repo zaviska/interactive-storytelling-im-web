@@ -17,7 +17,7 @@ export default class LeaveShadowEmpireLibrary extends Phaser.State {
       cutSceneLeaveShadowEmpireLibrary.play();
       cutSceneLeaveShadowEmpireLibrary.onComplete.add(onClickNextButton); 
       
-      this.game.nextLeaveShadowEmpireLibraryButton = this.game.add.button(1730, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+      this.game.nextLeaveShadowEmpireLibraryButton = this.game.add.button(1710, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
   
       this.resize(this.game.width, this.game.height);
   
@@ -36,7 +36,7 @@ export default class LeaveShadowEmpireLibrary extends Phaser.State {
       var videoScale = Math.min(scaleModiferX, scaleModiferY);
       this.game.videoImageLeaveShadowEmpireLibrary.scale.set(videoScale);
   
-      this.game.nextLeaveShadowEmpireLibraryButton.x = scaleModiferX*1730;
+      this.game.nextLeaveShadowEmpireLibraryButton.x = scaleModiferX*1710;
           this.game.nextLeaveShadowEmpireLibraryButton.y = scaleModiferY*10;
     }
   }

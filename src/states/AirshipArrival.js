@@ -17,7 +17,7 @@ export default class AirshipArrival extends Phaser.State {
     cutSceneAirshipArrival.play();
     cutSceneAirshipArrival.onComplete.add(onClickNextButton);
 
-    this.game.nextAirshipArrivalButton = this.game.add.button(1730, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+    this.game.nextAirshipArrivalButton = this.game.add.button(1710, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
 
     this.resize(this.game.width, this.game.height);
     
@@ -37,7 +37,7 @@ export default class AirshipArrival extends Phaser.State {
     var videoScale = Math.min(scaleModiferX, scaleModiferY);
     this.game.videoImageAirshipArrival.scale.set(videoScale);
 
-    this.game.nextAirshipArrivalButton.x = scaleModiferX*1730;
+    this.game.nextAirshipArrivalButton.x = scaleModiferX*1710;
 		this.game.nextOrdinareWorldButton.y = scaleModiferY*10;
   } 
 }

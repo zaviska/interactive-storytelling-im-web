@@ -17,7 +17,7 @@ export default class LorcansTransformation extends Phaser.State {
       cutSceneLorcansTransformation.play();
       cutSceneLorcansTransformation.onComplete.add(onClickNextButton); 
       
-      this.game.nextLorcansTransformationButton = this.game.add.button(1730, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
+      this.game.nextLorcansTransformationButton = this.game.add.button(1710, 10, 'nextButton', onClickNextButton, this, 1, 0, 2);
   
       this.resize(this.game.width, this.game.height);
   
@@ -36,7 +36,7 @@ export default class LorcansTransformation extends Phaser.State {
       var videoScale = Math.min(scaleModiferX, scaleModiferY);
       this.game.videoImageLorcansTransformation.scale.set(videoScale);
   
-      this.game.nextLorcansTransformationButton.x = scaleModiferX*1730;
+      this.game.nextLorcansTransformationButton.x = scaleModiferX*1710;
           this.game.nextLorcansTransformationButton.y = scaleModiferY*10;
     }
   }
