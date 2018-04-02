@@ -30,6 +30,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+        this.scale.compatibility.noMargins = true;
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
@@ -140,7 +141,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
-        
+
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
