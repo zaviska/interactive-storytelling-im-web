@@ -28,6 +28,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
         let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
@@ -138,6 +140,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
+
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
@@ -209,6 +212,13 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
     
         function slashTumbra(player, tumbra) {
             tumbra.damage(1);
+            var explosion = this.explosions.getFirstExists(false);
+            if (explosion) {
+                explosion.reset(tumbra.body.x, tumbra.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+
+            this.explosionSound.play("", 0, 5, false, true);
         }
 
         function tumbraAttacksPlayer(player, tumbra) {

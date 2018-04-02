@@ -180,6 +180,13 @@ export default class ShipEnimies extends Phaser.State {
         
         function slashTumbra(player, tumbra) {
             tumbra.damage(1);
+            var explosion = this.explosions.getFirstExists(false);
+            if(explosion) {
+                explosion.reset(tumbra.body.x, tumbra.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+
+            this.explosionSound.play("", 0, 5, false, true);
         }
 
         function tumbraAttacksPlayer(player, tumbra) {

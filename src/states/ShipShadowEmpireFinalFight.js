@@ -117,6 +117,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
+        
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
@@ -242,6 +243,13 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
     
         function slashBoss(player, boss) {
             boss.damage(1);
+            var explosion = this.explosions.getFirstExists(false);
+            if(explosion) {
+                explosion.reset(boss.body.x, boss.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+
+            this.explosionSound.play("", 0, 5, false, true);
             this.endBossHitPointsText.setText('Lebenspunkte Endboss:' + boss.health, true);
         }
 
