@@ -8,13 +8,13 @@ export default class FarmAfterVisit extends Phaser.State {
 
     preload() {
         this.load.audio('farm_sound', 'audio/farm/piano_rain_terrasound_de.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/farm.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.game.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
-        this.game.load.image('tamo', '/image/characters/tamo/tamo_140x270.png', 140, 270);
-        this.game.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
-        this.game.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
-        this.game.load.image('background', 'image/background/house_farm_airship_3840x900px.png');
+        this.load.tilemap('map', 'image/tilemap/farm.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
+        this.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
+        this.load.image('tamo', '/image/characters/tamo/tamo_140x270.png', 140, 270);
+        this.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
+        this.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
+        this.load.image('background', 'image/background/house_farm_airship_3840x900px.png');
         
     }
 

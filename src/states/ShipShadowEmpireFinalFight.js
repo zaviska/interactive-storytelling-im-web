@@ -45,7 +45,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 900, 'background-airship');
+        this.background = this.game.add.tileSprite(0, 0, 1920, 900, 'background-airship');
         this.game.world.setBounds(0, 0, 1920, 900);
 
         this.delay = 0;
