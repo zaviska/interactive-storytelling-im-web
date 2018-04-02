@@ -148,7 +148,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
 
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('ShipShadowEmpireCellEscape');
+            this.state.start('Lumitra');
         }  
 
         function destroyObject(weapon, object) {
@@ -187,7 +187,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
                 let damianPerson = new Person("Damian Black", "damian");
                 window.startNextCutScene = function() {
                     that.shadowEmpireBackgroundSound.destroy();
-                    that.state.start('ShipShadowEmpireCellEscape');
+                    that.state.start('Lumitra');
                 }
                 let answer = [
                     new Answer("Deine Träne auf dem Amulett wegwischen.", "startNextCutScene"),

@@ -75,7 +75,6 @@ export default class FarmEscapeWay extends Phaser.State {
         //this.darconoBabyTwo.body.bounce.set(1);
 
         this.lorcan = this.game.add.sprite(2700, 200, 'lorcan');
-        //this.lorcan.scale.set(0.53);
         this.lorcan.frame = 4;
         this.game.physics.enable(this.lorcan, Phaser.Physics.ARCADE);
         this.lorcan.body.bounce.y = 0.2;

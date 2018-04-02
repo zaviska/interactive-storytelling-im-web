@@ -78,7 +78,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.cell = this.game.add.sprite(1600, 900, 'marker');
         this.game.physics.enable(this.cell, Phaser.Physics.ARCADE);
         this.cell.body.allowGravity = false;
-        this.cell.visible = false;
+        this.cell.alpha = false;
         this.cellTouched = false;
         this.cellTouchedFText = false;
 
@@ -261,6 +261,12 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.tumbraFour.body.velocity.y = 100;
         }
 
+        let overlapLorcan = this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        if (overlapLorcan === false && this.lorcanTalkFText === true) {
+            this.lorcanText.destroy();
+            this.lorcanTalkFText = false;
+            this.talkToLorcan = false;
+        }
         function talkToLorcan(player, lorcan) {
             if (this.fKey.isDown && this.lorcanTalked === false) {
                 this.lorcanTalked = true;
@@ -270,8 +276,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
                     that.state.start('LorcansTransformation');
                 }
                 let answer = [
-                    new Answer("Du willst kämpfen?", "startCutSceneLorcansTransformation"),
-                    new Answer("Nein, ich werde dich vernichten.", "startCutSceneLorcansTransformation")
+                    new Answer("Weiter", "startCutSceneLorcansTransformation"),
                 ];
                 this.game.textBox.addText(new Dialog("Du entkommst mir nicht! Ich werde dich jetzt vernichten!", lorcanPerson));
                 this.game.textBox.addText(new Decision(answer));

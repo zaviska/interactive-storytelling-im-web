@@ -42,7 +42,7 @@ export {default as LeaveShadowEmpireArmory} from './states/LeaveShadowEmpireArmo
 export {default as ShipTestLibraryBack} from './states/ShipTestLibraryBack';
 
 export {default as ShipShadowEmpireCell} from './states/ShipShadowEmpireCell';
-// Cut Scene Lumitras Help
+export {default as Lumitra} from './states/Lumitra';
 export {default as ShipShadowEmpireCellEscape} from './states/ShipShadowEmpireCellEscape';
 export {default as LorcansTransformation} from './states/LorcansTransformation';
 export {default as ShipShadowEmpireFinalFight} from './states/ShipShadowEmpireFinalFight';
@@ -51,5 +51,4 @@ export {default as ShipReward} from './states/ShipReward';
 //ACT 3
 export {default as RoadBack} from './states/RoadBack';
 export {default as FarmBack} from './states/FarmBack';
-// cut scene goodbye
 export {default as TheEnd} from './states/TheEnd';
