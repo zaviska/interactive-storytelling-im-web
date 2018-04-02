@@ -12,13 +12,13 @@ export default class Room extends Phaser.State {
         this.load.audio('door_unlock_sound', 'audio/sound_effects/door/door_unlock.mp3');
         this.load.audio('pick_sound', 'audio/sound_effects/pick/click.mp3');
         this.load.audio('window_sound', 'audio/sound_effects/window/old_door_creaking.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/room_1920px.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.game.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
-        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.image('background-room', 'image/background/house_room_1920x900px.png');
-        this.game.load.image('bag', 'image/item/backpack_115_155px.png');
-        this.game.load.image('marker', 'image/tilemap/marker_30x30px.png');
+        this.load.tilemap('map', 'image/tilemap/room_1920px.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
+        this.load.spritesheet('damian', 'image/characters/damian/damian_room_210x495px.png', 210, 495);
+        this.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
+        this.load.image('background-room', 'image/background/house_room_1920x900px.png');
+        this.load.image('bag', 'image/item/backpack_115_155px.png');
+        this.load.image('marker', 'image/tilemap/marker_30x30px.png');
     }
 
     create() {

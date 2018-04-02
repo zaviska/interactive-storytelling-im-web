@@ -8,13 +8,13 @@ export default class FarmEscapeWay extends Phaser.State {
 
     preload() {
         this.load.audio('escape_way_sound', 'audio/escape_way/criminal-cat_terrasound_de.mp3');
-        this.game.load.tilemap('map', 'image/tilemap/farm.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.game.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
-        this.game.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_190x260px.png', 190, 260);
-        this.game.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
-        this.game.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
-        this.game.load.image('background', 'image/background/house_farm_escape_way_3840x900px.png');
+        this.load.tilemap('map', 'image/tilemap/farm.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
+        this.load.spritesheet('damian_amulet', 'image/characters/damian/damian_amulet_room_210x495px.png', 210, 495);
+        this.load.spritesheet('lorcan', 'image/characters/lorcan/lorcan_190x260px.png', 190, 260);
+        this.load.spritesheet('darcono', 'image/characters/darconos/darconos_400x620.png', 400, 620);
+        this.load.spritesheet('darcono-baby', 'image/characters/darconos/darcono_baby_280x500.png', 280, 500);
+        this.load.image('background', 'image/background/house_farm_escape_way_3840x900px.png');
     }
 
     create() {
