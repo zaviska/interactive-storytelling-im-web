@@ -36,6 +36,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.tumbraJumpDownTimer = 0;
         this.tumbraJumpUpTimer = 0;
         this.tumbraAttackTimer = 0;
+        this.updateCameraTimer = 0;
         let textBox = this.game.textBox;
 
         this.shadowEmpireBackgroundSound = this.game.add.audio('shadow_empire_sound');
@@ -53,7 +54,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
 
         this.game.stage.backgroundColor = '#000000';
         this.background = this.game.add.tileSprite(0, 0, 1920, 2700, 'background-airship');
-        this.game.world.setBounds(0, 0, 1920, 2700);
+        this.game.world.setBounds(0, 200, 1920, 2700);
+        this.game.physics.arcade.setBounds(0, 200, 1920, 2700);
 
         this.delay = 0;
         for (var i = 0; i < 40; i++) {
@@ -115,7 +117,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         function createDamianSword(game) {
             let player = game.add.sprite(0, 0, 'damian-sword');
             player.scale.set(0.75);
-            game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
@@ -129,7 +130,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         function createDamianMagic(game) {
             let player = game.add.sprite(0, 0, 'damian-magic');
             player.scale.set(0.97);
-            game.camera.follow(player);
             game.physics.enable(player, Phaser.Physics.ARCADE);
             player.body.bounce.y = 0.2;
             player.body.collideWorldBounds = true;
@@ -140,7 +140,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
-
+        
         if (this.game.knight === true) {
             this.player = createDamianSword(this.game);
         } else {
@@ -194,9 +194,18 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
              
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         this.playerHitPointsText = this.game.add.text(10, 730, 'Lebenspunkte Damian: ' + this.player.health, style);
+        this.cameraYPosition = Math.ceil(this.player.y) - 200;
     }
 
     update() {
+
+        var cameraMovement = Math.abs(this.cameraYPosition - Math.ceil(this.player.y) + 200);
+
+        if(cameraMovement > 1) {
+            this.cameraYPosition = Math.ceil(this.player.y) - 200;
+            this.game.camera.setPosition(0, this.cameraYPosition);
+        }
+
 
         function hitTumbraWithMagic(tumbra, bullet) {
             tumbra.damage(1);
