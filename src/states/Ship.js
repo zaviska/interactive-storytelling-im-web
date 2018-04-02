@@ -305,15 +305,15 @@ export default class Ship extends Phaser.State {
                     that.box3.body.collideWorldBounds = true;
                     that.box3.body.bounce.set(1);
                 }
-                window.startToBeContinued = function () {
+                window.startTumbras = function () {
                     that.airshipBackgroundSound.destroy();
                     that.fightTutorialBackgroundSound.destroy();
                     that.game.hideNavigation();
-                    that.state.start('ToBeContinued');
+                    that.state.start('Tumbras');
                 }
                 let repeat = [
                     new Answer("Nein, ich möchte weiter trainieren.", "loadBoxes"),
-                    new Answer("Ja, das reicht.", "startToBeContinued")
+                    new Answer("Ja, das reicht.", "startTumbras")
                 ];
                 this.game.textBox.addText(new Dialog("Na, genug trainiert?", lorcanPerson));
                 this.game.textBox.addText(new Decision(repeat));
