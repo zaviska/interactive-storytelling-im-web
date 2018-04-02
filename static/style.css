@@ -64,6 +64,9 @@ canvas {
 .picture.lorcan {
     background-image: url('assets/image/dialog/lorcan_100x100px.png');
 }
+.picture.kian {
+    background-image: url('assets/image/dialog/kian_100x100px.png');
+}
 .decision {
     margin-bottom: 20px;
 }

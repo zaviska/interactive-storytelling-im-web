@@ -15,9 +15,10 @@ export default class ShipReward extends Phaser.State {
         this.load.spritesheet('explode', 'image/bullet/explode.png', 128, 128);
         this.load.spritesheet('damian-magic', 'image/characters/damian/damian_magicAttackAndWalk_500x500px.png', 500, 500);
         this.load.spritesheet('damian-sword', 'image/characters/damian/damian_swordAttackAndWalk_610x880px.png', 610, 880);
-        this.load.tilemap('map', 'image/tilemap/room_3840px.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.spritesheet('kian', 'image/characters/kian/kian_378x510px.png', 378, 510);
+        this.load.tilemap('map', 'image/tilemap/room_1920px.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tiles-ground', 'image/tilemap/tiles-ground.png');
-        this.load.image('background-airship', 'image/background/airship_room_3840x1080px.png');
+        this.load.image('background-airship', 'image/background/airship_room_1920x900px.png');
     }
 
     create() {
@@ -43,8 +44,8 @@ export default class ShipReward extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.game.stage.backgroundColor = '#000000';
-        this.background = this.game.add.tileSprite(0, 0, 3840, 1080, 'background-airship');
-        this.game.world.setBounds(0, 0, 3840, 1080);
+        this.background = this.game.add.tileSprite(0, 0, 1920, 900, 'background-airship');
+        this.game.world.setBounds(0, 0, 1920, 900);
 
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
@@ -53,6 +54,14 @@ export default class ShipReward extends Phaser.State {
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
+
+        this.kian = this.game.add.sprite(1550, 300, 'kian');
+        this.game.physics.enable(this.kian, Phaser.Physics.ARCADE);
+        this.kian.body.bounce.y = 0.2;
+        this.kian.body.collideWorldBounds = true;
+        this.kian.body.setSize(378, 510, 0, 0);
+        this.kianTalked = false;
+        this.kianTalkFText = false;
 
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
@@ -154,6 +163,27 @@ export default class ShipReward extends Phaser.State {
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
+        this.game.physics.arcade.collide(this.kian, this.layer);
+
+        let overlapKian = this.game.physics.arcade.overlap(this.player, this.kian, talkToKian, null, this);
+
+        if (overlapKian === false && this.kianTalkFText === true) {
+            this.kianText.destroy();
+            this.kianTalkFText = false;
+            this.talkToKian = false;
+        }
+
+        function talkToKian(player, kian) {
+            if (this.fKey.isDown && this.kianTalked === false) {
+                this.kianTalked = true;
+                let kianPerson = new Person("Sir Kian", "kian");
+                this.game.textBox.addText(new Dialog("Hallo Damian, ich bin Kapitän Sir Kian.", kianPerson));
+                //this.game.textBox.addText(new Decision(questionAnswer));
+            } else if (this.kianTalkFText === false) {
+                this.kianTalkFText = true;
+                this.kianText = this.game.add.text(this.kian.x, this.kian.y-50, 'Drücke F: Sprechen', style);
+            }
+        }
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
@@ -176,11 +206,9 @@ export default class ShipReward extends Phaser.State {
                         this.player.animations.play('shootLeft');
                         this.facing == "idleLeft";
                     }
-                    
                 }
             } else if(this.game.knight === true) {
                 this.swordSound.play();
-                //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
                     this.facing == "idleRight";
