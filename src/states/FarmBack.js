@@ -36,8 +36,8 @@ export default class FarmBack extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
 
         let textBox = this.game.textBox;
-        textBox.addText(new Text("KAPITEL 13: HEIMFLUG <hr>"));
-        textBox.addText(new Text("...."));
+        textBox.addText(new Text("KAPITEL 13: DIE HEIMREISE <hr>"));
+        textBox.addText(new Text("Damian war wieder zurück auf der Darcono Farm und freute sich auf seine Familie, auch wenn er ein wenig Angst vor der Reaktion seines Vaters hatte... "));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit deinem Vater Tamo.</i></span>"));
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -166,9 +166,16 @@ export default class FarmBack extends Phaser.State {
             if (this.fKey.isDown && this.tamoTalked === false) {
                 this.tamoTalked = true;
                 let tamoPerson = new Person("Tamo Black", "tamo");
-               
-                this.game.textBox.addText(new Dialog("Damian...! Wo warst du die ganze Zeit?!", tamoPerson));
-                //this.game.textBox.addText(new Decision(taskAnswer));
+                window.startTheEnd = function() {
+                    that.farmBackgroundSound.destroy();
+                    that.state.start('TheEnd');
+                }
+                let readyAnswer = [
+                    new Answer("Abreisen", "startTheEnd"),
+                ];
+                this.game.textBox.addText(new Dialog("Damian...! Wo warst du die ganze Zeit?! Ich habe mir solche Sorgen gemacht! Wie siehst du denn jetzt aus, warum hast du diese Rüstung an?!", tamoPerson));
+                this.game.textBox.addText(new Text("Damian entschuldigte sich für seine Flucht und erzählte ihm voller Begeisterung von seiner Reise, seinen Kämpfen und dass er zum Luftritter geschlagen wurde. Obwohl Damian's Vater gegen die Ausbildung zum Luftritter war, ist er nun richtig stolz auf seinen Sohn und schenkte ihm einen Darcono, welcher ihn auf seinen Reisen begleiten soll. Außerdem erfuhr Damian, dass seine Schwester Lina stattdessen die Darcono Farm übernehmen wird. Damian verbrachte noch den ganzen Abend mit seiner Familie bis es wieder Zeit wurde Abschied zu nehmen. Denn das Luftschiff wartete bereits auf den Luftritter Damian Black."));
+                this.game.textBox.addText(new Decision(readyAnswer))
             } else if (this.tamoTalkFText === false) {
                 this.tamoTalkFText = true;
                 this.TamoText = this.game.add.text(this.tamo.x, this.tamo.y-50, 'Drücke F: Sprechen', style);
