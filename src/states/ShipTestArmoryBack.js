@@ -135,7 +135,50 @@ export default class ShipTestArmoryBack extends Phaser.State {
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.lorcan, this.layer);
 
-        //this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+        let overlapLorcan = this.game.physics.arcade.overlap(this.player, this.lorcan, talkToLorcan, null, this);
+
+        if (overlapLorcan === false && this.lorcanTalkFText === true) {
+            this.lorcanText.destroy();
+            this.lorcanTalkFText = false;
+            this.talkToLorcan = false;
+        }
+
+        function talkToLorcan(player, lorcan) {
+            if (this.fKey.isDown && this.lorcanTalked === false) {
+                this.lorcanTalked = true;
+                let lorcanPerson = new Person("Sir Lorcan", "lorcan");
+                window.truthAnswer = function() {
+                    that.lorcanTalked = false;
+                    textBox.addText(new Dialog("Ich bin sehr enttäuscht von dir. Du hast gegen die Regel verstoßen, jetzt muss ich dich verbannen!", lorcanPerson));
+                    textBox.addText(new Decision(begAnswer1));
+                }
+                window.lieAnswer = function() {
+                    that.lorcanTalked = false;
+                    textBox.addText(new Dialog("Netter Versuch, Kleiner! Ich weiß, dass du lügst!", lorcanPerson));
+                    textBox.addText(new Decision(begAnswer2));
+                }
+                window.startCutSceneShipShadowEmpireCell = function() {
+                    that.airshipTestBackgroundSound.destroy();
+                    that.state.start('ShipShadowEmpireCell');
+                }
+                let begAnswer1 = [
+                    new Answer("Bitte verschone mich!", "startCutSceneShipShadowEmpireCell"),
+                    new Answer("Es war ein Unfall, ich bin gestolpert und habe ausversehen das Schwert berührt.", "lieAnswer")
+                ];
+                let begAnswer2 = [
+                    new Answer("Bitte verschone mich!", "startCutSceneShipShadowEmpireCell"),
+                ];
+                let questionAnswer = [
+                    new Answer("Es tut mir leid, ich wollte das nicht...", "truthAnswer"),
+                    new Answer("Es ist nicht so, wie es aussieht. Ich war das nicht, wirklich!", "lieAnswer")
+                ];
+                this.game.textBox.addText(new Dialog("Damian, gib mir bitte die Schlüssel zur Waffenkammer zurück... was, du hast das goldene Schwert berührt?!", lorcanPerson));
+                this.game.textBox.addText(new Decision(questionAnswer));
+            } else if (this.lorcanTalkFText === false) {
+                this.lorcanTalkFText = true;
+                this.lorcanText = this.game.add.text(this.lorcan.x+200, this.lorcan.y-50, 'Drücke F: Sprechen', style);
+            }
+        }
 
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
@@ -146,7 +189,6 @@ export default class ShipTestArmoryBack extends Phaser.State {
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
             this.swordSound.play();
-            //this.game.physics.arcade.overlap(this.player, this.box1, slashObject, null, this);
             if (this.facing == 'idleRight' || this.facing == 'right') {
                 this.player.animations.play('slashRight');
                 this.facing == "idleRight";
