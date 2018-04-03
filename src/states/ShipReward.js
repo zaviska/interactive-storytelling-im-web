@@ -36,10 +36,8 @@ export default class ShipReward extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 12: SIR KIAN'S ERLÖSUNG <hr>"));
-        textBox.addText(new Text("Nachdem Damian den Schattengeist Lorcan besiegt hatte, fiel er ohnmächtig zu Boden. Als er wieder aufwachte, gab sich der unbekannte Mann zu erkennen. Er erzählte Damian, dass sein Name <i> Sir Kian </i> ist und er der richtige Kapitän der Black Air Knights ist. Es handelte sich dabei um ein königliches Luftschiffs, welches von dem Schattengeist Lorcan übernommen wurde, nachdem er Sir Kian gefangen genommen hatte."));
-        textBox.addText(new Text("Aus Dankbarkeit und zu Ehren wurde Damian von Kapitän Sir Kian zum Luftritter geschlagen und gehörte ab sofort zum festen Bestandteil der königlichen Luftritter."));
-        textBox.addText(new Text("Damian war sehr stolz, dass er nun ein richtiger Luftritter wurde. Er bat jedoch Sir Kian um einen Gefallen. Er wollte seine Familie besuchen, um sich nochmal richtig verabschieden zu können."));
-        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Fliege zurück zur Black's Darcono Farm.</i></span>"));
+        textBox.addText(new Text("Nachdem das Schattenreich vollkommen verschwunden war, befand sich Damian wieder in einem Raum des Luftschiffs. Am Ende des Raums erwartete ihn ein Luftritter, den Damian bisher noch nie auf dem Luftschiff gesehen hatte. Dieser unbekannte Luftritter bat Damian zu sich."));
+        textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit dem unbekannten Luftritter.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -176,9 +174,26 @@ export default class ShipReward extends Phaser.State {
         function talkToKian(player, kian) {
             if (this.fKey.isDown && this.kianTalked === false) {
                 this.kianTalked = true;
+                window.goHome = function() {
+                    that.airshipRewardBackgroundSound.destroy();
+                    that.state.start('RoadBack');
+                }
+                let yesAnswer = [
+                    new Answer("Ja, ich bin bereit.", "goHome"),
+                ];
+                window.answerName = function() {
+                    that.game.textBox.addText(new Dialog("Damian Black, wenn ich mich vorstellen darf, ich bin Sir Kian, der richtige Kapitän der Black Air Knights. Der Kapitän, denn du hier kennengelernt hattest, war in Wirklichkeit ein Anführer der Schattengeister, der seine Gestalt verändert hatte, um junge Leute, wie dich, zu täuschen und für seine Zwecke zu missbrauchen. Sir Lorcan hatte unsere ganze Besatzung im Schattenreich gefangen genommen und dieses königliche Luftschiff übernommen. Damian, du hast mit deiner Heldentat wirklich bewiesen, dass du eines Luftritter würdig bist. Aus Dankbarkeit und zu Ehren möchte ich dich zum Luftritter schlagen. Du gehörst ab sofort zum festen Bestandteil der könglichen Luftritter. Gibt es noch etwas was ich für dich tun kann, bevor wir zu unserem Alltag der Luftritter zurück kehren?", kianPerson));
+                    that.game.textBox.addText(new Dialog("Danke Kapitän Sir Kian für diese Ehre. Ich bin sehr glücklich, dass ich dem Königreich Livania dienen kann. Und ja, ich hätte nur eine Bitte, könnte ich meine Familie noch einmal sehen, bevor wir weiter reisen?", damianPerson));
+                    that.game.textBox.addText(new Dialog("Nichts lieber als das, Damian. Wir können sofort aufbrechen. Bist du bereit?", kianPerson));
+                    that.game.textBox.addText(new Decision(yesAnswer));
+                }
+                let nameDamian = [
+                    new Answer("Mein Name ist Damian Black.", "answerName"),
+                ];
                 let kianPerson = new Person("Sir Kian", "kian");
-                this.game.textBox.addText(new Dialog("Hallo Damian, ich bin Kapitän Sir Kian.", kianPerson));
-                //this.game.textBox.addText(new Decision(questionAnswer));
+                let damianPerson = new Person("Damian Black", "damian");
+                this.game.textBox.addText(new Dialog("Danke, dass du uns von dem Fluch der Schattengeister befreit hast. Wie heißt du denn, mein Junge?", kianPerson));
+                this.game.textBox.addText(new Decision(nameDamian));
             } else if (this.kianTalkFText === false) {
                 this.kianTalkFText = true;
                 this.kianText = this.game.add.text(this.kian.x, this.kian.y-50, 'Drücke F: Sprechen', style);
