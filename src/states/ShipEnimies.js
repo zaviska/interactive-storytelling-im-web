@@ -56,29 +56,54 @@ export default class ShipEnimies extends Phaser.State {
 
         this.game.physics.arcade.gravity.y = 500;
 
-        this.tumbraOne = this.game.add.sprite(500, 400, 'tumbra');
+        this.tumbraOne = this.game.add.sprite(1000, 400, 'tumbra');
         this.game.physics.enable(this.tumbraOne, Phaser.Physics.ARCADE);
         this.tumbraOne.body.collideWorldBounds = true;
         this.tumbraOne.body.allowGravity = false;
         this.tumbraOne.health = 30;
+        this.tumbraOne.events.onKilled.add(tumbraOneDied, this);
+        this.tumbraOneDied = false;
 
-        this.tumbraTwo = this.game.add.sprite(1000, 400, 'tumbra');
+        this.tumbraTwo = this.game.add.sprite(1500, 400, 'tumbra');
         this.game.physics.enable(this.tumbraTwo, Phaser.Physics.ARCADE);
         this.tumbraTwo.body.collideWorldBounds = true;
         this.tumbraTwo.body.allowGravity = false;
         this.tumbraTwo.health = 30;
+        this.tumbraTwo.events.onKilled.add(tumbraTwoDied, this);
+        this.tumbraTwoDied = false;
 
-        this.tumbraThree = this.game.add.sprite(1500, 400, 'tumbra');
+        this.tumbraThree = this.game.add.sprite(2000, 400, 'tumbra');
         this.game.physics.enable(this.tumbraThree, Phaser.Physics.ARCADE);
         this.tumbraThree.body.collideWorldBounds = true;
         this.tumbraThree.body.allowGravity = false;
         this.tumbraThree.health = 30;
+        this.tumbraThree.events.onKilled.add(tumbraThreeDied, this);
+        this.tumbraThreeDied = false;
 
-        this.tumbraFour = this.game.add.sprite(2000, 400, 'tumbra');
+        this.tumbraFour = this.game.add.sprite(2500, 400, 'tumbra');
         this.game.physics.enable(this.tumbraFour, Phaser.Physics.ARCADE);
         this.tumbraFour.body.collideWorldBounds = true;
         this.tumbraFour.body.allowGravity = false;
         this.tumbraFour.health = 30;
+        this.tumbraFour.events.onKilled.add(tumbraFourDied, this);
+        this.tumbraFourDied = false;
+
+        function tumbraOneDied(tumbraOne) {
+            console.log("tumbra 1 died", tumbraOne);
+            this.tumbraOneDied = true;
+        }
+        function tumbraTwoDied(tumbraTwo) {
+            console.log("tumbra 2 died", tumbraTwo);
+            this.tumbraTwoDied = true;
+        }
+        function tumbraThreeDied(tumbraThree) {
+            console.log("tumbra 3 died", tumbraThree);
+            this.tumbraThreeDied = true;
+        }
+        function tumbraFourDied(tumbraFour) {
+            console.log("tumbra 4 died", tumbraFour);
+            this.tumbraFourDied = true;
+        }
         
         function createDamianSword(game) {
             let player = game.add.sprite(0, 100, 'damian-sword');
@@ -119,6 +144,7 @@ export default class ShipEnimies extends Phaser.State {
         this.player.events.onKilled.add(playerDied, this);
 
         function playerDied(player) {
+            this.enimiesBackgroundSound.destroy();
             this.game.lastState = 'ShipEnimies';
             this.state.start('GameOver');
         }
@@ -161,11 +187,12 @@ export default class ShipEnimies extends Phaser.State {
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.strgKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
 
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        this.playerHitPointsText = this.game.add.text(10, 50, 'Lebenspunkte Damian: ' + this.player.health, style);
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black" };
+        this.playerHitPointsText = this.game.add.text(1650, 15, 'Lebenspunkte Damian: ' + this.player.health, style);
     }
 
     update() {
+
         function hitTumbraWithMagic(tumbra, bullet) {
             tumbra.damage(1);
             var explosion = this.explosions.getFirstExists(false);
@@ -208,6 +235,27 @@ export default class ShipEnimies extends Phaser.State {
                 this.state.start('ShipTestLibrary');
             } 
         }  
+
+        if (this.tumbraOneDied === true && this.tumbraTwoDied === true && this.tumbraThreeDied === true && this.tumbraFourDied === true) {
+            this.tumbraOneDied = false;
+            this.tumbraTwoDied = false;
+            this.tumbraThreeDied = false;
+            this.tumbraFourDied = false;
+            console.log("Tumbras died");
+            window.startShipTest = function() {
+                that.enimiesBackgroundSound.destroy();
+                if (that.game.knight === true) {
+                    that.state.start('ShipTestArmory');
+                } else {
+                    that.state.start('ShipTestLibrary');
+                } 
+            }
+            let next = [
+                new Answer("Weiter", "startShipTest"),
+            ];
+            this.game.textBox.addText(new Text("Du hast alle Tumbras besiegt."));
+            this.game.textBox.addText(new Decision(next));
+        }
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.tumbraOne, this.layer);

@@ -128,6 +128,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.player.events.onKilled.add(playerDied, this);
 
         function playerDied(player) {
+            this.finalFightBackgroundSound.destroy();
             this.game.lastState = 'ShipShadowEmpireFinalFight';
             this.state.start('GameOver');
         }
