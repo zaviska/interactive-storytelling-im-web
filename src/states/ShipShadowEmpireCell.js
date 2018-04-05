@@ -38,7 +38,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
   
         textBox.addText(new Text("KAPITEL 9: DIE VERBANNUNG <hr>"));
-        textBox.addText(new Text("Sir Lorcan streckte vor Zorn seine Hand aus, so dass das goldene Schwert in seine Hand flog. Er öffnete dadurch das Schattenreich, um Damian zu verbannen. Damian wurde zur Strafe dort in eine Zelle eingesperrt."));
+        textBox.addText(new Text("Sir Lorcan streckte vor Zorn seine Hand aus und öffnete dadurch das Schattenreich, um Damian zu verbannen. Damian wurde zur Strafe dort in eine Zelle eingesperrt."));
         textBox.addText(new Text("Als Damian hoffnunglos und verzweifelt in seiner Zelle saß, wusste er nicht, wie er sich befreien sollte. Dann schaute er sich sein Amulett von seinem Onkel an... eine Träne fiel auf sein Amulett..."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Finde einen Weg aus der Zelle auszubrechen.</i></span>"));
     
