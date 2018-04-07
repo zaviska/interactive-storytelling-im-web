@@ -267,12 +267,14 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.lorcan, this.layer);
-
-        this.game.physics.arcade.overlap(this.bullets, this.lorcan, hitEndBossWithMagic, null, this);
+        if (this.game.mage) {
+            this.game.physics.arcade.overlap(this.bullets, this.lorcan, hitEndBossWithMagic, null, this);
+        }
         this.game.physics.arcade.overlap(this.bossBullets, this.player, hitPlayerWithBullets, null, this);
         this.game.physics.arcade.overlap(this.bossBullets, this.bullets, bulletHitBullets, null, this);
-        this.game.physics.arcade.overlap(this.player, this.lorcan, slashBoss, null, this);
-
+        if (knightAttacks){
+            this.game.physics.arcade.overlap(this.player, this.lorcan, slashBoss, null, this);
+        }
         this.player.body.velocity.x = 0;
         if (this.jumpButton.isDown &&
             this.player.body.onFloor() &&
