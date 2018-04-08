@@ -1,6 +1,4 @@
 import { Text } from "../textbox/api/Text";
-import { Person } from "../textbox/api/Person";
-import { Dialog } from "../textbox/api/Dialog";
 import { Decision } from "../textbox/api/Decision";
 import { Answer } from "../textbox/api/Answer";
 
@@ -24,7 +22,6 @@ export default class ShipEnimies extends Phaser.State {
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
         this.tumbraJumpDownTimer = 0;
@@ -88,20 +85,16 @@ export default class ShipEnimies extends Phaser.State {
         this.tumbraFour.events.onKilled.add(tumbraFourDied, this);
         this.tumbraFourDied = false;
 
-        function tumbraOneDied(tumbraOne) {
-            console.log("tumbra 1 died", tumbraOne);
+        function tumbraOneDied() {
             this.tumbraOneDied = true;
         }
-        function tumbraTwoDied(tumbraTwo) {
-            console.log("tumbra 2 died", tumbraTwo);
+        function tumbraTwoDied() {
             this.tumbraTwoDied = true;
         }
-        function tumbraThreeDied(tumbraThree) {
-            console.log("tumbra 3 died", tumbraThree);
+        function tumbraThreeDied() {
             this.tumbraThreeDied = true;
         }
-        function tumbraFourDied(tumbraFour) {
-            console.log("tumbra 4 died", tumbraFour);
+        function tumbraFourDied() {
             this.tumbraFourDied = true;
         }
         
@@ -143,7 +136,7 @@ export default class ShipEnimies extends Phaser.State {
         this.player.setHealth(100);
         this.player.events.onKilled.add(playerDied, this);
 
-        function playerDied(player) {
+        function playerDied() {
             this.enimiesBackgroundSound.destroy();
             this.game.lastState = 'ShipEnimies';
             this.state.start('GameOver');
@@ -162,10 +155,7 @@ export default class ShipEnimies extends Phaser.State {
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
 
-        this.explosions.forEach(setupExplosion, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }   
+        this.explosions.forEach(setupExplosion, this); 
         
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
@@ -222,9 +212,7 @@ export default class ShipEnimies extends Phaser.State {
                 this.tumbraAttackTimer = this.game.time.now + 200;
             }
         }
-
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        
         let that = this;
 
         if (this.nKey.isDown) {
@@ -241,7 +229,6 @@ export default class ShipEnimies extends Phaser.State {
             this.tumbraTwoDied = false;
             this.tumbraThreeDied = false;
             this.tumbraFourDied = false;
-            console.log("Tumbras died");
             window.startShipTest = function() {
                 that.enimiesBackgroundSound.destroy();
                 if (that.game.knight === true) {

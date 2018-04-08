@@ -152,7 +152,7 @@ export default class Farm extends Phaser.State {
             }
         }
 
-        function feedDarcono(player, darcono) {
+        function feedDarcono() {
             if (this.fKey.isDown && this.darconosFed === false && this.darconosTalked === false) {
                 this.darconosTalked = true;
                 if (this.ballCount >= 10) {
@@ -170,7 +170,7 @@ export default class Farm extends Phaser.State {
             }
         }
 
-        function talkToTamo(player, tamo) {
+        function talkToTamo() {
             if (this.fKey.isDown && this.tamoTalked === false) {
                 this.tamoTalked = true;
 

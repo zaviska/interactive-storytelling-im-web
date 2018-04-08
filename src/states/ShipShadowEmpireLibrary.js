@@ -1,8 +1,4 @@
 import { Text } from "../textbox/api/Text";
-import { Person } from "../textbox/api/Person";
-import { Dialog } from "../textbox/api/Dialog";
-import { Decision } from "../textbox/api/Decision";
-import { Answer } from "../textbox/api/Answer";
 
 export default class ShipShadowEmpireLibrary extends Phaser.State {
 
@@ -21,7 +17,6 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
         let textBox = this.game.textBox;
@@ -97,9 +92,6 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
         this.explosions.createMultiple(30, 'explode');
 
         this.explosions.forEach(setupInvader, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }     
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
@@ -116,27 +108,11 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
 
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('LeaveShadowEmpireLibrary');
         }  
-
-        function destroyObject(weapon, object) {
-            weapon.kill();
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
-        }
-       
         this.game.physics.arcade.collide(this.player, this.layer);
 
         let overlapBook = this.game.physics.arcade.overlap(this.player, this.book, touchBook, null, this);
@@ -146,7 +122,7 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
             this.bookText.destroy();
             this.bookTouchedFText = false;
         }
-        function touchBook(player, item) {
+        function touchBook() {
             if (this.fKey.isDown && this.bookTouched === false) {
                 this.bookTouched = true;
                 this.game.textBox.addText(new Text("Du hast das goldene Buch berührt."));

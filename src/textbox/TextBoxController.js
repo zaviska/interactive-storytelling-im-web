@@ -1,8 +1,8 @@
-import { Text } from './api/Text';
-import { Dialog } from './api/Dialog';
-import { Decision } from './api/Decision';
-import { Person } from './api/Person';
-import { Answer } from './api/Answer';
+export {default as Text } from './api/Text';
+export {default as Dialog } from './api/Dialog';
+export {default as Decision } from './api/Decision';
+export {default as Person } from './api/Person';
+export {default as Answer } from './api/Answer';
 
 export class TextBoxController {
     constructor() {

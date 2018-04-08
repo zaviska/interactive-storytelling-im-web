@@ -1,4 +1,3 @@
-import { Text } from "../textbox/api/Text";
 import { Person } from "../textbox/api/Person";
 import { Dialog } from "../textbox/api/Dialog";
 import { Decision } from "../textbox/api/Decision";
@@ -100,7 +99,6 @@ export default class FarmEscapeWay extends Phaser.State {
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fireButton = this.input.keyboard.addKey(Phaser.KeyCode.E);
     
-        var style = { font: "24px Arial", fill: "#19de65"};
     }
 
     update() {
@@ -113,7 +111,7 @@ export default class FarmEscapeWay extends Phaser.State {
             this.state.start('AirshipDeparture');
         }
      
-        function talkToLorcan(player, lorcan) {
+        function talkToLorcan() {
             if (this.fKey.isDown && this.lorcanTalked === false) {
                 this.lorcanTalked = true;
                 let lorcanPerson = new Person("Sir Lorcan", "lorcan");

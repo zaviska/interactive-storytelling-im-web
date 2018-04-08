@@ -29,7 +29,6 @@ export default class LorcansTransformation extends Phaser.State {
       }
     }
     resize (x, y) {
-      console.log("SCALE MODE CREATE LORCANS TRANSFORMATION", x, y);
       var scaleModiferX = x/1920;
       var scaleModiferY = y/1080;
   

@@ -164,9 +164,6 @@ export default class Room extends Phaser.State {
             return player;
         }
 
-        function collectItem(player, item) {
-            item.kill();
-        }
 
         function takeBag(player, item) {
             if (this.fKey.isDown && this.bagTaken === false) {
@@ -180,7 +177,7 @@ export default class Room extends Phaser.State {
             }
         }
 
-        function openDoor(player, item) {
+        function openDoor() {
             if (this.fKey.isDown && this.doorOpened === false) {
                 this.doorUnlockSound.play();
                 this.doorOpened = true;
@@ -192,7 +189,7 @@ export default class Room extends Phaser.State {
             }
         }
 
-        function openDrawer(player, item) {
+        function openDrawer() {
             if (this.amulet === false) {
                 if (this.fKey.isDown && this.drawerOpened === false) {
                     this.drawerOpened = true;
@@ -228,7 +225,7 @@ export default class Room extends Phaser.State {
             }
         }
 
-        function openWindow(player, item) {
+        function openWindow() {
             if (this.fKey.isDown && this.windowOpened === false)  {
                 this.windowOpened = true;
                 let that = this;

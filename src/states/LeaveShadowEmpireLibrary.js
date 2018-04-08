@@ -29,7 +29,6 @@ export default class LeaveShadowEmpireLibrary extends Phaser.State {
       }
     }
     resize (x, y) {
-      console.log("SCALE MODE CREATE LEAVE SHADOW EMPIRE LIBRARY", x, y);
       var scaleModiferX = x/1920;
       var scaleModiferY = y/1080;
   

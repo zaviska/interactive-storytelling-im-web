@@ -1,6 +1,4 @@
 import { Text } from "../textbox/api/Text";
-import { Person } from "../textbox/api/Person";
-import { Dialog } from "../textbox/api/Dialog";
 import { Decision } from "../textbox/api/Decision";
 import { Answer } from "../textbox/api/Answer";
 
@@ -76,8 +74,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.lorcanTalkFText = false;
         this.lorcan.events.onKilled.add(lorcanDied, this);
 
-        function lorcanDied(lorcan) {
-            console.log("Lorcan died", lorcan);
+        function lorcanDied() {
             window.startCutSceneShipReward = function() {
                 that.finalFightBackgroundSound.destroy();
                 that.state.start('ShipReward');
@@ -127,7 +124,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.player.setHealth(100);
         this.player.events.onKilled.add(playerDied, this);
 
-        function playerDied(player) {
+        function playerDied() {
             this.finalFightBackgroundSound.destroy();
             this.game.lastState = 'ShipShadowEmpireFinalFight';
             this.state.start('GameOver');
@@ -156,9 +153,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.explosions.createMultiple(30, 'explode');
 
         this.explosions.forEach(setupInvader, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }     
 
         function setupBossBullets(invader) {
             invader.anchor.x = 1;
@@ -191,9 +185,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
         let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
     
         if (this.nKey.isDown) {
@@ -260,7 +251,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
                 bossBullets.reset(this.lorcan.x+350, this.lorcan.y+300);
                 let x = Math.round(Math.random()) * 1920;
                 let y = Math.random() * 900;
-                console.log("X, Y", x, y);
                 bossBullets.rotation = this.game.physics.arcade.moveToXY(bossBullets, x, y, 400);
             }
         }

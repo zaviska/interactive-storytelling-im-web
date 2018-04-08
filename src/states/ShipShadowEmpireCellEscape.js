@@ -31,7 +31,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
         this.scale.compatibility.noMargins = true;
-        let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
         this.tumbraJumpDownTimer = 0;
@@ -151,7 +150,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.player.setHealth(100); 
         this.player.events.onKilled.add(playerDied, this);
 
-        function playerDied(player) {
+        function playerDied() {
             this.game.lastState = 'ShipShadowEmpireCellEscape';
             this.state.start('GameOver');
         }
@@ -169,10 +168,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
 
-        this.explosions.forEach(setupExplosion, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }     
+        this.explosions.forEach(setupExplosion, this);   
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
@@ -238,7 +234,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             }
         }
 
-        let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
@@ -267,7 +262,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.lorcanTalkFText = false;
             this.talkToLorcan = false;
         }
-        function talkToLorcan(player, lorcan) {
+        function talkToLorcan() {
             if (this.fKey.isDown && this.lorcanTalked === false) {
                 this.lorcanTalked = true;
                 let lorcanPerson = new Person("Sir Lorcan", "lorcan");
@@ -305,7 +300,7 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.cellText.destroy();
             this.cellTouchedFText = false;
         }
-        function touchCell(player, item) {
+        function touchCell() {
             if (this.fKey.isDown && this.cellTouched === false) {
                 this.cellTouched = true;
                 let cellPerson = new Person("Gefangener", "tamo");

@@ -26,7 +26,6 @@ export default class ShipShadowEmpireCell extends Phaser.State {
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
         let textBox = this.game.textBox;
@@ -123,9 +122,6 @@ export default class ShipShadowEmpireCell extends Phaser.State {
         this.explosions.createMultiple(30, 'explode');
 
         this.explosions.forEach(setupInvader, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }     
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
@@ -142,35 +138,11 @@ export default class ShipShadowEmpireCell extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
         if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('Lumitra');
-        }  
-
-        function destroyObject(weapon, object) {
-            weapon.kill();
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
-        }
-        function slashObject(player, object) {
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);
@@ -181,7 +153,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
             this.amuletText.destroy();
             this.amuletTouchedFText = false;
         }
-        function touchAmulet(player, item) {
+        function touchAmulet() {
             if (this.fKey.isDown && this.amuletTouched === false) {
                 this.amuletTouched = true;
                 let damianPerson = new Person("Damian Black", "damian");

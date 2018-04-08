@@ -31,7 +31,6 @@ export default class OrdinaryWorld extends Phaser.State {
   }
 
   resize (x, y) {
-    console.log("SCALE MODE CREATE ORDINARY WORLD", x, y);
     var scaleModiferX = x/1920;
     var scaleModiferY = y/1080;
 

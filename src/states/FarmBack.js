@@ -133,10 +133,7 @@ export default class FarmBack extends Phaser.State {
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
 
-        this.explosions.forEach(setupInvader, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }     
+        this.explosions.forEach(setupInvader, this);   
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
@@ -153,7 +150,6 @@ export default class FarmBack extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
         let that = this;
 
         if (this.nKey.isDown) {
@@ -162,7 +158,7 @@ export default class FarmBack extends Phaser.State {
         }
       
         var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        function talkToTamo(player, tamo) {
+        function talkToTamo() {
             if (this.fKey.isDown && this.tamoTalked === false) {
                 this.tamoTalked = true;
                 let tamoPerson = new Person("Tamo Black", "tamo");
@@ -180,28 +176,6 @@ export default class FarmBack extends Phaser.State {
                 this.tamoTalkFText = true;
                 this.TamoText = this.game.add.text(this.tamo.x, this.tamo.y-50, 'Drücke F: Sprechen', style);
             }
-        }
-
-        function destroyObject(weapon, object) {
-            weapon.kill();
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
-        }
-        function slashObject(player, object) {
-            object.kill();
-            ++this.boxCount;
-
-            var explosion = this.explosions.getFirstExists(false);
-            explosion.reset(object.body.x, object.body.y);
-            explosion.play('explode', 30, false, true);
-
-            this.explosionSound.play("", 0, 5, false, true);
         }
 
         this.game.physics.arcade.collide(this.player, this.layer);

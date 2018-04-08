@@ -28,7 +28,6 @@ export default class Ship extends Phaser.State {
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        let that = this;
         this.facing = 'right';
         this.jumpTimer = 0;
         this.game.mage = false;
@@ -128,10 +127,7 @@ export default class Ship extends Phaser.State {
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
 
-        this.explosions.forEach(setupInvader, this);
-        function setupTrackSprite(weapon) {
-            weapon.trackSprite(this.player, 0, 0, true);
-        }     
+        this.explosions.forEach(setupInvader, this);  
         function setupInvader(invader) {
             invader.anchor.x = -0.5;
             invader.anchor.y = 2.2;
@@ -156,9 +152,7 @@ export default class Ship extends Phaser.State {
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
-        function collectItem(player, item) {
-            item.kill();
-        }
+
         if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
@@ -181,7 +175,7 @@ export default class Ship extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
-        function createDamianSword(game, x, y) {
+        function createDamianSword(game, x) {
             that.game.knight = true;
             that.game.mage = false;
             that.roleChose = true;
@@ -198,11 +192,10 @@ export default class Ship extends Phaser.State {
             player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
-        function talkToLorcan(player, lorcan) {
+        function talkToLorcan() {
             if (this.fKey.isDown && this.lorcanTalked === false && this.roleChose === false) {
                 this.lorcanTalked = true;
                 let lorcanPerson = new Person("Sir Lorcan", "lorcan");
-                let tamoPerson = new Person("Tamo Black", "tamo");
                 window.beAMage = function() {
                     that.airshipBackgroundSound.destroy();
                     that.fightTutorialBackgroundSound.loopFull();

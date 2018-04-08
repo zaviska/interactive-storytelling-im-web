@@ -109,7 +109,7 @@ export default class FarmAfterVisit extends Phaser.State {
         let that = this;
       
         var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        function talkToTamo(player, tamo) {
+        function talkToTamo() {
             if (this.fKey.isDown && this.tamoTalked === false) {
                 this.tamoTalked = true;
                 let tamoPerson = new Person("Tamo Black", "tamo");
