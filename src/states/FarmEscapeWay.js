@@ -35,7 +35,6 @@ export default class FarmEscapeWay extends Phaser.State {
         this.map.addTilesetImage('tiles-ground');
         this.map.addTilesetImage('tiles_ball');
         this.layer = this.map.createLayer('tile-layer_ground');
-        //this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4); 
 
         this.game.physics.arcade.gravity.y = 250;
@@ -47,13 +46,11 @@ export default class FarmEscapeWay extends Phaser.State {
         this.game.physics.enable(this.darconoOne, Phaser.Physics.ARCADE);
         this.darconoOne.body.collideWorldBounds = true;
         this.darconoOne.scale.set(0.6);
-        //this.darconoOne.body.bounce.set(1);
 
         this.darconoTwo = this.game.add.sprite(3500, 500, 'darcono');
         this.game.physics.enable(this.darconoTwo, Phaser.Physics.ARCADE);
         this.darconoTwo.body.collideWorldBounds = true;
         this.darconoTwo.scale.set(0.6);
-        //this.darconoTwo.body.bounce.set(1);
 
         this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
         this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
@@ -71,7 +68,6 @@ export default class FarmEscapeWay extends Phaser.State {
         this.game.physics.enable(this.darconoBabyTwo, Phaser.Physics.ARCADE);
         this.darconoBabyTwo.body.collideWorldBounds = true;
         this.darconoBabyTwo.scale.set(0.4);
-        //this.darconoBabyTwo.body.bounce.set(1);
 
         this.lorcan = this.game.add.sprite(2700, 200, 'lorcan');
         this.lorcan.frame = 4;

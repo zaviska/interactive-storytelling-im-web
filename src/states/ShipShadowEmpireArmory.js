@@ -58,7 +58,6 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
         this.game.physics.enable(this.sword, Phaser.Physics.ARCADE);
         this.sword.body.allowGravity = false;
         this.sword.alpha = 0;
-        //this.sword.visible = false;
         this.swordTouched = false;
         this.swordTouchedFText = false;
         

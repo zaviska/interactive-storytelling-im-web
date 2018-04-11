@@ -58,7 +58,6 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
         this.game.physics.enable(this.book, Phaser.Physics.ARCADE);
         this.book.body.allowGravity = false;
         this.book.alpha = 0;
-        //this.book.visible = false;
         this.bookTouched = false;
         this.bookTouchedFText = false;
         

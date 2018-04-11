@@ -74,7 +74,6 @@ export default class FarmAfterVisit extends Phaser.State {
         this.game.physics.enable(this.darconoBabyTwo, Phaser.Physics.ARCADE);
         this.darconoBabyTwo.body.collideWorldBounds = true;
         this.darconoBabyTwo.scale.set(0.4);
-        //this.darconoBabyTwo.body.bounce.set(1);
 
         this.tamo = this.game.add.sprite(420, 600, 'tamo');
         this.game.physics.enable(this.tamo, Phaser.Physics.ARCADE);

@@ -44,7 +44,6 @@ export default class Farm extends Phaser.State {
         this.map.addTilesetImage('tiles-ground');
         this.map.addTilesetImage('tiles_ball');
         this.layer = this.map.createLayer('tile-layer_ground');
-        //this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4); 
 
         this.balls = this.game.add.group();
@@ -59,13 +58,11 @@ export default class Farm extends Phaser.State {
         this.game.physics.enable(this.darconoOne, Phaser.Physics.ARCADE);
         this.darconoOne.body.collideWorldBounds = true;
         this.darconoOne.scale.set(0.6);
-        //this.darconoOne.body.bounce.set(1);
 
         this.darconoTwo = this.game.add.sprite(3500, 500, 'darcono');
         this.game.physics.enable(this.darconoTwo, Phaser.Physics.ARCADE);
         this.darconoTwo.body.collideWorldBounds = true;
         this.darconoTwo.scale.set(0.6);
-        //this.darconoTwo.body.bounce.set(1);
 
         this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
         this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
@@ -83,7 +80,6 @@ export default class Farm extends Phaser.State {
         this.game.physics.enable(this.darconoBabyTwo, Phaser.Physics.ARCADE);
         this.darconoBabyTwo.body.collideWorldBounds = true;
         this.darconoBabyTwo.scale.set(0.4);
-        //this.darconoBabyTwo.body.bounce.set(1);
         
         this.darconosFed = false;
         this.darconosTalked = false;
@@ -109,17 +105,6 @@ export default class Farm extends Phaser.State {
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-        /*
-        this.darconogroup = this.game.add.group();
-        this.darconogroup.createMultiple(1, 'darcono', [0, 1, 2], true);
-        this.darconogroup.scale.set(0.4);
-        this.darconogroup.enableBody = true;
-        this.darconogroup.physicsBodyType = Phaser.Physics.ARCADE;
-        this.darconogroup.align(40,-40,400, 600);
-        this.darconogroup.x = 3300;
-        this.darconogroup.y = 400;
-        */
 
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
         this.nKey = this.game.input.keyboard.addKey(Phaser.Keyboard.N);

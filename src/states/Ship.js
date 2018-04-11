@@ -62,7 +62,6 @@ export default class Ship extends Phaser.State {
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
         this.layer = this.map.createLayer('tile-layer_ground');
-       // this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4);
 
         this.game.physics.arcade.gravity.y = 500;
@@ -101,20 +100,6 @@ export default class Ship extends Phaser.State {
             player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
             return player;
         }
-        
-       /*
-        this.boxgroup = this.game.add.group();
-        this.boxgroup.enableBody = true;
-        this.boxgroup.physicsBodyType = Phaser.Physics.ARCADE;
-        this.boxgroup.createMultiple(5, 'box', [0, 1, 2, 4], true);
-        this.boxgroup.align(100,-40,100, 10);
-        this.boxgroup.x = 2000;
-        this.boxgroup.y = 400;
-        this.boxgroup.body.collideWorldBounds = true;
-        this.boxgroup.body.gravity.x = game.rnd.integerInRange(-50, 50);
-        this.boxgroup.body.gravity.y = 100 + Math.random() * 100;
-        this.boxgroup.body.bounce.setTo(0.9, 0.9);
-        */
 
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
@@ -144,7 +129,6 @@ export default class Ship extends Phaser.State {
 
         this.boxCount = 0;
     }
-
 
     update() {
 
@@ -213,7 +197,7 @@ export default class Ship extends Phaser.State {
                     let y = that.player.y;
                     that.player.destroy();
                     that.player = createDamianSword(that.game, x, y);
-                    that.facing = 'right'; // bugfix
+                    that.facing = 'right';
                     textBox.addText(new Text("Du bist jetzt ein Schwertkämpfer."));
                     textBox.addText(new Dialog("Du möchtest also ein Schwertkämpfer werden, eine gute Wahl. Ich wählte einst auch die Schwertkunst. <br> Nun sollst du deine neue Waffe ausprobieren. Hier deine erste Aufgabe: <br> <i> Siehst du die drei Truhen im nächsten Raum? Ich möchte, dass du sie alle zerstörst. Komme zu mir, wenn du damit fertig bist. </i>", lorcanPerson));
                 }

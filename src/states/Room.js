@@ -207,7 +207,7 @@ export default class Room extends Phaser.State {
                         let y = that.player.y;
                         that.player.destroy();
                         that.player = createDamianAmulet(that.game, x, y);
-                        that.facing = 'right'; //bugfix
+                        that.facing = 'right';
                     }
                     this.game.textBox.addText(new Dialog("Hm, in welcher Schublade war nochmal das Amulett meines Onkels?", this.damianPerson));
                     let chooseDrawer = [
