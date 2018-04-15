@@ -99,10 +99,10 @@ export default class ShipTestLibrary extends Phaser.State {
 
     update() {
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('EnterShadowEmpireLibrary');
-        }
+        }*/
 
         this.game.physics.arcade.collide(this.player, this.layer);
 

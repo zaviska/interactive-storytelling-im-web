@@ -140,10 +140,10 @@ export default class ShipShadowEmpireCell extends Phaser.State {
     update() {
         let that = this;
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('Lumitra');
-        }
+        }*/
 
         this.game.physics.arcade.collide(this.player, this.layer);
 

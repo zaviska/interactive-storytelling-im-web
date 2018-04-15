@@ -137,11 +137,11 @@ export default class Ship extends Phaser.State {
         let that = this;
 
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
             this.state.start('Tumbras');
-        }  
+        }*/ 
         function createDamianMagic(game, x, y) {
             that.game.mage = true;
             that.game.knight = false;

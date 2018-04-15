@@ -102,10 +102,10 @@ export default class FarmEscapeWay extends Phaser.State {
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
    
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.escapeWayBackgroundSound.destroy();
             this.state.start('AirshipDeparture');
-        }
+        }*/
      
         function talkToLorcan() {
             if (this.fKey.isDown && this.lorcanTalked === false) {

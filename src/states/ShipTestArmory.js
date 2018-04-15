@@ -91,10 +91,10 @@ export default class ShipTestArmory extends Phaser.State {
 
     update() {
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('EnterShadowEmpireArmory');
-        }
+        }*/
         
         this.game.physics.arcade.collide(this.player, this.layer);
 

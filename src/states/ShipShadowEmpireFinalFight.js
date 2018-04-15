@@ -187,10 +187,10 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
     update() {
         let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
     
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.finalFightBackgroundSound.destroy();
             this.state.start('ShipReward');
-        }  
+        }*/  
 
         function hitEndBossWithMagic(boss, bullet) {
             boss.damage(1);

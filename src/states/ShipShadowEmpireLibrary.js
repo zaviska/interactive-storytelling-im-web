@@ -108,10 +108,10 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
 
     update() {
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('LeaveShadowEmpireLibrary');
-        }  
+        }*/  
         this.game.physics.arcade.collide(this.player, this.layer);
 
         let overlapBook = this.game.physics.arcade.overlap(this.player, this.book, touchBook, null, this);

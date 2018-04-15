@@ -215,14 +215,14 @@ export default class ShipEnimies extends Phaser.State {
         
         let that = this;
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.enimiesBackgroundSound.destroy();
             if (this.game.knight === true) {
                 this.state.start('ShipTestArmory');
             } else {
                 this.state.start('ShipTestLibrary');
             } 
-        }  
+        }*/ 
 
         if (this.tumbraOneDied === true && this.tumbraTwoDied === true && this.tumbraThreeDied === true && this.tumbraFourDied === true) {
             this.tumbraOneDied = false;

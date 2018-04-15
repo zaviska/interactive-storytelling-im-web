@@ -237,10 +237,10 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('LorcansTransformation');
-        }
+        }*/
 
         if (this.game.time.now > this.tumbraJumpDownTimer) {
             this.tumbraOne.body.velocity.y = -100;

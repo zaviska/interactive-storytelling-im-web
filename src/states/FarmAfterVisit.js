@@ -156,10 +156,10 @@ export default class FarmAfterVisit extends Phaser.State {
             }
         }
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.farmBackgroundSound.destroy();
             this.state.start('Room');
-        }
+        }*/
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.tamo, this.layer);

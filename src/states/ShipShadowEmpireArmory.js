@@ -100,10 +100,10 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
 
     update() {
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('LeaveShadowEmpireArmory');
-        }  
+        }*/  
 
         this.game.physics.arcade.collide(this.player, this.layer);
 

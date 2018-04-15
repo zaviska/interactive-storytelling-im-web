@@ -128,10 +128,10 @@ export default class ShipReward extends Phaser.State {
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.airshipRewardBackgroundSound.destroy();
             this.state.start('RoadBack');
-        }
+        }*/
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.kian, this.layer);

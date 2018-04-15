@@ -111,10 +111,10 @@ export default class ShipTestLibraryBack extends Phaser.State {
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireCell');
-        }
+        }*/
 
         if (this.lorcan.x === 0) {
             this.game.add.tween(this.lorcan).to( { x: +this.lorcanMovePosition }, this.lorcanMoveSpeed, Phaser.Easing.Linear.None, true);

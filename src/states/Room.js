@@ -108,10 +108,10 @@ export default class Room extends Phaser.State {
     }
 
     update() {
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.escapeWayBackgroundSound.destroy();
             this.state.start('FarmEscapeWay');
-        }
+        }*/
 
 
         this.game.physics.arcade.collide(this.player, this.layer);

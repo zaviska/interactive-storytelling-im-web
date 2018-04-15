@@ -152,10 +152,10 @@ export default class FarmBack extends Phaser.State {
     update() {
         let that = this;
 
-        if (this.nKey.isDown) {
+        /*if (this.nKey.isDown) {
             this.farmBackgroundSound.destroy();
             this.state.start('TheEnd');
-        }
+        }*/
       
         var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         function talkToTamo() {
