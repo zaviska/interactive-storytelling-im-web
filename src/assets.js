@@ -7,19 +7,7 @@
  */
 
 //  -- Splash screen assets used by the Preloader.
-export const preloaderAssets = [{
-  key: 'splash-screen',
-  type: 'image'
-}, {
-  key: 'progress-bar',
-  type: 'image'
-}, {
-  key: 'loading_410x100px',
-  type: 'image'
-}];
+export const preloaderAssets = [];
 
 //  -- General assets used throughout the game.
-export const gameAssets = [{
-  key: 'phaser',
-  type: 'image'
-}];
+export const gameAssets = [];
