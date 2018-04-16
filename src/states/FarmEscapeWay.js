@@ -120,7 +120,7 @@ export default class FarmEscapeWay extends Phaser.State {
                     that.state.start('AirshipDeparture');
                 }
                 let questionAnswer = [
-                    new Answer("Ja.", "startCutSceneAirshipDeparture"),
+                    new Answer("Ja, ich möchte einsteigen.", "startCutSceneAirshipDeparture"),
                     new Answer("Noch nicht.", "waitAnswer")
                 ];
                 this.game.textBox.addText(new Dialog("Möchtest du einsteigen?", lorcanPerson));

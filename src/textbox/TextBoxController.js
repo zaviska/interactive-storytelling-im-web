@@ -1,9 +1,3 @@
-export {default as Text } from './api/Text';
-export {default as Dialog } from './api/Dialog';
-export {default as Decision } from './api/Decision';
-export {default as Person } from './api/Person';
-export {default as Answer } from './api/Answer';
-
 export class TextBoxController {
     constructor() {
         this.textList = [];

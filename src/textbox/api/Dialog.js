@@ -1,4 +1,3 @@
-
 export class Dialog {
     constructor(text, person) {
         this.text = text;

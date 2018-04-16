@@ -168,7 +168,7 @@ export default class Farm extends Phaser.State {
                     if (that.ballCount >= 10 && that.darconosFed === true) {
                         let goHomeAnswer = [
                             new Answer("Ich möchte noch draußen bleiben.", "okAnswer"),
-                            new Answer("Ok.", "startCutSceneAirshipArrival")
+                            new Answer("Ok, ich komme ins Haus hinein.", "startCutSceneAirshipArrival")
                         ];
                         textBox.addText(new Dialog("Sehr gut. Komm doch wieder ins Haus hinein.", tamoPerson));
                         textBox.addText(new Decision(goHomeAnswer));
@@ -182,7 +182,7 @@ export default class Farm extends Phaser.State {
                 }
 
                 let taskAnswer = [
-                    new Answer("Ok.", "okAnswer"),
+                    new Answer("Ok, ich werde die Darconos füttern.", "okAnswer"),
                     new Answer("Ich habe sie schon gefüttert.", "checkTaskAnswer")
                 ];
                 let tamoPerson = new Person("Tamo Black", "tamo");

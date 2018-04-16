@@ -6,9 +6,6 @@
  */
 
 //  The game canvas dimensions.
-//export const width = 1920;
-//export const height = 1080;
-
 export const width = 1920;
 export const height = 900;
 
@@ -38,4 +35,3 @@ export const resolution = 1;
 // export const enableDebug = false;
 
 export const parent = "game";
-

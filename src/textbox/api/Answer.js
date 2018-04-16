@@ -1,4 +1,3 @@
-
 export class Answer {
     constructor(text, callBack) {
         this.text = text;
