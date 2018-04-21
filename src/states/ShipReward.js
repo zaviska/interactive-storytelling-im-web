@@ -95,8 +95,6 @@ export default class ShipReward extends Phaser.State {
             this.player = createDamianMagic(this.game);
         }
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -125,13 +123,13 @@ export default class ShipReward extends Phaser.State {
     }
 
     update() {
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
-
         /*if (this.nKey.isDown) {
             this.airshipRewardBackgroundSound.destroy();
             this.state.start('RoadBack');
         }*/
+
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        let that = this;
 
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.kian, this.layer);
@@ -181,7 +179,7 @@ export default class ShipReward extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
-            if(this.game.mage === true) {
+            if (this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -195,7 +193,7 @@ export default class ShipReward extends Phaser.State {
                         this.facing == "idleLeft";
                     }
                 }
-            } else if(this.game.knight === true) {
+            } else if (this.game.knight === true) {
                 this.swordSound.play();
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
@@ -211,8 +209,7 @@ export default class ShipReward extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');

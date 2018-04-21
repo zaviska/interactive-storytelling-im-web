@@ -52,7 +52,7 @@ export default class FarmEscapeWay extends Phaser.State {
         this.darconoTwo.body.collideWorldBounds = true;
         this.darconoTwo.scale.set(0.6);
 
-        this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
+        this.darconoThree = this.game.add.sprite(3600, 400, 'darcono');
         this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
         this.darconoThree.body.collideWorldBounds = true;
         this.darconoThree.scale.set(0.6);
@@ -98,15 +98,15 @@ export default class FarmEscapeWay extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
-   
         /*if (this.nKey.isDown) {
             this.escapeWayBackgroundSound.destroy();
             this.state.start('AirshipDeparture');
         }*/
-     
+
+        let textBox = this.game.textBox;
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        let that = this;
+   
         function talkToLorcan() {
             if (this.fKey.isDown && this.lorcanTalked === false) {
                 this.lorcanTalked = true;
@@ -154,8 +154,7 @@ export default class FarmEscapeWay extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');
@@ -166,21 +165,18 @@ export default class FarmEscapeWay extends Phaser.State {
                 this.player.animations.stop();
                 if (this.facing == 'left') {
                     this.player.frame = 4;
-                }
-                else {
+                } else {
                     this.player.frame = 5;
                 }
                 this.facing = 'idle';
             }
         }
         
-        if (
-            this.jumpButton.isDown &&
+        if (this.jumpButton.isDown &&
             this.player.body.onFloor() &&
             this.game.time.now > this.jumpTimer) {
-
-            this.player.body.velocity.y = -250;
-            this.jumpTimer = this.game.time.now + 750;
+                this.player.body.velocity.y = -250;
+                this.jumpTimer = this.game.time.now + 750;
         }
     
     }

@@ -76,8 +76,6 @@ export default class ShipTestLibraryBack extends Phaser.State {
             player.animations.add('shootLeft', [10, 11]);
             return player;
         }
-        
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
@@ -107,14 +105,14 @@ export default class ShipTestLibraryBack extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
-
         /*if (this.nKey.isDown) {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireCell');
         }*/
+
+        let textBox = this.game.textBox;
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        let that = this;
 
         if (this.lorcan.x === 0) {
             this.game.add.tween(this.lorcan).to( { x: +this.lorcanMovePosition }, this.lorcanMoveSpeed, Phaser.Easing.Linear.None, true);

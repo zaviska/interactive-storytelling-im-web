@@ -155,8 +155,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
             this.state.start('GameOver');
         }
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -195,10 +193,14 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
     }
 
     update() {
+          /*if (this.nKey.isDown) {
+            this.shadowEmpireBackgroundSound.destroy();
+            this.state.start('LorcansTransformation');
+        }*/
 
         var cameraMovement = Math.abs(this.cameraYPosition - Math.ceil(this.player.y) + 200);
 
-        if(cameraMovement > 1) {
+        if (cameraMovement > 1) {
             this.cameraYPosition = Math.ceil(this.player.y) - 200;
             this.game.camera.setPosition(0, this.cameraYPosition);
         }
@@ -236,11 +238,6 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
 
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
-
-        /*if (this.nKey.isDown) {
-            this.shadowEmpireBackgroundSound.destroy();
-            this.state.start('LorcansTransformation');
-        }*/
 
         if (this.game.time.now > this.tumbraJumpDownTimer) {
             this.tumbraOne.body.velocity.y = -100;

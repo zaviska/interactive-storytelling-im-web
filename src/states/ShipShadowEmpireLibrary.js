@@ -77,8 +77,6 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
             return player;
         }
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -107,11 +105,11 @@ export default class ShipShadowEmpireLibrary extends Phaser.State {
     }
 
     update() {
-
         /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('LeaveShadowEmpireLibrary');
         }*/  
+        
         this.game.physics.arcade.collide(this.player, this.layer);
 
         let overlapBook = this.game.physics.arcade.overlap(this.player, this.book, touchBook, null, this);

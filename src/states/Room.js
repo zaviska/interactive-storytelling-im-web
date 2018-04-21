@@ -113,7 +113,6 @@ export default class Room extends Phaser.State {
             this.state.start('FarmEscapeWay');
         }*/
 
-
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.bag, this.layer);
 
@@ -145,11 +144,9 @@ export default class Room extends Phaser.State {
             this.bagTakeFText = false;
         }
       
-
         this.fontStyle = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};   
 
         this.damianPerson = new Person("Damian Black", "damian");
-
 
         function createDamianAmulet(game, x, y) {
             let player = game.add.sprite(x, y, 'damian_amulet');
@@ -163,7 +160,6 @@ export default class Room extends Phaser.State {
             player.animations.add('right', [5, 6, 7, 8, 9], 8, true);
             return player;
         }
-
 
         function takeBag(player, item) {
             if (this.fKey.isDown && this.bagTaken === false) {

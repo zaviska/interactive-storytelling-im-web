@@ -67,8 +67,6 @@ export default class ShipTestArmory extends Phaser.State {
             player.animations.add('slashLeft', [4, 3, 2, 1, 0], 16 );
             return player;
         }
-        
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
@@ -90,7 +88,6 @@ export default class ShipTestArmory extends Phaser.State {
     }
 
     update() {
-
         /*if (this.nKey.isDown) {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('EnterShadowEmpireArmory');

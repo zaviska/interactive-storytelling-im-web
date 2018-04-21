@@ -17,6 +17,8 @@ export default class Intro extends Phaser.State {
     
     this.game.nextButton = this.game.add.button(1710, 10, 'playButton', onClickNextButton, this, 1, 0, 2);
 
+    this.resize(this.game.width, this.game.height);
+
     function onClickNextButton() {
         introTitleSound.destroy();
         this.game.nextButton.destroy();

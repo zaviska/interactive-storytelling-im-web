@@ -41,7 +41,6 @@ export default class FarmAfterVisit extends Phaser.State {
         this.map = this.game.add.tilemap('map');
         this.map.addTilesetImage('tiles-ground');
         this.layer = this.map.createLayer('tile-layer_ground');
-        //this.layer.resizeWorld();
         this.map.setCollisionBetween(1,4); 
 
         this.game.physics.arcade.gravity.y = 250;
@@ -50,15 +49,13 @@ export default class FarmAfterVisit extends Phaser.State {
         this.game.physics.enable(this.darconoOne, Phaser.Physics.ARCADE);
         this.darconoOne.body.collideWorldBounds = true;
         this.darconoOne.scale.set(0.6);
-        //this.darconoOne.body.bounce.set(1);
 
         this.darconoTwo = this.game.add.sprite(3500, 500, 'darcono');
         this.game.physics.enable(this.darconoTwo, Phaser.Physics.ARCADE);
         this.darconoTwo.body.collideWorldBounds = true;
         this.darconoTwo.scale.set(0.6);
-        //this.darconoTwo.body.bounce.set(1);
 
-        this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
+        this.darconoThree = this.game.add.sprite(3600, 400, 'darcono');
         this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
         this.darconoThree.body.collideWorldBounds = true;
         this.darconoThree.scale.set(0.6);
@@ -104,6 +101,11 @@ export default class FarmAfterVisit extends Phaser.State {
     }
 
     update() {
+        /*if (this.nKey.isDown) {
+            this.farmBackgroundSound.destroy();
+            this.state.start('Room');
+        }*/
+
         let textBox = this.game.textBox;
         let that = this;
       
@@ -156,11 +158,6 @@ export default class FarmAfterVisit extends Phaser.State {
             }
         }
 
-        /*if (this.nKey.isDown) {
-            this.farmBackgroundSound.destroy();
-            this.state.start('Room');
-        }*/
-
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.tamo, this.layer);
         this.game.physics.arcade.collide(this.darconoOne, this.layer);
@@ -196,8 +193,7 @@ export default class FarmAfterVisit extends Phaser.State {
                 this.player.animations.stop();
                 if (this.facing == 'left') {
                     this.player.frame = 4;
-                }
-                else {
+                } else {
                     this.player.frame = 5;
                 }
                 this.facing = 'idle';

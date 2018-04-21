@@ -77,8 +77,6 @@ export default class ShipTestArmoryBack extends Phaser.State {
             return player;
         }
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
         this.explosions.forEach(setupInvader, this);      
@@ -98,14 +96,14 @@ export default class ShipTestArmoryBack extends Phaser.State {
     }
 
     update() {
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
-
         /*if (this.nKey.isDown) {
             this.airshipTestBackgroundSound.destroy();
             this.state.start('ShipShadowEmpireCell');
-        }*/  
+        }*/ 
+
+        let textBox = this.game.textBox;
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        let that = this;
 
         if (this.lorcan.x === 0) {
             this.game.add.tween(this.lorcan).to( { x: +this.lorcanMovePosition }, this.lorcanMoveSpeed, Phaser.Easing.Linear.None, true);
@@ -186,8 +184,7 @@ export default class ShipTestArmoryBack extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');

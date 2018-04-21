@@ -29,7 +29,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.facing = 'right';
         this.jumpTimer = 0;
         let textBox = this.game.textBox;
-
+        
         this.finalFightBackgroundSound = this.game.add.audio('final_fight_sound');
         this.finalFightBackgroundSound.loopFull();
         this.shootSound = this.game.add.audio('shoot_sound');
@@ -69,7 +69,8 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         this.lorcan.body.collideWorldBounds = true;
         this.lorcan.body.setSize(800, 800, 0, 0);
         this.lorcan.body.bounce.set(1);
-        this.lorcan.setHealth(1200);
+        this.lorcan.maxHealth = 200;
+        this.lorcan.setHealth(200);
         this.lorcanTalked = false;
         this.lorcanTalkFText = false;
         this.lorcan.events.onKilled.add(lorcanDied, this);
@@ -121,6 +122,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             this.game.mage = true;
             this.player = createDamianMagic(this.game);
         }
+
         this.player.setHealth(100);
         this.player.events.onKilled.add(playerDied, this);
 
@@ -129,8 +131,6 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             this.game.lastState = 'ShipShadowEmpireFinalFight';
             this.state.start('GameOver');
         }
-
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
@@ -185,39 +185,36 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
     }
 
     update() {
-        let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
-    
         /*if (this.nKey.isDown) {
             this.finalFightBackgroundSound.destroy();
             this.state.start('ShipReward');
-        }*/  
+        }*/ 
 
+        let knightAttacks = (this.game.input.activePointer.isDown || this.strgKey.isDown) && this.game.knight;
+    
         function hitEndBossWithMagic(boss, bullet) {
             boss.damage(1);
             this.endBossHitPointsText.setText('Lebenspunkte Endboss: ' + boss.health, true);
             var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
+            if (explosion) {
                 explosion.reset(bullet.body.x, bullet.body.y);
                 explosion.play('explode', 30, false, true);
             }
-
             this.explosionSound.play("", 0, 5, false, true);
             bullet.kill();
         }
         
         function hitPlayerWithBullets(player, bullet) {
-            if(!knightAttacks || this.game.mage === true) {
+            if (!knightAttacks || this.game.mage === true) {
                 player.damage(1);
                 this.playerHitPointsText.setText('Lebenspunkte Damian: ' + player.health, true); 
             }
             var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
+            if (explosion) {
                 explosion.reset(bullet.body.x, bullet.body.y);
                 explosion.play('explode', 30, false, true);
             }
-
             this.explosionSound.play("", 0, 5, false, true);
-        
             bullet.kill();
         }
 
@@ -225,27 +222,25 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
             bullet.kill();
             bossBullet.kill();
             var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
+            if (explosion) {
                 explosion.reset(bullet.body.x, bullet.body.y);
                 explosion.play('explode', 30, false, true);
             }
-
             this.explosionSound.play("", 0, 5, false, true);
         }
     
         function slashBoss(player, boss) {
             boss.damage(1);
             var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
+            if (explosion) {
                 explosion.reset(boss.body.x, boss.body.y);
                 explosion.play('explode', 30, false, true);
             }
-
             this.explosionSound.play("", 0, 5, false, true);
             this.endBossHitPointsText.setText('Lebenspunkte Endboss:' + boss.health, true);
         }
 
-        if(this.lorcan.alive) {
+        if (this.lorcan.alive) {
             var bossBullets = this.bossBullets.getFirstExists(false);
             if (bossBullets) {
                 bossBullets.reset(this.lorcan.x+350, this.lorcan.y+300);
@@ -262,7 +257,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
         }
         this.game.physics.arcade.overlap(this.bossBullets, this.player, hitPlayerWithBullets, null, this);
         this.game.physics.arcade.overlap(this.bossBullets, this.bullets, bulletHitBullets, null, this);
-        if (knightAttacks){
+        if (knightAttacks) {
             this.game.physics.arcade.overlap(this.player, this.lorcan, slashBoss, null, this);
         }
         this.player.body.velocity.x = 0;
@@ -273,7 +268,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
-            if(this.game.mage === true) {
+            if (this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -288,7 +283,7 @@ export default class ShipShadowEmpireFinalFight extends Phaser.State {
                     }
                     
                 }
-            } else if(this.game.knight === true) {
+            } else if (this.game.knight === true) {
                 this.swordSound.play();
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');

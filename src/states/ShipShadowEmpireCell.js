@@ -108,8 +108,6 @@ export default class ShipShadowEmpireCell extends Phaser.State {
 
         this.cell = this.game.add.tileSprite(0, 0, 1920, 900, 'cell');
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -138,12 +136,11 @@ export default class ShipShadowEmpireCell extends Phaser.State {
     }
 
     update() {
-        let that = this;
-
         /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('Lumitra');
         }*/
+        let that = this;
 
         this.game.physics.arcade.collide(this.player, this.layer);
 
@@ -195,7 +192,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
                     }
                     
                 }
-            } else if(this.game.knight === true) {
+            } else if (this.game.knight === true) {
                 this.swordSound.play();
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');
@@ -211,8 +208,7 @@ export default class ShipShadowEmpireCell extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');

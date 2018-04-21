@@ -63,7 +63,7 @@ export default class FarmBack extends Phaser.State {
         this.darconoTwo.body.collideWorldBounds = true;
         this.darconoTwo.scale.set(0.6);
 
-        this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
+        this.darconoThree = this.game.add.sprite(3600, 400, 'darcono');
         this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
         this.darconoThree.body.collideWorldBounds = true;
         this.darconoThree.scale.set(0.6);
@@ -150,13 +150,13 @@ export default class FarmBack extends Phaser.State {
     }
 
     update() {
-        let that = this;
-
         /*if (this.nKey.isDown) {
             this.farmBackgroundSound.destroy();
             this.state.start('TheEnd');
         }*/
-      
+
+        let that = this;
+
         var style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         function talkToTamo() {
             if (this.fKey.isDown && this.tamoTalked === false) {
@@ -202,7 +202,7 @@ export default class FarmBack extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
-            if(this.game.mage === true) {
+            if (this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -217,7 +217,7 @@ export default class FarmBack extends Phaser.State {
                     }
                     
                 }
-            } else if(this.game.knight === true) {
+            } else if (this.game.knight === true) {
                 this.swordSound.play();
                 if (this.facing == 'idleRight' || this.facing == 'right') {
                     this.player.animations.play('slashRight');

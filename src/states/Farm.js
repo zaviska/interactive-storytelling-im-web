@@ -64,7 +64,7 @@ export default class Farm extends Phaser.State {
         this.darconoTwo.body.collideWorldBounds = true;
         this.darconoTwo.scale.set(0.6);
 
-        this.darconoThree = this.game.add.sprite(3600, 500, 'darcono');
+        this.darconoThree = this.game.add.sprite(3600, 400, 'darcono');
         this.game.physics.enable(this.darconoThree, Phaser.Physics.ARCADE);
         this.darconoThree.body.collideWorldBounds = true;
         this.darconoThree.scale.set(0.6);
@@ -117,6 +117,11 @@ export default class Farm extends Phaser.State {
     }
 
     update() {
+        /*if (this.nKey.isDown) {
+            this.farmBackgroundSound.destroy();
+            this.state.start('AirshipArrival');
+        }*/
+
         let textBox = this.game.textBox;
         let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
         let that = this;
@@ -194,11 +199,6 @@ export default class Farm extends Phaser.State {
             }
         }
 
-        /*if (this.nKey.isDown) {
-            this.farmBackgroundSound.destroy();
-            this.state.start('AirshipArrival');
-        }*/
-
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.tamo, this.layer);
         this.game.physics.arcade.collide(this.balls, this.layer);
@@ -230,8 +230,7 @@ export default class Farm extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');
@@ -242,8 +241,7 @@ export default class Farm extends Phaser.State {
                 this.player.animations.stop();
                 if (this.facing == 'left') {
                     this.player.frame = 4;
-                }
-                else {
+                } else {
                     this.player.frame = 5;
                 }
                 this.facing = 'idle';

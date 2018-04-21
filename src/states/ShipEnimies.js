@@ -22,6 +22,7 @@ export default class ShipEnimies extends Phaser.State {
     create() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
         this.facing = 'right';
         this.jumpTimer = 0;
         this.tumbraJumpDownTimer = 0;
@@ -142,8 +143,6 @@ export default class ShipEnimies extends Phaser.State {
             this.state.start('GameOver');
         }
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -182,39 +181,6 @@ export default class ShipEnimies extends Phaser.State {
     }
 
     update() {
-
-        function hitTumbraWithMagic(tumbra, bullet) {
-            tumbra.damage(1);
-            var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
-                explosion.reset(bullet.body.x, bullet.body.y);
-                explosion.play('explode', 30, false, true);
-            }
-
-            this.explosionSound.play("", 0, 5, false, true);
-            bullet.kill();
-        }
-        
-        function slashTumbra(player, tumbra) {
-            tumbra.damage(1);
-            var explosion = this.explosions.getFirstExists(false);
-            if(explosion) {
-                explosion.reset(tumbra.body.x, tumbra.body.y);
-                explosion.play('explode', 30, false, true);
-            }
-
-            this.explosionSound.play("", 0, 5, false, true);
-        }
-
-        function tumbraAttacksPlayer(player, tumbra) {
-            if(this.game.time.now > this.tumbraAttackTimer) {
-                tumbra.damage(1);
-                this.tumbraAttackTimer = this.game.time.now + 200;
-            }
-        }
-        
-        let that = this;
-
         /*if (this.nKey.isDown) {
             this.enimiesBackgroundSound.destroy();
             if (this.game.knight === true) {
@@ -223,6 +189,36 @@ export default class ShipEnimies extends Phaser.State {
                 this.state.start('ShipTestLibrary');
             } 
         }*/ 
+
+        function hitTumbraWithMagic(tumbra, bullet) {
+            tumbra.damage(1);
+            var explosion = this.explosions.getFirstExists(false);
+            if (explosion) {
+                explosion.reset(bullet.body.x, bullet.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+            this.explosionSound.play("", 0, 5, false, true);
+            bullet.kill();
+        }
+        
+        function slashTumbra(player, tumbra) {
+            tumbra.damage(1);
+            var explosion = this.explosions.getFirstExists(false);
+            if (explosion) {
+                explosion.reset(tumbra.body.x, tumbra.body.y);
+                explosion.play('explode', 30, false, true);
+            }
+            this.explosionSound.play("", 0, 5, false, true);
+        }
+
+        function tumbraAttacksPlayer(player, tumbra) {
+            if (this.game.time.now > this.tumbraAttackTimer) {
+                tumbra.damage(1);
+                this.tumbraAttackTimer = this.game.time.now + 200;
+            }
+        }
+        
+        let that = this;
 
         if (this.tumbraOneDied === true && this.tumbraTwoDied === true && this.tumbraThreeDied === true && this.tumbraFourDied === true) {
             this.tumbraOneDied = false;
@@ -324,8 +320,7 @@ export default class ShipEnimies extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');

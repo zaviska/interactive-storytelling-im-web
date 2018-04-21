@@ -131,17 +131,16 @@ export default class Ship extends Phaser.State {
     }
 
     update() {
-
-        let textBox = this.game.textBox;
-        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
-        let that = this;
-
-
         /*if (this.nKey.isDown) {
             this.airshipBackgroundSound.destroy();
             this.fightTutorialBackgroundSound.destroy();
             this.state.start('Tumbras');
         }*/ 
+
+        let textBox = this.game.textBox;
+        let style = { font: "20px Hind, Arial", fill: "#19de65", backgroundColor: "black"};
+        let that = this;
+
         function createDamianMagic(game, x, y) {
             that.game.mage = true;
             that.game.knight = false;
@@ -346,7 +345,7 @@ export default class Ship extends Phaser.State {
                 this.jumpTimer = this.game.time.now + 750;
         }
         if (this.game.input.activePointer.isDown || this.strgKey.isDown) {
-            if(this.game.mage === true) {
+            if (this.game.mage === true) {
                 var bullet = this.bullets.getFirstExists(false);
                 if (bullet) {
                     bullet.reset(this.player.x+350, this.player.y+300);
@@ -380,8 +379,7 @@ export default class Ship extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');

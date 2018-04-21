@@ -77,8 +77,6 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
             return player;
         }
 
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
         this.explosions = this.game.add.group();
         this.explosions.createMultiple(30, 'explode');
         this.explosions.forEach(setupInvader, this);
@@ -99,7 +97,6 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
     }
 
     update() {
-
         /*if (this.nKey.isDown) {
             this.shadowEmpireBackgroundSound.destroy();
             this.state.start('LeaveShadowEmpireArmory');
@@ -148,8 +145,7 @@ export default class ShipShadowEmpireArmory extends Phaser.State {
                 this.player.animations.play('left');
                 this.facing = 'left';
             }
-        }
-        else if (this.cursors.right.isDown || this.dKey.isDown) {
+        } else if (this.cursors.right.isDown || this.dKey.isDown) {
             this.player.body.velocity.x = 350;
             if (this.facing != 'right') {
                 this.player.animations.play('right');
