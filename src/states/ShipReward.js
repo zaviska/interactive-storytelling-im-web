@@ -34,7 +34,7 @@ export default class ShipReward extends Phaser.State {
         this.swordSound = this.game.add.audio('sword_sound');
         this.explosionSound = this.game.add.audio('explosion_sound');
   
-        textBox.addText(new Text("KAPITEL 12: SIR KIAN'S ERLÖSUNG <hr>"));
+        textBox.addText(new Text("KAPITEL 12: SIR KIANS ERLÖSUNG <hr>"));
         textBox.addText(new Text("Nachdem das Schattenreich vollkommen verschwunden war, befand sich Damian wieder in einem Raum des Luftschiffs. Am Ende des Raums erwartete ihn ein Luftritter, den Damian bisher noch nie auf dem Luftschiff gesehen hatte. Dieser unbekannte Luftritter bat Damian zu sich."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit dem unbekannten Luftritter.</i></span>"));
     

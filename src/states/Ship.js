@@ -49,7 +49,7 @@ export default class Ship extends Phaser.State {
         this.boxSound = this.game.add.audio('box_sound');
   
         textBox.addText(new Text("KAPITEL 4: DAS LUFTSCHIFF DER BLACK AIR KNIGHTS <hr>"));
-        textBox.addText(new Text("Nachdem Damian es geschafft hatte, sich unbemerkt aus dem Haus zu schleichen, stieg er in das Luftschiff der Black Air Knights ein. Das Luftschiff war mit vielen Gemeinschaftsräumen zum Trainieren, Speißen und Schlafen ausgestattet. Es hatte zudem noch eine große Magier-Bibliothek und eine Waffenkammer."));
+        textBox.addText(new Text("Nachdem Damian es geschafft hatte, sich unbemerkt aus dem Haus zu schleichen, stieg er in das Luftschiff der Black Air Knights ein. Das Luftschiff war mit vielen Gemeinschaftsräumen zum Trainieren, Speisen und Schlafen ausgestattet. Es hatte zudem noch eine große Magier-Bibliothek und eine Waffenkammer."));
         textBox.addText(new Text("Im Luftschiff erwartete ihn Kapitän Sir Lorcan."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Spreche mit Sir Lorcan, wähle eine Ausbildungsklasse und bestehe die erste Kampfübung.</i></span>"));
     

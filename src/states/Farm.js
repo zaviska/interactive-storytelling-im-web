@@ -30,7 +30,7 @@ export default class Farm extends Phaser.State {
         this.ballSound = this.game.add.audio('ball_sound');
 
         let textBox = this.game.textBox;
-        textBox.addText(new Text("KAPITEL 1: BLACK'S DARCONO FARM <hr>"));
+        textBox.addText(new Text("KAPITEL 1: BLACKS DARCONO FARM <hr>"));
         textBox.addText(new Text("Familie Black lebte am Rande der schwebenden Stadt des Königreichs Livania. Sie arbeiteten auf der familiengeführten Darcono Farm. Damian war der älteste Sohn von Tamo und Ava Black und hatte eine jüngere Schwester namens Lina. Er musste viele Aufgaben auf der Darcono Farm übernehmen, die ihn allerdings sehr langweilten. Damian wollte vielmehr ein Luftritter, wie sein Onkel Luan Black, werden. Aber er sollte später einmal die Darcono Farm übernehmen."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Sammle mind. 10 Energie-Bälle und füttere damit die Darconos. Sprich danach mit Tamo Black.</i></span>"));
     

@@ -36,7 +36,7 @@ export default class Room extends Phaser.State {
         this.windowSound = this.game.add.audio('window_sound');
 
         let textBox = this.game.textBox;
-        textBox.addText(new Text("KAPITEL 3: DAMIAN'S FLUCHT <hr>"));
+        textBox.addText(new Text("KAPITEL 3: DAMIANS FLUCHT <hr>"));
         textBox.addText(new Text("Damian bekam von seinem Vater Hausarrest und befand sich jetzt in seinem Zimmer. Er wollte um jeden Preis Luftritter werden, auch wenn er sich aus dem Zimmer schleichen musste. Er bereitete sich auf sein Abenteuer vor, indem er alles Wichtige in einen Rucksack packte."));
         textBox.addText(new Text("Zudem erinnerte sich Damian, wie sein Luftritter-Onkel ihm vor einiger Zeit ein Amulett schenkte. Sein Onkel Luan gab es ihm mit den Worten »trage es auf Reisen, es wird dich in Not beschützen«. Dieses Amulett wollte Damian unbedingt mitnehmen, nur hatte er vergessen, wo es sich befindet."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Schleiche dich aus dem Haus und steige in das Luftschiff ein. Vergesse nicht den Rucksack und das Amulett mitzunehmen.</i></span>"));

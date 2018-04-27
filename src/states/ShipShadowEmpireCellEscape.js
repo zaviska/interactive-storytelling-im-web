@@ -46,8 +46,8 @@ export default class ShipShadowEmpireCellEscape extends Phaser.State {
         this.explosionSound = this.game.add.audio('explosion_sound');
         this.appearSound = this.game.add.audio('appear_sound');
   
-        textBox.addText(new Text("KAPITEL 10: DAMIAN'S AUSBRUCH <hr>"));
-        textBox.addText(new Text("Nachdem Damian sein Amulett, aufgrund einer Träne, trocken gerieben hatte, erschien ein Lumitra aus dem Stein. Lumitras waren gute Lichtgeister. Dieses Lichtwesen öffnete Damian's verschlossene Zellentür und verschwand danach wieder. Nun konnte Damian aus seiner Zelle ausbrechen."));
+        textBox.addText(new Text("KAPITEL 10: DAMIANS AUSBRUCH <hr>"));
+        textBox.addText(new Text("Nachdem Damian sein Amulett, aufgrund einer Träne, trocken gerieben hatte, erschien ein Lumitra aus dem Stein. Lumitras waren gute Lichtgeister. Dieses Lichtwesen öffnete Damians verschlossene Zellentür und verschwand danach wieder. Nun konnte Damian aus seiner Zelle ausbrechen."));
         textBox.addText(new Text("<span style='color:#19de65;'>Hauptziel: <i>Breche aus deiner Zelle aus und suche den Ausgang.</i></span>"));
     
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
